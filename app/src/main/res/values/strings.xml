@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Photo Editor</string>
+    <string name="key_save_first_open_app"><![CDATA[key_save_first_open_app\">key_save_first_open_app]]></string>
 </resources>
