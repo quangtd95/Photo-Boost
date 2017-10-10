@@ -4,9 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 
-import com.quangtd.photoeditor.MainActivity;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.utils.SharedPreferencesUtils;
 
@@ -30,6 +28,7 @@ public class ActivityIntro extends MaterialIntroActivity {
         addSlide(new SlideFragmentBuilder()
                 .backgroundColor(R.color.second_slide_background)
                 .buttonsColor(R.color.second_slide_buttons)
+                .image(R.mipmap.img_equipment)
                 .title("Photo Editor")
                 .description("Easy & Quick")
                 .build());
@@ -44,7 +43,7 @@ public class ActivityIntro extends MaterialIntroActivity {
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.RECORD_AUDIO})
-                        .image(R.mipmap.img_equipment)
+                        .image(R.mipmap.img_office)
                         .title("13PFIEV3")
                         .description("Quang - Sang - Nhan")
                         .build(),
@@ -55,8 +54,8 @@ public class ActivityIntro extends MaterialIntroActivity {
     @Override
     public void onFinish() {
         super.onFinish();
-        SharedPreferencesUtils.getInstance(this).setBool(getString(R.string.key_save_first_open_app), true);
-        Intent intent = new Intent(this, MainActivity.class);
+        SharedPreferencesUtils.getInstance(this).setBool(getString(R.string.key_save_first_open_app), false);
+        Intent intent = new Intent(this, ActivityListPhoto_.class);
         startActivity(intent);
     }
 }

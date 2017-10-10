@@ -68,7 +68,7 @@ public class SharedPreferencesUtils {
     }
 
     public String getString(String key) {
-        return this.sharedPreferences.getString(key, (String) null);
+        return this.sharedPreferences.getString(key, null);
     }
 
     public void setBool(String key, Boolean value) {
@@ -112,7 +112,7 @@ public class SharedPreferencesUtils {
     public Object getObject(String key, Class<?> object) {
         try {
             Gson e = new Gson();
-            String json = this.sharedPreferences.getString(key, (String) null);
+            String json = this.sharedPreferences.getString(key, null);
             Object obj = e.fromJson(json, object);
             return obj;
         } catch (Exception var6) {
@@ -122,7 +122,7 @@ public class SharedPreferencesUtils {
 
     public boolean isExists(String key) {
         try {
-            return this.sharedPreferences.getString(key, (String) null) != null;
+            return this.sharedPreferences.getString(key, null) != null;
         } catch (Exception var3) {
             return true;
         }

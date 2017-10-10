@@ -31,6 +31,5 @@ public abstract class PresenterBase<I extends IViewBase> {
         return this.getClass().getName();
     }
 
-    public void onInit() {
-    }
+    public abstract void onInit();
 }

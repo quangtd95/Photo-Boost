@@ -20,19 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".view.activity.ActivityIntro"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ActivitySplash">
+        <activity android:name=".view.activity.ActivitySplash_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.activity.ActivityListPhoto_"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

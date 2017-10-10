@@ -2,14 +2,9 @@ package com.quangtd.photoeditor.view.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.presenter.PresenterBase;
 import com.quangtd.photoeditor.view.iface.IViewBase;
 
@@ -53,23 +48,23 @@ public class FragmentBase<P extends PresenterBase> extends Fragment {
         startActivity(intent);
     }
 
-    public void replaceFragment(FragmentBase fragment, boolean addToBackStack) {
+   /* public void replaceFragment(FragmentBase fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (addToBackStack) {
             transaction.addToBackStack(fragment.getClass().getName());
         }
         transaction.replace(R.id.content, fragment);
         transaction.commit();
-    }
+    }*/
 
-    public void addFragment(FragmentBase fragment, boolean addToBackStack) {
+    /*public void addFragment(FragmentBase fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (addToBackStack) {
             transaction.addToBackStack(fragment.getClass().getName());
         }
         transaction.add(R.id.content, fragment);
         transaction.commit();
-    }
+    }*/
 
     public boolean popFragment() {
         if (getFragmentManager().getBackStackEntryCount() >= 0) {

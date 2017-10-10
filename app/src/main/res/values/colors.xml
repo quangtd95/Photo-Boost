@@ -12,4 +12,18 @@
 
     <color name="third_slide_background">#009688</color>
     <color name="third_slide_buttons">#004D40</color>
+
+    <color name="color_gray">#ddd</color>
+    <color name="color_red">#ff0000</color>
+    <color name="color_white">#fff</color>
+    <color name="color_light_white">#f3f3f3</color>
+    <color name="color_dark_gray">#8a8686</color>
+    <color name="color_pink">#fc3c89</color>
+    <color name="color_dark_pink">#af4d74</color>
+    <color name="color_light_gray">#e2e0e0</color>
+    <color name="color_line_gray">#CACACA</color>
+    <color name="light_gray">#ceced2</color>
+    <color name="text_color_header">#30334e</color>
+    <color name="text_color_folder">#4d4d4f</color>
+    <color name="color_heavy_pink">#F00090</color>
 </resources>

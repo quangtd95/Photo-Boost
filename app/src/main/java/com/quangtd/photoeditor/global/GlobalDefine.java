@@ -5,4 +5,6 @@ package com.quangtd.photoeditor.global;
  */
 
 public class GlobalDefine {
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 100;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 101;
 }

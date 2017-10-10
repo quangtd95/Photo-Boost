@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.presenter.PresenterBase;
 import com.quangtd.photoeditor.view.fragment.FragmentBase;
 import com.quangtd.photoeditor.view.iface.IViewBase;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -16,14 +19,16 @@ import java.lang.reflect.ParameterizedType;
  * QuangTD on 10/5/2017.
  */
 
-public class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
+@EActivity
+public abstract class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
 
     private P viewPresenter;
 
     public P getPresenter(IViewBase iViewBase) {
         try {
             if (this.viewPresenter == null) {
-                String e = ((Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]).getName();
+                String e = ((Class) ((ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0]).getName();
+                Log.e("TAGG", e);
                 Class classDefinition = Class.forName(e);
                 this.viewPresenter = (P) classDefinition.newInstance();
                 this.viewPresenter.setIFace(iViewBase);
@@ -40,6 +45,9 @@ public class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
 
         return this.viewPresenter;
     }
+
+    @AfterViews
+    protected abstract void init();
 
     public void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
@@ -64,7 +72,7 @@ public class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void replaceFragment(FragmentBase fragment, boolean addToBackStack) {
+    /*public void replaceFragment(FragmentBase fragment, boolean addToBackStack) {
         String TAB = fragment.getClass().getName();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) {
@@ -82,7 +90,7 @@ public class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
         }
         transaction.add(R.id.content, fragment);
         transaction.commit();
-    }
+    }*/
 
     public void showDialogNotify(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
