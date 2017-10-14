@@ -48,6 +48,15 @@
             android:layout_height="1dp"
             android:background="@color/color_dark_gray"/>
 
+        <ImageView
+            android:id="@+id/imgCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_camera"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerFolder"
             android:layout_width="match_parent"
