@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.activity;
+package com.quangtd.photoeditor.view.activity.splash;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.utils.SharedPreferencesUtils;
+import com.quangtd.photoeditor.view.activity.ActivityBase;
+import com.quangtd.photoeditor.view.activity.choosephoto.ActivityListPhoto_;
+import com.quangtd.photoeditor.view.activity.intro.ActivityIntro;
 
 import org.androidannotations.annotations.EActivity;
 
@@ -22,6 +25,7 @@ public class ActivitySplash extends ActivityBase {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.init();
         setContentView(R.layout.activity_splash);
         isFirstOpenApp = SharedPreferencesUtils.getInstance(this).getBool(getString(R.string.key_save_first_open_app));
         Handler handler = new Handler();

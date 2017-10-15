@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.quangtd.photoeditor.presenter.PresenterBase;
 import com.quangtd.photoeditor.view.fragment.FragmentBase;
@@ -47,7 +48,10 @@ public abstract class ActivityBase<P extends PresenterBase> extends AppCompatAct
     }
 
     @AfterViews
-    protected abstract void init();
+    protected void init(){
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    };
 
     public void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);

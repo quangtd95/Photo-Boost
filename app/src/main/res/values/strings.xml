@@ -57,4 +57,24 @@
     <string name="select_video">Select Video</string>
     <string name="text_please_choose_some_video">please choose some video</string>
     <string name="text_trim_video">Trim Video</string>
+    <string name="sticker">sticker</string>
+    <string name="tools">Tools</string>
+    <string name="change_photo">Change Photo</string>
+    <string-array name="list_features">
+        <item>sticker</item>
+        <item>effect</item>
+        <item>filter</item>
+        <item>blur</item>
+        <item>text</item>
+        <item>crop</item>
+        <item>share</item>
+    </string-array>
+    <string-array name="list_tools">
+        <item>Change</item>
+        <item>Flip H</item>
+        <item>Flip V</item>
+        <item>Zoom In</item>
+        <item>Zoom Out</item>
+        <item>Rotate</item>
+    </string-array>
 </resources>

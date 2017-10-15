@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.activity;
+package com.quangtd.photoeditor.view.activity.choosephoto;
 
 import android.Manifest;
 import android.content.Context;
@@ -17,6 +17,8 @@ import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.response.AlbumImage;
 import com.quangtd.photoeditor.model.response.LocalImage;
 import com.quangtd.photoeditor.presenter.PresenterListPhoto;
+import com.quangtd.photoeditor.view.activity.ActivityBase;
+import com.quangtd.photoeditor.view.activity.editphoto.ActivityEditPhoto_;
 import com.quangtd.photoeditor.view.adapter.FolderPhotoAdapter;
 import com.quangtd.photoeditor.view.adapter.PhotoAdapter;
 import com.quangtd.photoeditor.view.component.GridSpacingItemDecoration;
@@ -43,9 +45,6 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
     @ViewById(R.id.recyclerFolder) RecyclerView mRecyclerFolder;
     @ViewById(R.id.recyclerPhoto) RecyclerView mRecyclerPhoto;
 
-    private LinearLayoutManager mLayoutManagerFolder;
-    private GridLayoutManager mLayoutManagerPhoto;
-
     private FolderPhotoAdapter mAdapterFolder;
     private PhotoAdapter mAdapterPhoto;
     private List<AlbumImage> mAlbumImages = new ArrayList<>();
@@ -53,7 +52,8 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     @Override
     protected void init() {
-        mLayoutManagerFolder = new LinearLayoutManager(this);
+        super.init();
+        LinearLayoutManager mLayoutManagerFolder = new LinearLayoutManager(this);
         mAdapterFolder = new FolderPhotoAdapter(this, mAlbumImages);
         mRecyclerFolder.setLayoutManager(mLayoutManagerFolder);
         mRecyclerFolder.setAdapter(mAdapterFolder);
@@ -61,7 +61,7 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
         mRecyclerFolder.setVisibility(View.VISIBLE);
         mRecyclerPhoto.setVisibility(View.GONE);
 
-        mLayoutManagerPhoto = new GridLayoutManager(this, 3);
+        GridLayoutManager mLayoutManagerPhoto = new GridLayoutManager(this, 3);
         mAdapterPhoto = new PhotoAdapter(this, mLocalImages);
         mRecyclerPhoto.setLayoutManager(mLayoutManagerPhoto);
         mRecyclerPhoto.setAdapter(mAdapterPhoto);
@@ -135,7 +135,7 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     @Override
     public void onClickItemPhoto(int position) {
-
+        ActivityEditPhoto_.intent(this).start();
     }
 
     @Override public void getListPhotoSuccess(List<AlbumImage> albumImageList) {

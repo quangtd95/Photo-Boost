@@ -1,12 +1,12 @@
-package com.quangtd.photoeditor.view.activity;
+package com.quangtd.photoeditor.view.activity.intro;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.utils.SharedPreferencesUtils;
+import com.quangtd.photoeditor.view.activity.choosephoto.ActivityListPhoto_;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
 import agency.tango.materialintroscreen.MessageButtonBehaviour;
@@ -55,7 +55,6 @@ public class ActivityIntro extends MaterialIntroActivity {
     public void onFinish() {
         super.onFinish();
         SharedPreferencesUtils.getInstance(this).setBool(getString(R.string.key_save_first_open_app), false);
-        Intent intent = new Intent(this, ActivityListPhoto_.class);
-        startActivity(intent);
+        ActivityListPhoto_.intent(this).start();
     }
 }

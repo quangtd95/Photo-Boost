@@ -70,7 +70,7 @@ public class PhotoAdapter extends RecyclerView.Adapter {
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            mImgPhoto = itemView.findViewById(R.id.imgPhoto);
+            mImgPhoto = (ImageView) itemView.findViewById(R.id.imgPhoto);
 
             mImgPhoto.getLayoutParams().height = mSizeImage;
             mImgPhoto.getLayoutParams().width = mSizeImage;

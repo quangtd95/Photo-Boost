@@ -61,9 +61,9 @@ public class FolderPhotoAdapter extends RecyclerView.Adapter {
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            tvNameFolder = itemView.findViewById(R.id.tvNameFolder);
-            tvPathFolder = itemView.findViewById(R.id.tvPathFolder);
-            imgFolder = itemView.findViewById(R.id.imgFolder);
+            tvNameFolder = (TextView) itemView.findViewById(R.id.tvNameFolder);
+            tvPathFolder = (TextView) itemView.findViewById(R.id.tvPathFolder);
+            imgFolder = (ImageView) itemView.findViewById(R.id.imgFolder);
 
             itemView.setOnClickListener(v -> {
                 if (mOnClickItemFolderListener != null) {

@@ -20,17 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.ActivityIntro"
+            android:name=".view.activity.intro.ActivityIntro"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ActivitySplash_">
+        <activity android:name=".view.activity.splash.ActivitySplash_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.ActivityListPhoto_"
+            android:name=".view.activity.choosephoto.ActivityListPhoto_"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.editphoto.ActivityEditPhoto_"
             android:screenOrientation="portrait"/>
     </application>
 
