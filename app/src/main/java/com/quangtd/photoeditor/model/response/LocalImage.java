@@ -4,9 +4,6 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * @author ToanNS
- */
 public class LocalImage implements Parcelable {
     private Uri uri;
     private String path;

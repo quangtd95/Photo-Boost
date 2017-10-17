@@ -20,7 +20,6 @@
     <string name="text_start">Start</string>
     <string name="text_number">[%d / 60]</string>
     <string name="text_folder">Folder Image</string>
-    <string name="url_base">http://139.59.241.64/App/VideoEditor/</string>
     <string name="msg_check_internet_connection">Please connect network</string>
     <string name="btn_close">Đóng</string>
     <string name="btn_cancel">Hủy</string>
@@ -60,6 +59,7 @@
     <string name="sticker">sticker</string>
     <string name="tools">Tools</string>
     <string name="change_photo">Change Photo</string>
+    <string name="filter">Filter</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>effect</item>

@@ -35,6 +35,6 @@
         <activity
             android:name=".view.activity.editphoto.ActivityEditPhoto_"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.choosesticker.StickerActivity_"/>
     </application>
-
 </manifest>

@@ -2,6 +2,10 @@ package com.quangtd.photoeditor.global;
 
 import android.app.Application;
 
+import com.quangtd.photoeditor.model.net.ApiClient;
+import com.quangtd.photoeditor.model.net.ApiConfig;
+import com.quangtd.photoeditor.model.net.ServerPath;
+
 /**
  * QuangTD on 10/5/2017.
  */
@@ -9,5 +13,11 @@ import android.app.Application;
 public class PhotoEditorApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
+        createService();
+    }
+
+    private void createService() {
+        ApiConfig apiConfig = new ApiConfig(this, ServerPath.API_DOMAIN);
+        ApiClient.getInstance().init(apiConfig);
     }
 }

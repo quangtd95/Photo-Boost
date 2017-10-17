@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_header"
+        android:background="@color/light_gray">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/height_header"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dip12"
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+            android:id="@+id/tvTabName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color_folder"
+            android:textSize="@dimen/dip18"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dark_gray"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpListSticker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dark_gray"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCategory"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"/>
+
+</LinearLayout>

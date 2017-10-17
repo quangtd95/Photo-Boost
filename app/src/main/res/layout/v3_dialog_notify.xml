@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/layout_corner_white"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dip10"
+        android:gravity="center"
+        android:text="@string/popup_title"
+        android:textSize="@dimen/dip20"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dip0_5"
+        android:layout_marginBottom="@dimen/dip10"
+        android:layout_marginTop="@dimen/dip10"
+        android:background="@color/color_gray"/>
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dip10"
+        android:layout_marginLeft="@dimen/dip30"
+        android:layout_marginRight="@dimen/dip30"
+        android:layout_marginTop="@dimen/dip10"
+        android:textSize="@dimen/text_big_size"/>
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dip50"
+        android:layout_marginBottom="@dimen/dip10"
+        android:layout_marginLeft="@dimen/dip20"
+        android:layout_marginRight="@dimen/dip20"
+        android:layout_marginTop="@dimen/dip10"
+        android:background="@drawable/button_close_selector"
+        android:text="@string/btn_close"
+        android:textAllCaps="true"
+        android:textColor="@color/color_white"/>
+</LinearLayout>

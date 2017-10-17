@@ -16,7 +16,7 @@ public class PresenterListPhoto extends PresenterBase<IViewListPhoto> {
 
     @Override
     public void onInit() {
-        mListPhotoRepository = ListPhotoRepository.getInstance(getContext());
+        mListPhotoRepository = ListPhotoRepository.getInstance();
     }
 
     public void getListPhoto() {

@@ -5,9 +5,11 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/black">
 
-
-
-
+    <FrameLayout
+        android:id="@+id/containerBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <com.quangtd.photoeditor.view.component.CustomFeatureBar_
             android:id="@+id/bottomFeatures"
@@ -22,13 +24,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@android:color/black"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
+
+        <com.quangtd.photoeditor.view.component.CustomFilterBar_
+            android:id="@+id/bottomFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomFeatures"
+        android:layout_above="@id/containerBottom"
         android:src="@drawable/temp"/>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBack"
         android:layout_width="wrap_content"

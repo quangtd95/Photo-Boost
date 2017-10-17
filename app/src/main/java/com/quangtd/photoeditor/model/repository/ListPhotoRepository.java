@@ -21,16 +21,13 @@ import java.util.List;
 public class ListPhotoRepository {
     private static ListPhotoRepository mInstance;
 
-    private Context mContext;
-
-    private ListPhotoRepository(Context context) {
+    private ListPhotoRepository() {
         mInstance = this;
-        this.mContext = context;
     }
 
-    public static synchronized ListPhotoRepository getInstance(Context context) {
+    public static synchronized ListPhotoRepository getInstance() {
         if (mInstance == null) {
-            mInstance = new ListPhotoRepository(context);
+            mInstance = new ListPhotoRepository();
         }
         return mInstance;
     }
