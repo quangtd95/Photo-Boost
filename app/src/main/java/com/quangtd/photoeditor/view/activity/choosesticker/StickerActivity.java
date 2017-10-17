@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.quangtd.photoeditor.R;
+import com.quangtd.photoeditor.model.cloud.FireBaseUtils;
+import com.quangtd.photoeditor.model.local.RealmUtils;
 import com.quangtd.photoeditor.model.response.CategorySticker;
 import com.quangtd.photoeditor.presenter.PresenterCategorySticker;
 import com.quangtd.photoeditor.utils.LogUtils;
@@ -32,14 +34,30 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
     CategoryStickerAdapter mCategoryAdapter;
     List<CategorySticker> mCategoryStickers;
     public final String TAG = getClass().getSimpleName();
+    private FireBaseUtils mFireBaseUtils;
 
     @Override protected void init() {
         super.init();
+        mFireBaseUtils = FireBaseUtils.getInstance();
         mCategoryStickers = new ArrayList<>();
         mCategoryAdapter = new CategoryStickerAdapter(this, mCategoryStickers);
         mRvCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRvCategory.setAdapter(mCategoryAdapter);
         getPresenter(this).getListCategory();
+        //load cache
+        mCategoryStickers.addAll(RealmUtils.getInstance().getList(CategorySticker.class));
+        mCategoryAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override protected void onStart() {
+        super.onStart();
+        mFireBaseUtils.addListener(this);
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        mFireBaseUtils.removeListener();
     }
 
     @Override public Context getContext() {
@@ -56,15 +74,13 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
 
     @Override public void getListCategorySuccess(List<CategorySticker> categoryStickers) {
         mCategoryStickers.clear();
-        for (CategorySticker categorySticker : categoryStickers) {
-            LogUtils.e(TAG, categorySticker.getTitle());
-        }
         mCategoryStickers.addAll(categoryStickers);
+        RealmUtils.getInstance().saveListData(mCategoryStickers);
         mCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override public void getListCategoryFail(String message) {
-        LogUtils.e(TAG,message);
+        LogUtils.e(TAG, message);
     }
 
     @Click(R.id.imgBack)

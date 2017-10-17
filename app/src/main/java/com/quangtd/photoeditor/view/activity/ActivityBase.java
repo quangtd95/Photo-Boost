@@ -6,7 +6,6 @@ import android.os.Build;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -26,14 +25,13 @@ import java.lang.reflect.ParameterizedType;
 
 @EActivity
 public abstract class ActivityBase<P extends PresenterBase> extends AppCompatActivity {
-
+    public final String TAG = getClass().getSimpleName();
     private P viewPresenter;
 
     public P getPresenter(IViewBase iViewBase) {
         try {
             if (this.viewPresenter == null) {
                 String e = ((Class) ((ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0]).getName();
-                Log.e("TAGG", e);
                 Class classDefinition = Class.forName(e);
                 this.viewPresenter = (P) classDefinition.newInstance();
                 this.viewPresenter.setIFace(iViewBase);

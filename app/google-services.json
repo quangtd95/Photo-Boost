@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "161640920559",
+    "firebase_url": "https://photo-editor-10cf3.firebaseio.com",
+    "project_id": "photo-editor-10cf3",
+    "storage_bucket": "photo-editor-10cf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161640920559:android:1490a52fdc84b6eb",
+        "android_client_info": {
+          "package_name": "com.quangtd.photoeditor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161640920559-0hm4vj7taiolhbtbhm607q2ukgkrl0oe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quangtd.photoeditor",
+            "certificate_hash": "98a111b3f9b478d62a4f89e1c838a2fbd43c3e45"
+          }
+        },
+        {
+          "client_id": "161640920559-rtkrl62p4g0e43pkq9g3327i7gqj4v1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATsyKglRD32gpy_j5K1KINvC8nw38eQ6w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161640920559-rtkrl62p4g0e43pkq9g3327i7gqj4v1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,6 @@ package com.quangtd.photoeditor.presenter;
 import com.quangtd.photoeditor.model.net.DataCallBack;
 import com.quangtd.photoeditor.model.repository.ListCategoryStickerRepository;
 import com.quangtd.photoeditor.model.response.CategoryStickerResponse;
-import com.quangtd.photoeditor.utils.LogUtils;
 import com.quangtd.photoeditor.view.iface.IViewListSticker;
 
 /**
@@ -23,12 +22,10 @@ public class PresenterCategorySticker extends PresenterBase<IViewListSticker> {
         mListCategoryStickerRepository.getListCategorySticker(new DataCallBack<CategoryStickerResponse>() {
             @Override public void onSuccess(CategoryStickerResponse result) {
                 getIFace().getListCategorySuccess(result.getCategories());
-                LogUtils.e(TAG, result.getCategories().size() + "size");
             }
 
             @Override public void onError(String message) {
                 getIFace().getListCategoryFail(message);
-                LogUtils.e(TAG, message);
             }
         });
     }

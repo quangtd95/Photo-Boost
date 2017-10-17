@@ -5,7 +5,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.quangtd.photoeditor.R;
+import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
 import com.quangtd.photoeditor.view.component.CustomFeatureBar;
@@ -14,6 +16,7 @@ import com.quangtd.photoeditor.view.component.CustomToolBar;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,10 +40,13 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
     CustomFilterBar mCustomFilterBar;
     @ViewById(R.id.containerBottom)
     FrameLayout mFlContainer;
+    @Extra(GlobalDefine.KEY_IMAGE)
+    String mImagePath;
     private boolean mToolsVisible;
 
     @Override protected void init() {
         super.init();
+        Glide.with(this).load(mImagePath).into(mCustomPreview);
         mCustomFeatureBar.setOnClickFeatureListener(this);
         mCustomToolBar.setOnClickToolListener(this);
     }
@@ -55,30 +61,12 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
         mToolsVisible = !mToolsVisible;
     }
 
-    /*private void hideToolBar() {
-        mCustomToolBar.setVisibility(View.INVISIBLE);
-        mCustomFeatureBar.setVisibility(View.VISIBLE);
-        mImgBack.setVisibility(View.VISIBLE);
-        mImgSave.setVisibility(View.VISIBLE);
-    }
-
-    private void showToolBar() {
-        mCustomFeatureBar.setVisibility(View.INVISIBLE);
-        mCustomToolBar.setVisibility(View.VISIBLE);
-        mImgBack.setVisibility(View.INVISIBLE);
-        mImgSave.setVisibility(View.INVISIBLE);
-    }*/
-
     private void showBar(View view) {
-        hideAllBottomItem();
-        view.setVisibility(View.VISIBLE);
-    }
-
-    private void hideAllBottomItem() {
         for (int index = 0; index < mFlContainer.getChildCount(); ++index) {
             View nextChild = mFlContainer.getChildAt(index);
             nextChild.setVisibility(View.INVISIBLE);
         }
+        view.setVisibility(View.VISIBLE);
     }
 
     @Override public void clickItem(CustomFeatureBar.TYPE type) {

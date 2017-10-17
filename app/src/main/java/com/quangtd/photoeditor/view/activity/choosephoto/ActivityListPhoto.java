@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quangtd.photoeditor.R;
+import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.response.AlbumImage;
 import com.quangtd.photoeditor.model.response.LocalImage;
 import com.quangtd.photoeditor.presenter.PresenterListPhoto;
@@ -41,7 +42,6 @@ import static com.quangtd.photoeditor.global.GlobalDefine.MY_PERMISSIONS_REQUEST
 @EActivity(R.layout.activity_list_photo)
 public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implements FolderPhotoAdapter.OnClickItemFolderListener, PhotoAdapter.OnClickItemPhotoListener, IViewListPhoto {
     @ViewById(R.id.tvNameFolder) TextView mTvNameFolder;
-
     @ViewById(R.id.recyclerFolder) RecyclerView mRecyclerFolder;
     @ViewById(R.id.recyclerPhoto) RecyclerView mRecyclerPhoto;
 
@@ -135,7 +135,7 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     @Override
     public void onClickItemPhoto(int position) {
-        ActivityEditPhoto_.intent(this).start();
+        ActivityEditPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mLocalImages.get(position).getPath()).start();
     }
 
     @Override public void getListPhotoSuccess(List<AlbumImage> albumImageList) {
