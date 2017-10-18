@@ -15,10 +15,10 @@ import java.lang.reflect.ParameterizedType;
  */
 
 public class FragmentBase<P extends PresenterBase> extends Fragment {
+    public String TAG = getClass().getSimpleName();
     private P viewPresenter;
 
     public FragmentBase() {
-
     }
 
     protected P getPresenter(IViewBase iface) {

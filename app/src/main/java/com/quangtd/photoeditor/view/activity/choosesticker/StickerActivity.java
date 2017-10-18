@@ -14,7 +14,8 @@ import com.quangtd.photoeditor.presenter.PresenterCategorySticker;
 import com.quangtd.photoeditor.utils.LogUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.adapter.CategoryStickerAdapter;
-import com.quangtd.photoeditor.view.iface.IViewListSticker;
+import com.quangtd.photoeditor.view.adapter.ViewPagerListStickerAdapter;
+import com.quangtd.photoeditor.view.iface.IViewCategorySticker;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -24,11 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_sticker)
-public class StickerActivity extends ActivityBase<PresenterCategorySticker> implements IViewListSticker {
+public class StickerActivity extends ActivityBase<PresenterCategorySticker> implements IViewCategorySticker {
     @ViewById(R.id.tvTabName)
     TextView mTvTabName;
     @ViewById(R.id.vpListSticker)
     ViewPager mVpListSticker;
+    ViewPagerListStickerAdapter mVpListStickerAdapter;
     @ViewById(R.id.rvCategory)
     RecyclerView mRvCategory;
     CategoryStickerAdapter mCategoryAdapter;
@@ -47,6 +49,23 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         //load cache
         mCategoryStickers.addAll(RealmUtils.getInstance().getList(CategorySticker.class));
         mCategoryAdapter.notifyDataSetChanged();
+
+        mVpListStickerAdapter = new ViewPagerListStickerAdapter(getSupportFragmentManager(), mCategoryStickers);
+        mVpListSticker.setAdapter(mVpListStickerAdapter);
+
+        mVpListSticker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -77,6 +96,7 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         mCategoryStickers.addAll(categoryStickers);
         RealmUtils.getInstance().saveListData(mCategoryStickers);
         mCategoryAdapter.notifyDataSetChanged();
+        mVpListStickerAdapter.notifyDataSetChanged();
     }
 
     @Override public void getListCategoryFail(String message) {

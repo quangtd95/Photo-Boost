@@ -3,13 +3,13 @@ package com.quangtd.photoeditor.presenter;
 import com.quangtd.photoeditor.model.net.DataCallBack;
 import com.quangtd.photoeditor.model.repository.ListCategoryStickerRepository;
 import com.quangtd.photoeditor.model.response.CategoryStickerResponse;
-import com.quangtd.photoeditor.view.iface.IViewListSticker;
+import com.quangtd.photoeditor.view.iface.IViewCategorySticker;
 
 /**
  * QuangTD on 10/17/2017.
  */
 
-public class PresenterCategorySticker extends PresenterBase<IViewListSticker> {
+public class PresenterCategorySticker extends PresenterBase<IViewCategorySticker> {
     private final String TAG = getClass().getSimpleName();
     private ListCategoryStickerRepository mListCategoryStickerRepository;
 

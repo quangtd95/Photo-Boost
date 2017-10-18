@@ -68,4 +68,8 @@ public class FireBaseUtils {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    public StorageReference getStorageReference(String path) {
+        return storageReference.child(path);
+    }
 }

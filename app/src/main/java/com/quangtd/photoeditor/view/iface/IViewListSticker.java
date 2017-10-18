@@ -1,6 +1,6 @@
 package com.quangtd.photoeditor.view.iface;
 
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -9,9 +9,6 @@ import java.util.List;
  */
 
 public interface IViewListSticker extends IViewBase {
-    void getListCategorySuccess(List<CategorySticker> categoryStickers);
-
-    void getListCategoryFail(String message);
-
-
+    void getListStickerSuccess(List<StorageReference> storageReferences);
+    void getListStickerFailure(String message);
 }
