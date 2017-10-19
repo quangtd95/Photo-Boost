@@ -16,6 +16,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/icons_photoeditor"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/icons_photoeditor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

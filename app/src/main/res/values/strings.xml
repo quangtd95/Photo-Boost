@@ -22,7 +22,7 @@
     <string name="text_folder">Folder Image</string>
     <string name="msg_check_internet_connection">Please connect network</string>
     <string name="btn_close">Đóng</string>
-    <string name="btn_cancel">Hủy</string>
+    <string name="btn_cancel">CANCEL</string>
     <string name="btn_ok">OK</string>
     <string name="popup_title">Thông báo</string>
     <string name="text_volume">Volume</string>
@@ -60,6 +60,9 @@
     <string name="tools">Tools</string>
     <string name="change_photo">Change Photo</string>
     <string name="filter">Filter</string>
+    <string name="confirm_back">This photo is not saved, you want to save it before closing?</string>
+    <string name="discard">DISCARD</string>
+    <string name="save">SAVE</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>effect</item>

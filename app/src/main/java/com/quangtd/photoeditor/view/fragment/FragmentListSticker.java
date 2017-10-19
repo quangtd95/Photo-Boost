@@ -35,7 +35,6 @@ public class FragmentListSticker extends FragmentBase<PresenterListSticker> impl
     }
 
     RecyclerView mRvSticker;
-    private GridLayoutManager mGridLayoutManager;
     private ListStickerAdapter mAdapter;
     private List<StorageReference> mStorageReferences;
     CategorySticker mCategorySticker;
@@ -61,8 +60,7 @@ public class FragmentListSticker extends FragmentBase<PresenterListSticker> impl
         mRvSticker = (RecyclerView) view.findViewById(R.id.rvSticker);
         mCategorySticker = getArguments().getParcelable(GlobalDefine.KEY_CATEGORY);
         mStorageReferences = new ArrayList<>();
-        mGridLayoutManager = new GridLayoutManager(getContext(), 3);
-        mRvSticker.setLayoutManager(mGridLayoutManager);
+        mRvSticker.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mAdapter = new ListStickerAdapter(getContext(), mStorageReferences, this);
         mRvSticker.setAdapter(mAdapter);
         getPresenter(this).getListSticker(mCategorySticker);

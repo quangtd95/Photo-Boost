@@ -17,6 +17,8 @@ public class GlobalDefine {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_STICKER = "sticker";
     public static final String KEY_CATEGORY = "category";
+
     public static final String STICKER_FOLDER_LOCAL = Environment.getExternalStorageDirectory() + "/." + ServerConst.APP_NAME + "/." + ServerConst.STICKER_FOLDER + "/";
+    public static final String OUTPUT_FOLDER = Environment.getExternalStorageDirectory() + "/" + ServerConst.APP_NAME + "/";
 
 }

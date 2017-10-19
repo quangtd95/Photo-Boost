@@ -55,8 +55,6 @@ public abstract class ActivityBase<P extends PresenterBase> extends AppCompatAct
         uiChangeListener();
     }
 
-    ;
-
     public void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);

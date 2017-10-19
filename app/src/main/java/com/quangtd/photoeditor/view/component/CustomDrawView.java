@@ -21,6 +21,7 @@ import android.view.View;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.DecorText;
+import com.quangtd.photoeditor.utils.EditPhotoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,8 @@ public class CustomDrawView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        EditPhotoUtils.WIDTH_PREVIEW = getMeasuredWidth();
+        EditPhotoUtils.HEIGHT_PREVIEW = getMeasuredHeight();
     }
 
     private void initialize() {
@@ -106,7 +109,7 @@ public class CustomDrawView extends View {
         float destiny = resources.getDisplayMetrics().density * 2;
         this.mFramePaint = new Paint();
         this.mFramePaint.setStrokeWidth(destiny);
-        this.mFramePaint.setColor(ContextCompat.getColor(getContext(), android.R.color.black));
+        this.mFramePaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         this.mOpenBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_btn_rotation);
         this.mDeleteBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_btn_delete);
     }
@@ -211,8 +214,7 @@ public class CustomDrawView extends View {
                             mDecors.get(this.mFocusObjectIndex).setChange(touchPoint);
                             break;
                         }
-                    }
-                    else if (mIsMove && mFocusObjectIndex != -1 && mFocusObjectIndex < mDecors.size()) {
+                    } else if (mIsMove && mFocusObjectIndex != -1 && mFocusObjectIndex < mDecors.size()) {
                         Decor focusDecor = mDecors.get(this.mFocusObjectIndex);
                         float deltaX = focusDecor.getX() + (float) (touchPoint.x - this.mLastPoint.x);
                         float deltaY = focusDecor.getY() + (float) (touchPoint.y - this.mLastPoint.y);

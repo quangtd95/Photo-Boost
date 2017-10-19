@@ -1,8 +1,10 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,12 +13,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
+import com.quangtd.photoeditor.model.data.Decor;
+import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
 import com.quangtd.photoeditor.view.component.CustomDrawView;
 import com.quangtd.photoeditor.view.component.CustomFeatureBar;
 import com.quangtd.photoeditor.view.component.CustomFilterBar;
 import com.quangtd.photoeditor.view.component.CustomToolBar;
+import com.quangtd.photoeditor.view.iface.IViewEditPhoto;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -24,49 +29,63 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * QuangTD on 10/15/2017.
  */
 @EActivity(R.layout.activity_edit_photo)
-public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener {
-    @ViewById(R.id.bottomFeatures)
-    CustomFeatureBar mCustomFeatureBar;
-    @ViewById(R.id.bottomTools)
-    CustomToolBar mCustomToolBar;
-    @ViewById(R.id.preview)
-    ImageView mCustomPreview;
-    @ViewById(R.id.imgBack)
-    CircleImageView mImgBack;
-    @ViewById(R.id.imgSave)
-    CircleImageView mImgSave;
-    @ViewById(R.id.bottomFilters)
-    CustomFilterBar mCustomFilterBar;
-    @ViewById(R.id.containerBottom)
-    FrameLayout mFlContainer;
-    @ViewById(R.id.customDraw)
-    CustomDrawView mCustomDraw;
-    @Extra(GlobalDefine.KEY_IMAGE)
-    String mImagePath;
+public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, IViewEditPhoto {
+    @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
+    @ViewById(R.id.bottomTools) CustomToolBar mCustomToolBar;
+    @ViewById(R.id.preview) ImageView mCustomPreview;
+    @ViewById(R.id.imgBack) CircleImageView mImgBack;
+    @ViewById(R.id.imgSave) CircleImageView mImgSave;
+    @ViewById(R.id.bottomFilters) CustomFilterBar mCustomFilterBar;
+    @ViewById(R.id.containerBottom) FrameLayout mFlContainer;
+    @ViewById(R.id.customDraw) CustomDrawView mCustomDraw;
+    @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
+    Bitmap mBitmap;
 
     private boolean mToolsVisible;
 
     @Override protected void init() {
         super.init();
         Glide.with(this).load(mImagePath).into(mCustomPreview);
+        mBitmap = BitmapFactory.decodeFile(mImagePath);
         mCustomFeatureBar.setOnClickFeatureListener(this);
         mCustomToolBar.setOnClickToolListener(this);
     }
 
     @Click(R.id.preview)
-    public void onClickPreview() {
+    void onClickPreview() {
         if (mToolsVisible) {
             showBar(mCustomFeatureBar);
         } else {
             showBar(mCustomToolBar);
         }
         mToolsVisible = !mToolsVisible;
+    }
+
+    @Click(R.id.imgBack)
+    void onClickBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getResources().getString(R.string.confirm_back));
+        builder.setCancelable(true);
+        builder.setNeutralButton(getResources().getString(R.string.btn_cancel), (dialog, which) -> dialog.dismiss());
+        builder.setNegativeButton(getResources().getString(R.string.discard), (dialog, which) -> finish());
+        builder.setPositiveButton(getResources().getString(R.string.save), (dialog, which) -> {
+            dialog.dismiss();
+            getPresenter(ActivityEditPhoto.this).save();
+        });
+        builder.show();
+    }
+
+    @Click(R.id.imgSave)
+    void onClickSave() {
+        getPresenter(this).save();
     }
 
     private void showBar(View view) {
@@ -115,6 +134,30 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
             mCustomDraw.addDecoItem(mBitmap, 1);
             dismissProgressDialog();
         });
+    }
+
+    @Override public Context getContext() {
+        return null;
+    }
+
+    @Override public void showLoading() {
+        showProgressDialog();
+    }
+
+    @Override public void hideLoading() {
+        dismissProgressDialog();
+    }
+
+    @Override public List<Decor> getListDecor() {
+        return mCustomDraw.getDecors();
+    }
+
+    @Override public Bitmap getPhoto() {
+        return mBitmap;
+    }
+
+    @Override public void showOutput(String output) {
+        Toast.makeText(this, output, Toast.LENGTH_SHORT).show();
     }
 }
 

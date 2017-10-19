@@ -78,11 +78,11 @@ public class FireBaseUtils {
     }
 
     public void downloadSticker(StorageReference storageReference, DataCallBack<String> callBack) {
-        File stickerDir = new File(GlobalDefine.STICKER_FOLDER_LOCAL);
+        File stickerDir = new File(GlobalDefine.STICKER_FOLDER_LOCAL + storageReference.getParent().getName());
         if (!stickerDir.exists()) {
             stickerDir.mkdirs();
         }
-        String localPath = GlobalDefine.STICKER_FOLDER_LOCAL + storageReference.getName();
+        String localPath = GlobalDefine.STICKER_FOLDER_LOCAL + storageReference.getParent().getName() + File.separator + storageReference.getName();
         File stickerLocalFile = new File(localPath);
         if (stickerLocalFile.exists()) {
             callBack.onSuccess(localPath);
