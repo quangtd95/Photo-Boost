@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
-import com.quangtd.photoeditor.model.response.AlbumImage;
-import com.quangtd.photoeditor.model.response.LocalImage;
+import com.quangtd.photoeditor.model.data.AlbumImage;
+import com.quangtd.photoeditor.model.data.LocalImage;
 import com.quangtd.photoeditor.presenter.PresenterListPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.editphoto.ActivityEditPhoto_;

@@ -10,10 +10,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.quangtd.photoeditor.R;
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.utils.ScreenUtils;
 
 import java.util.List;
+
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * QuangTD on 10/17/2017.
@@ -21,10 +24,17 @@ import java.util.List;
 
 
 public class CategoryStickerAdapter extends AdapterBase<CategoryStickerAdapter.CategoryStickerHolder> {
+    public interface OnClickItemCategoryListener {
+        void onClickItemCategory(int position);
+    }
+
     private List<CategorySticker> mCategoryStickers;
     private int mImgSize;
     private int mFolderSize;
     private int mCurrentPosition;
+    @Accessors(prefix = "m")
+    @Setter
+    private ListStickerAdapter.OnClickStickerListener mListener;
 
     public CategoryStickerAdapter(Context context, List<CategorySticker> categoryStickers) {
         super(context);
@@ -43,6 +53,16 @@ public class CategoryStickerAdapter extends AdapterBase<CategoryStickerAdapter.C
 
     @Override public int getItemCount() {
         return mCategoryStickers == null ? 0 : mCategoryStickers.size();
+    }
+
+    public void setSelected(int position) {
+        if (position < 0 || position >= mCategoryStickers.size()) return;
+        mCategoryStickers.get(mCurrentPosition).setSelected(false);
+        mCategoryStickers.get(position).setSelected(true);
+        notifyItemChanged(mCurrentPosition);
+        notifyItemChanged(position);
+        mCurrentPosition = position;
+
     }
 
     class CategoryStickerHolder extends ViewHolderBase<CategorySticker> {
@@ -64,6 +84,9 @@ public class CategoryStickerAdapter extends AdapterBase<CategoryStickerAdapter.C
                     mCategoryStickers.get(getLayoutPosition()).setSelected(true);
                     notifyDataSetChanged();
                     mCurrentPosition = getLayoutPosition();
+                    if (mListener != null) {
+                        mListener.onClickSticker(mCurrentPosition);
+                    }
                 }
             });
         }

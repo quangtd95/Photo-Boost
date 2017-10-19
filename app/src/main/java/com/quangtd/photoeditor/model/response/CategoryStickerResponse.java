@@ -1,6 +1,7 @@
 package com.quangtd.photoeditor.model.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 
 import java.util.List;
 

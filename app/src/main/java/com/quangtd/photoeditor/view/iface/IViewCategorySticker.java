@@ -1,6 +1,6 @@
 package com.quangtd.photoeditor.view.iface;
 
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 
 import java.util.List;
 

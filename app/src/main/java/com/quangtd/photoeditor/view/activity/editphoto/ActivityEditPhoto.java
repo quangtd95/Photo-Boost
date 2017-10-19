@@ -1,5 +1,6 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.quangtd.photoeditor.view.component.CustomToolBar;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,7 +75,7 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
         Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
         switch (type) {
             case STICKER:
-                StickerActivity_.intent(this).start();
+                StickerActivity_.intent(this).startForResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER);
                 break;
             case FILTER:
                 showBar(mCustomFilterBar);
@@ -85,6 +87,16 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
 
     @Override public void clickItem(CustomToolBar.TYPE type) {
         Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER)
+    public void onResultGetSticker(int resultCode, Intent data) {
+        if (resultCode == GlobalDefine.MY_RESULT_CODE_GET_STICKER) {
+            if (data != null) {
+                String pathSticker = data.getStringExtra(GlobalDefine.KEY_STICKER);
+                Toast.makeText(this, pathSticker, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 package com.quangtd.photoeditor.presenter;
 
 import com.quangtd.photoeditor.model.repository.ListPhotoRepository;
-import com.quangtd.photoeditor.model.response.AlbumImage;
+import com.quangtd.photoeditor.model.data.AlbumImage;
 import com.quangtd.photoeditor.view.iface.IViewListPhoto;
 
 import java.util.List;

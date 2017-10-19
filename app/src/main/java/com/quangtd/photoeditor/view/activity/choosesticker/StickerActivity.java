@@ -1,21 +1,25 @@
 package com.quangtd.photoeditor.view.activity.choosesticker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.quangtd.photoeditor.R;
+import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.cloud.FireBaseUtils;
 import com.quangtd.photoeditor.model.local.RealmUtils;
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.presenter.PresenterCategorySticker;
 import com.quangtd.photoeditor.utils.LogUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.adapter.CategoryStickerAdapter;
 import com.quangtd.photoeditor.view.adapter.ViewPagerListStickerAdapter;
+import com.quangtd.photoeditor.view.fragment.FragmentListSticker;
 import com.quangtd.photoeditor.view.iface.IViewCategorySticker;
+import com.quangtd.photoeditor.view.iface.listener.AbstractOnViewPagerChangeListener;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -25,7 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_sticker)
-public class StickerActivity extends ActivityBase<PresenterCategorySticker> implements IViewCategorySticker {
+public class StickerActivity extends ActivityBase<PresenterCategorySticker> implements IViewCategorySticker, FragmentListSticker.OnReceiveStickerListener {
+
     @ViewById(R.id.tvTabName)
     TextView mTvTabName;
     @ViewById(R.id.vpListSticker)
@@ -45,28 +50,32 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         mCategoryAdapter = new CategoryStickerAdapter(this, mCategoryStickers);
         mRvCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRvCategory.setAdapter(mCategoryAdapter);
+        mCategoryAdapter.setListener(position -> {
+            updateUiActivity(position);
+            mVpListSticker.setCurrentItem(position);
+        });
         getPresenter(this).getListCategory();
         //load cache
         mCategoryStickers.addAll(RealmUtils.getInstance().getList(CategorySticker.class));
+        updateUiActivity(0);
         mCategoryAdapter.notifyDataSetChanged();
 
         mVpListStickerAdapter = new ViewPagerListStickerAdapter(getSupportFragmentManager(), mCategoryStickers);
+        mVpListStickerAdapter.setOnReceiveStickerListener(this);
         mVpListSticker.setAdapter(mVpListStickerAdapter);
 
-        mVpListSticker.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
+        mVpListSticker.addOnPageChangeListener(new AbstractOnViewPagerChangeListener() {
             @Override public void onPageSelected(int position) {
-
-            }
-
-            @Override public void onPageScrollStateChanged(int state) {
-
+                updateUiActivity(position);
+                mRvCategory.scrollToPosition(position);
             }
         });
 
+    }
+
+    private void updateUiActivity(int position) {
+        mTvTabName.setText(mCategoryStickers.get(position).getTitle());
+        mCategoryAdapter.setSelected(position);
     }
 
     @Override protected void onStart() {
@@ -84,17 +93,18 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
     }
 
     @Override public void showLoading() {
-
+        showProgressDialog();
     }
 
     @Override public void hideLoading() {
-
+        dismissProgressDialog();
     }
 
     @Override public void getListCategorySuccess(List<CategorySticker> categoryStickers) {
         mCategoryStickers.clear();
         mCategoryStickers.addAll(categoryStickers);
         RealmUtils.getInstance().saveListData(mCategoryStickers);
+        updateUiActivity(0);
         mCategoryAdapter.notifyDataSetChanged();
         mVpListStickerAdapter.notifyDataSetChanged();
     }
@@ -108,4 +118,10 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         finish();
     }
 
+    @Override public void receiveSticker(String pathSticker) {
+        Intent intent = new Intent();
+        intent.putExtra(GlobalDefine.KEY_STICKER, pathSticker);
+        setResult(GlobalDefine.MY_RESULT_CODE_GET_STICKER, intent);
+        finish();
+    }
 }

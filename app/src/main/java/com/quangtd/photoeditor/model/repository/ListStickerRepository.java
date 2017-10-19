@@ -5,7 +5,8 @@ import android.content.Context;
 import com.google.firebase.storage.StorageReference;
 import com.quangtd.photoeditor.model.cloud.FireBaseUtils;
 import com.quangtd.photoeditor.model.cloud.ServerConst;
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.quangtd.photoeditor.model.net.DataCallBack;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 
 /**
  * QuangTD on 10/18/2017.
@@ -33,5 +34,9 @@ public class ListStickerRepository {
 
     public String convertStickerPath(CategorySticker categorySticker, int id) {
         return ServerConst.STICKER_FOLDER + "/" + categorySticker.getFolderName() + "/.image_" + id + ".png";
+    }
+
+    public void downloadSticker(StorageReference storageReference, DataCallBack<String> callBack) {
+        FireBaseUtils.getInstance().downloadSticker(storageReference, callBack);
     }
 }

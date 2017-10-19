@@ -1,9 +1,12 @@
-package com.quangtd.photoeditor.model.response;
+package com.quangtd.photoeditor.model.data;
 
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import lombok.Data;
+
+@Data
 public class LocalImage implements Parcelable {
     private Uri uri;
     private String path;
@@ -29,40 +32,10 @@ public class LocalImage implements Parcelable {
         }
     };
 
-    public boolean isSelect() {
-        return select;
-    }
-
-    public void setSelect(boolean select) {
-        this.select = select;
-    }
 
     public LocalImage() {
     }
 
-    public Uri getUri() {
-        return uri;
-    }
-
-    public void setUri(Uri uri) {
-        this.uri = uri;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public int describeContents() {

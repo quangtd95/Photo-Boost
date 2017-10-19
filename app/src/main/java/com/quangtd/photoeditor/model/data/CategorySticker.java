@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.model.response;
+package com.quangtd.photoeditor.model.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class CategorySticker extends RealmObject implements Parcelable {
     private String thumbnail;
     @SerializedName("folder_name")
     private String folderName;
+    @Ignore
     private boolean isSelected;
     @SerializedName("size")
     private int size;

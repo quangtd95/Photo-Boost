@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.quangtd.photoeditor.R;
-import com.quangtd.photoeditor.model.response.AlbumImage;
+import com.quangtd.photoeditor.model.data.AlbumImage;
 
 import java.io.File;
 import java.util.List;

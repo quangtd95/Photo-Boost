@@ -1,8 +1,9 @@
 package com.quangtd.photoeditor.presenter;
 
 import com.google.firebase.storage.StorageReference;
+import com.quangtd.photoeditor.model.net.DataCallBack;
 import com.quangtd.photoeditor.model.repository.ListStickerRepository;
-import com.quangtd.photoeditor.model.response.CategorySticker;
+import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.view.iface.IViewListSticker;
 
 import java.util.ArrayList;
@@ -30,5 +31,20 @@ public class PresenterListSticker extends PresenterBase<IViewListSticker> {
         } else {
             getIFace().getListStickerFailure("error");
         }
+    }
+
+    public void downloadSticker(StorageReference storageReference) {
+        getIFace().showLoading();
+        mListStickerRepository.downloadSticker(storageReference, new DataCallBack<String>() {
+            @Override public void onSuccess(String path) {
+                getIFace().downloadStickerSuccess(path);
+                getIFace().hideLoading();
+            }
+
+            @Override public void onError(String message) {
+                getIFace().downloadStickerFailure(message);
+                getIFace().hideLoading();
+            }
+        });
     }
 }

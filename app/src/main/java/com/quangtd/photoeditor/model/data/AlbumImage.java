@@ -1,10 +1,13 @@
-package com.quangtd.photoeditor.model.response;
+package com.quangtd.photoeditor.model.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class AlbumImage implements Parcelable {
     private List<LocalImage> localImages;
     private String name;
@@ -33,21 +36,6 @@ public class AlbumImage implements Parcelable {
         }
     };
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public List<LocalImage> getLocalImages() {
-        return localImages;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public String getFirstImage() {
         if (localImages != null && !localImages.isEmpty()) {

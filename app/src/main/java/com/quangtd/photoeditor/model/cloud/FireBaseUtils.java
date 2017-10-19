@@ -6,7 +6,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.quangtd.photoeditor.global.GlobalDefine;
+import com.quangtd.photoeditor.model.net.DataCallBack;
 import com.quangtd.photoeditor.utils.LogUtils;
+
+import java.io.File;
 
 /**
  * QuangTD on 10/17/2017.
@@ -71,5 +75,21 @@ public class FireBaseUtils {
 
     public StorageReference getStorageReference(String path) {
         return storageReference.child(path);
+    }
+
+    public void downloadSticker(StorageReference storageReference, DataCallBack<String> callBack) {
+        File stickerDir = new File(GlobalDefine.STICKER_FOLDER_LOCAL);
+        if (!stickerDir.exists()) {
+            stickerDir.mkdirs();
+        }
+        String localPath = GlobalDefine.STICKER_FOLDER_LOCAL + storageReference.getName();
+        File stickerLocalFile = new File(localPath);
+        if (stickerLocalFile.exists()) {
+            callBack.onSuccess(localPath);
+            return;
+        }
+        storageReference.getFile(stickerLocalFile)
+                .addOnSuccessListener(taskSnapshot -> callBack.onSuccess(localPath))
+                .addOnFailureListener(e -> callBack.onError(e.toString()));
     }
 }

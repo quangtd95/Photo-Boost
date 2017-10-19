@@ -10,5 +10,10 @@ import java.util.List;
 
 public interface IViewListSticker extends IViewBase {
     void getListStickerSuccess(List<StorageReference> storageReferences);
+
     void getListStickerFailure(String message);
+
+    void downloadStickerSuccess(String path);
+
+    void downloadStickerFailure(String message);
 }

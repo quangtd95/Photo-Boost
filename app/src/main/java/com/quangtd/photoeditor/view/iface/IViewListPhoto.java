@@ -1,6 +1,6 @@
 package com.quangtd.photoeditor.view.iface;
 
-import com.quangtd.photoeditor.model.response.AlbumImage;
+import com.quangtd.photoeditor.model.data.AlbumImage;
 
 import java.util.List;
 

@@ -8,8 +8,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 
-import com.quangtd.photoeditor.model.response.AlbumImage;
-import com.quangtd.photoeditor.model.response.LocalImage;
+import com.quangtd.photoeditor.model.data.AlbumImage;
+import com.quangtd.photoeditor.model.data.LocalImage;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,14 +14,18 @@
     <application
         android:name=".global.PhotoEditorApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icons_photoeditor"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icons_photoeditor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.intro.ActivityIntro"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".view.activity.splash.ActivitySplash_">
 
@@ -33,10 +37,6 @@
             android:name=".view.activity.editphoto.ActivityEditPhoto_"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.choosesticker.StickerActivity_">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 </manifest>

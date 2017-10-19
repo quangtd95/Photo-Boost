@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.quangtd.photoeditor.R;
-import com.quangtd.photoeditor.model.response.LocalImage;
+import com.quangtd.photoeditor.model.data.LocalImage;
 import com.quangtd.photoeditor.utils.ScreenUtils;
 
 import java.io.File;
