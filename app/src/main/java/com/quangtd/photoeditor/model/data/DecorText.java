@@ -4,10 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Parcel;
 
+import lombok.Data;
+
 /**
  * QuangTD on 6/24/2017.
  */
 
+@Data
 public class DecorText extends Decor {
     private String text;
     private int align;

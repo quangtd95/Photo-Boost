@@ -40,8 +40,13 @@
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/containerBottom"
-        android:src="@drawable/temp"/>
+        android:layout_above="@id/containerBottom"/>
+
+    <com.quangtd.photoeditor.view.component.CustomDrawView
+        android:id="@+id/customDraw"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/containerBottom"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBack"

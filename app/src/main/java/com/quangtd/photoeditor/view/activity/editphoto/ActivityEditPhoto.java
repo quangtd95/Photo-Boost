@@ -1,6 +1,8 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
+import com.quangtd.photoeditor.view.component.CustomDrawView;
 import com.quangtd.photoeditor.view.component.CustomFeatureBar;
 import com.quangtd.photoeditor.view.component.CustomFilterBar;
 import com.quangtd.photoeditor.view.component.CustomToolBar;
@@ -42,8 +45,11 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
     CustomFilterBar mCustomFilterBar;
     @ViewById(R.id.containerBottom)
     FrameLayout mFlContainer;
+    @ViewById(R.id.customDraw)
+    CustomDrawView mCustomDraw;
     @Extra(GlobalDefine.KEY_IMAGE)
     String mImagePath;
+
     private boolean mToolsVisible;
 
     @Override protected void init() {
@@ -94,9 +100,21 @@ public class ActivityEditPhoto extends ActivityBase implements CustomFeatureBar.
         if (resultCode == GlobalDefine.MY_RESULT_CODE_GET_STICKER) {
             if (data != null) {
                 String pathSticker = data.getStringExtra(GlobalDefine.KEY_STICKER);
-                Toast.makeText(this, pathSticker, Toast.LENGTH_SHORT).show();
+                addSticker(pathSticker);
             }
         }
+    }
+
+    private void addSticker(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap mBitmap = BitmapFactory.decodeFile(path, options);
+        mCustomDraw.setVisibility(View.VISIBLE);
+        showProgressDialog();
+        mCustomDraw.post(() -> {
+            mCustomDraw.addDecoItem(mBitmap, 1);
+            dismissProgressDialog();
+        });
     }
 }
 
