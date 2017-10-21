@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.adapter;
+package com.quangtd.photoeditor.view.activity.choosephoto;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

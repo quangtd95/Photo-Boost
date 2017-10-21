@@ -36,25 +36,30 @@
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/preview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/containerBottom"
-        android:layout_centerInParent="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/temp"/>
-
-    <com.quangtd.photoeditor.view.component.CustomDrawView
-        android:id="@+id/customDraw"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/containerBottom"
-        android:layout_alignBottom="@id/preview"
-        android:layout_alignEnd="@id/preview"
-        android:layout_alignStart="@id/preview"
-        android:layout_alignTop="@id/preview"
-        android:layout_centerInParent="true"/>
+        android:layout_above="@id/containerBottom">
+
+        <ImageView
+            android:id="@+id/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/temp"/>
+
+        <com.quangtd.photoeditor.view.component.CustomDrawView
+            android:id="@+id/customDraw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/preview"
+            android:layout_alignEnd="@id/preview"
+            android:layout_alignStart="@id/preview"
+            android:layout_alignTop="@id/preview"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBack"

@@ -20,8 +20,6 @@ import com.quangtd.photoeditor.model.data.LocalImage;
 import com.quangtd.photoeditor.presenter.PresenterListPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.editphoto.ActivityEditPhoto_;
-import com.quangtd.photoeditor.view.adapter.FolderPhotoAdapter;
-import com.quangtd.photoeditor.view.adapter.PhotoAdapter;
 import com.quangtd.photoeditor.view.component.GridSpacingItemDecoration;
 import com.quangtd.photoeditor.view.iface.IViewListPhoto;
 

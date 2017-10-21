@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.adapter;
+package com.quangtd.photoeditor.view;
 
 import android.content.Context;
 import android.content.res.Resources;

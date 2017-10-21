@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.adapter;
+package com.quangtd.photoeditor.view.activity.choosesticker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.utils.ScreenUtils;
+import com.quangtd.photoeditor.view.AdapterBase;
+import com.quangtd.photoeditor.view.fragment.ListStickerAdapter;
+import com.quangtd.photoeditor.view.ViewHolderBase;
 
 import java.util.List;
 

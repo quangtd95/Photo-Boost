@@ -15,7 +15,6 @@ import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.presenter.PresenterListSticker;
 import com.quangtd.photoeditor.utils.LogUtils;
-import com.quangtd.photoeditor.view.adapter.ListStickerAdapter;
 import com.quangtd.photoeditor.view.iface.IViewListSticker;
 
 import java.util.ArrayList;

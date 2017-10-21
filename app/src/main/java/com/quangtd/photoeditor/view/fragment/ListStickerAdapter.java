@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.adapter;
+package com.quangtd.photoeditor.view.fragment;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

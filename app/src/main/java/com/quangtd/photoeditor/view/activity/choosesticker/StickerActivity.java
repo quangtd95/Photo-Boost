@@ -15,8 +15,6 @@ import com.quangtd.photoeditor.model.data.CategorySticker;
 import com.quangtd.photoeditor.presenter.PresenterCategorySticker;
 import com.quangtd.photoeditor.utils.LogUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
-import com.quangtd.photoeditor.view.adapter.CategoryStickerAdapter;
-import com.quangtd.photoeditor.view.adapter.ViewPagerListStickerAdapter;
 import com.quangtd.photoeditor.view.fragment.FragmentListSticker;
 import com.quangtd.photoeditor.view.iface.IViewCategorySticker;
 import com.quangtd.photoeditor.view.iface.listener.AbstractOnViewPagerChangeListener;

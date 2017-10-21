@@ -1,4 +1,4 @@
-package com.quangtd.photoeditor.view.adapter;
+package com.quangtd.photoeditor.view.activity.choosesticker;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
