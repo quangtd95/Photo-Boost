@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -37,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * QuangTD on 10/15/2017.
  */
 @EActivity(R.layout.activity_edit_photo)
-public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, IViewEditPhoto {
+public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawView.OnChangeItemStickerListener, SeekBar.OnSeekBarChangeListener, IViewEditPhoto {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
     @ViewById(R.id.bottomTools) CustomToolBar mCustomToolBar;
     @ViewById(R.id.preview) ImageView mCustomPreview;
@@ -46,6 +48,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @ViewById(R.id.bottomFilters) CustomFilterBar mCustomFilterBar;
     @ViewById(R.id.containerBottom) FrameLayout mFlContainer;
     @ViewById(R.id.customDraw) CustomDrawView mCustomDraw;
+    @ViewById(R.id.sb) SeekBar mSeekBar;
     @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
     Bitmap mBitmap;
 
@@ -57,6 +60,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         mBitmap = BitmapFactory.decodeFile(mImagePath);
         mCustomFeatureBar.setOnClickFeatureListener(this);
         mCustomToolBar.setOnClickToolListener(this);
+        mCustomDraw.setOnChangeItemStickerListener(this);
+        mSeekBar.setOnSeekBarChangeListener(this);
     }
 
     @Click(R.id.preview)
@@ -128,7 +133,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap mBitmap = BitmapFactory.decodeFile(path, options);
-        mCustomDraw.setVisibility(View.VISIBLE);
+        mSeekBar.setVisibility(View.VISIBLE);
         showProgressDialog();
         mCustomDraw.post(() -> {
             mCustomDraw.addDecoItem(mBitmap, 1);
@@ -158,6 +163,32 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @Override public void showOutput(String output) {
         Toast.makeText(this, output, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void changeSticker(int oldP, int newP) {
+        if (newP == -1) {
+            mSeekBar.setVisibility(View.GONE);
+        } else {
+            mSeekBar.setVisibility(View.VISIBLE);
+            mSeekBar.setProgress(mCustomDraw.getDecors().get(newP).getAlpha());
+        }
+
+    }
+
+    @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        Decor decor = mCustomDraw.getFocusDecor();
+        if (decor == null) return;
+        decor.setAlpha(progress);
+        Log.e("TAGG", progress+"");
+        mCustomDraw.invalidate();
+    }
+
+    @Override public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 }
 

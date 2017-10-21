@@ -35,11 +35,10 @@ public class EditPhotoUtils {
     private static Bitmap editImage(Bitmap bitmap, List<Decor> decors) {
         Bitmap mutableBitmap = convertToMutable(bitmap);
         Canvas canvas = new Canvas(mutableBitmap);
-        Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
         for (int i = 0; i < decors.size(); i++) {
             Decor decor = decors.get(i);
             Matrix matrix = decor.getMatrix(bitmap.getWidth() * 1.0f / WIDTH_PREVIEW, bitmap.getHeight() * 1.0f / HEIGHT_PREVIEW);
-            canvas.drawBitmap(decor.getBitmap(), matrix, paint);
+            canvas.drawBitmap(decor.getBitmap(), matrix, decor.getPaint());
         }
         return mutableBitmap;
     }

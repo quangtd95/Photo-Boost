@@ -27,10 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 
 public class CustomDrawView extends View {
+
+    public interface OnChangeItemStickerListener {
+        void changeSticker(int oldP, int newP);
+    }
 
     private static final float MENU_BUTTON_SIZE = 64.0f;
     private static final int TYPE_CHANGE = 3;
@@ -65,6 +70,10 @@ public class CustomDrawView extends View {
     @Accessors(prefix = "m")
     @Getter
     private Bitmap mBitmapDeco;
+
+    @Accessors(prefix = "m")
+    @Setter
+    private OnChangeItemStickerListener mOnChangeItemStickerListener;
 
     public void clearData() {
         mDecors.clear();
@@ -120,7 +129,7 @@ public class CustomDrawView extends View {
         mIsDraw = true;
     }
 
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mIsDraw) {
             drawCake(canvas);
@@ -236,18 +245,28 @@ public class CustomDrawView extends View {
 
     private void judgeTouchPoint(Point touch) {
         this.mTouchType = TYPE_NONE;
+
         for (int i = mDecors.size() - 1; i >= 0; i--) {
             int touchType = mDecors.get(i).getTouchType(touch);
+
             if (touchType != 0) {
                 if (this.mFocusObjectIndex == i) {
                     this.mTouchType = touchType;
                 } else {
                     this.mTouchType = TYPE_MOVE;
                 }
+                if (mFocusObjectIndex != i) {
+                    if (mOnChangeItemStickerListener != null) {
+                        mOnChangeItemStickerListener.changeSticker(mFocusObjectIndex, i);
+                    }
+                }
                 this.mFocusObjectIndex = i;
                 return;
             }
             if (this.mFocusObjectIndex == i) {
+                if (mOnChangeItemStickerListener != null) {
+                    mOnChangeItemStickerListener.changeSticker(mFocusObjectIndex, -1);
+                }
                 this.mFocusObjectIndex = -1;
             }
         }
@@ -298,7 +317,7 @@ public class CustomDrawView extends View {
         if (Math.max(bitmap.getWidth(), bitmap.getHeight()) >= Math.max(getWidth() / 2, getHeight() / 2)) {
             scale = ((float) Math.max(getWidth() / 2, getHeight() / 2)) / ((float) Math.max(bitmap.getWidth(), bitmap.getHeight()));
         }
-        addDecoItem(new Decor(bitmap, getWidth() / 2, getHeight() / 2, bitmap.getWidth() * scale, bitmap.getHeight() * scale, null, TYPE_NONE, type, scale));
+        addDecoItem(new Decor(bitmap, getWidth() / 2, getHeight() / 2, bitmap.getWidth() * scale, bitmap.getHeight() * scale, new Paint(Paint.FILTER_BITMAP_FLAG), TYPE_NONE, type, scale));
     }
 
     public void addDecoItemText(Bitmap bitmap, int type, String text) {
@@ -323,5 +342,10 @@ public class CustomDrawView extends View {
     public void removeFrame() {
         this.mFocusObjectIndex = -1;
         invalidate();
+    }
+
+    public Decor getFocusDecor() {
+        if (mFocusObjectIndex == -1) return null;
+        return mDecors.get(mFocusObjectIndex);
     }
 }

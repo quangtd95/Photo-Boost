@@ -8,6 +8,8 @@ import android.graphics.Point;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import lombok.Getter;
+
 public class Decor implements Parcelable, Cloneable {
     private static final int TYPE_CAMERA = 0;
     private static final int TYPE_STAMP = 1;
@@ -17,12 +19,14 @@ public class Decor implements Parcelable, Cloneable {
     private float y;
     private float width;
     private float height;
+    @Getter
     private Paint paint;
     private int rotation;
     private int type;
     private float scale = 1;
     private float startTime;
     private float endTime;
+    protected int alpha = 255;
 
     public Decor(Bitmap bitmap, float x, float y, float width, float height, Paint paint, int rotation, int type, float scale) {
         this.bitmap = bitmap;
@@ -36,15 +40,6 @@ public class Decor implements Parcelable, Cloneable {
         this.scale = scale;
     }
 
-    @Override public Object clone(){
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     protected Decor(Parcel in) {
         bitmap = in.readParcelable(Bitmap.class.getClassLoader());
         x = in.readFloat();
@@ -56,6 +51,7 @@ public class Decor implements Parcelable, Cloneable {
         scale = in.readFloat();
         startTime = in.readFloat();
         endTime = in.readFloat();
+        alpha = in.readInt();
     }
 
     public static final Creator<Decor> CREATOR = new Creator<Decor>() {
@@ -69,6 +65,16 @@ public class Decor implements Parcelable, Cloneable {
             return new Decor[size];
         }
     };
+
+    @Override public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public float getStartTime() {
         return startTime;
@@ -91,11 +97,20 @@ public class Decor implements Parcelable, Cloneable {
         endTime = e;
     }
 
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
     public void draw(Canvas canvas) {
         if (this.width == 0.0f || this.height == 0.0f) {
             this.width = (float) (this.bitmap.getWidth() / TYPE_TEXT);
             this.height = (float) (this.bitmap.getHeight() / TYPE_TEXT);
         }
+        paint.setAlpha(alpha);
         canvas.drawBitmap(this.bitmap, getMatrix(), this.paint);
     }
 
@@ -262,6 +277,6 @@ public class Decor implements Parcelable, Cloneable {
         dest.writeFloat(scale);
         dest.writeFloat(startTime);
         dest.writeFloat(endTime);
+        dest.writeInt(alpha);
     }
-
 }
