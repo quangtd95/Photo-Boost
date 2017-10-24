@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.utils.ScreenUtils;
@@ -49,7 +48,7 @@ public class ListStickerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Glide.with(mContext).using(new FirebaseImageLoader()).load(mStorageReferences.get(position)).into(((IViewHolder) holder).imgSticker);
+        Glide.with(mContext).load(mStorageReferences.get(position)).into(((IViewHolder) holder).imgSticker);
         if (position % 2 == 1) {
             ((IViewHolder) holder).llContainer.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_gray));
         } else {

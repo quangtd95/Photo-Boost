@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.quangtd.photoeditor.R;
@@ -22,10 +21,6 @@ import org.androidannotations.annotations.ViewById;
 public class CustomToolBar extends LinearLayout {
     @ViewById(R.id.rvTools)
     RecyclerView mRvTools;
-    @ViewById(R.id.imgClose)
-    ImageView mImgClose;
-    @ViewById(R.id.imgOk)
-    ImageView mImgOk;
     private CustomToolAdapter mAdapter;
     private String[] mTools;
     private int[] mIcons;

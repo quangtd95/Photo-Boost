@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.data.LocalImage;
 import com.quangtd.photoeditor.utils.ScreenUtils;
@@ -50,11 +51,12 @@ public class PhotoAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         String link = mLocalImages.get(position).getPath();
         if (link != null) {
-            Glide
-                    .with(mContext)
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.centerCrop();
+            requestOptions.override(mSizeImage,mSizeImage);
+            Glide.with(mContext)
+                    .setDefaultRequestOptions(requestOptions)
                     .load(new File(link))
-                    .centerCrop()
-                    .override(mSizeImage, mSizeImage)
                     .into(((ItemViewHolder)holder).mImgPhoto);
         }
     }

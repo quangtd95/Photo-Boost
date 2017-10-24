@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
@@ -62,7 +63,9 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @Override protected void init() {
         super.init();
         Glide.with(this).load(mImagePath).into(mCustomPreview);
-        Glide.with(this).load(mImagePath).fitCenter().into(mImgOriginFilter);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.fitCenter();
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(mImagePath).into(mImgOriginFilter);
         mBitmap = BitmapFactory.decodeFile(mImagePath);
         addListeners();
     }

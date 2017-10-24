@@ -9,7 +9,7 @@ import android.os.Environment;
 public class GlobalDefine {
     public static final String APP_NAME = "photo_editor";
     public static final String STICKER_FOLDER = "stickers";
-    public static final String STICKER_FILE_FORMAT = ".image%d.png";
+    public static final String STICKER_FILE_FORMAT = ".image_%d.png";
     public static final String FILTER_FOLDER = "filters";
     public static final String FILTER_FILE_FORMAT = ".filter%d.png";
     public static final String FIREBASE_USER_NAME = "pfiev13.photoeditor@gmail.com";

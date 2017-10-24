@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.data.AlbumImage;
 
@@ -75,7 +76,10 @@ public class FolderPhotoAdapter extends RecyclerView.Adapter {
         private void setData(AlbumImage albumImage) {
             tvNameFolder.setText(albumImage.getName());
             tvPathFolder.setText(albumImage.getPath());
-            Glide.with(mContext).load(new File(albumImage.getFirstImage())).centerCrop().override(150, 150).into(imgFolder);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.centerCrop();
+            requestOptions.override(150, 150);
+            Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(new File(albumImage.getFirstImage())).into(imgFolder);
         }
     }
 }
