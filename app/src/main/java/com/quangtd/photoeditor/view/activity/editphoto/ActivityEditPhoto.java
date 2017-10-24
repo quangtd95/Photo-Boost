@@ -1,11 +1,11 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * QuangTD on 10/15/2017.
  */
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
 public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawView.OnChangeItemStickerListener, SeekBar.OnSeekBarChangeListener, IViewEditPhoto {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
@@ -176,11 +177,12 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     }
 
     @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        Decor decor = mCustomDraw.getFocusDecor();
-        if (decor == null) return;
-        decor.setAlpha(progress);
-        Log.e("TAGG", progress+"");
-        mCustomDraw.invalidate();
+        if (fromUser) {
+            Decor decor = mCustomDraw.getFocusDecor();
+            if (decor == null) return;
+            decor.setAlpha(progress);
+            mCustomDraw.invalidate();
+        }
     }
 
     @Override public void onStartTrackingTouch(SeekBar seekBar) {

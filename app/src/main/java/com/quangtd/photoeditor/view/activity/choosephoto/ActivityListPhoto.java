@@ -1,6 +1,7 @@
 package com.quangtd.photoeditor.view.activity.choosephoto;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -37,6 +38,7 @@ import static com.quangtd.photoeditor.global.GlobalDefine.MY_PERMISSIONS_REQUEST
  * QuangTD on 10/10/2017.
  */
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_list_photo)
 public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implements FolderPhotoAdapter.OnClickItemFolderListener, PhotoAdapter.OnClickItemPhotoListener, IViewListPhoto {
     @ViewById(R.id.tvNameFolder) TextView mTvNameFolder;
@@ -118,6 +120,10 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
     @Click(R.id.imgCamera)
     void onClickCamera() {
         Toast.makeText(this, "comming soon!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onBackPressed() {
+        onClickBack();
     }
 
     @Override

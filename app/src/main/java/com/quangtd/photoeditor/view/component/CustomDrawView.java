@@ -30,7 +30,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-
 public class CustomDrawView extends View {
 
     public interface OnChangeItemStickerListener {
@@ -245,7 +244,6 @@ public class CustomDrawView extends View {
 
     private void judgeTouchPoint(Point touch) {
         this.mTouchType = TYPE_NONE;
-
         for (int i = mDecors.size() - 1; i >= 0; i--) {
             int touchType = mDecors.get(i).getTouchType(touch);
 
