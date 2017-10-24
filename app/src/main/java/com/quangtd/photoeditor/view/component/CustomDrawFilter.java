@@ -60,6 +60,7 @@ public class CustomDrawFilter extends View {
         mWidthImage = 0;
         mHeightImage = 0;
         mAlpha = 100;
+        invalidate();
     }
 
     public void setAlpha(int alpha) {

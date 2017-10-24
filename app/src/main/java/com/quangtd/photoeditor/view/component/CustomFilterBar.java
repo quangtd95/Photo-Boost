@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import com.quangtd.photoeditor.R;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
@@ -19,12 +20,16 @@ import org.androidannotations.annotations.ViewById;
 
 @EViewGroup(R.layout.custom_filter_bar)
 public class CustomFilterBar extends RelativeLayout {
-    @ViewById(R.id.rvFilters)
-    RecyclerView mRvFilters;
+    @ViewById(R.id.rvFilters) RecyclerView mRvFilters;
     private CustomFilterAdapter mAdapter;
 
     public interface OnClickFilterListener {
-        void clickFilterItem(int position);
+        void onClickFilterItem(int position);
+
+        void onClickFilterClose();
+
+        void onClickFilterOk();
+
     }
 
     public CustomFilterBar(Context context) {
@@ -34,6 +39,8 @@ public class CustomFilterBar extends RelativeLayout {
     public CustomFilterBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    private OnClickFilterListener mListener;
 
     @AfterViews
     public void init() {
@@ -49,7 +56,22 @@ public class CustomFilterBar extends RelativeLayout {
         mRvFilters.setAdapter(mAdapter);
     }
 
+    @Click(R.id.imgClose)
+    public void onClickClose() {
+        if (mListener != null) {
+            mListener.onClickFilterClose();
+        }
+    }
+
+    @Click(R.id.imgOk)
+    public void onClickOk() {
+        if (mListener != null) {
+            mListener.onClickFilterOk();
+        }
+    }
+
     public void setOnClickFilterListener(CustomFilterBar.OnClickFilterListener listener) {
+        mListener = listener;
         if (listener != null) mAdapter.setListener(listener);
     }
 

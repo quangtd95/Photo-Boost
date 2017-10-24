@@ -53,7 +53,7 @@ public class CustomFilterAdapter extends RecyclerView.Adapter<CustomFilterAdapte
         void bindData(int resId) {
             Glide.with(mContext).load(resId).into(mImgFilter);
             mImgFilter.setOnClickListener(v -> {
-                if (mListener != null) mListener.clickFilterItem(getAdapterPosition());
+                if (mListener != null) mListener.onClickFilterItem(getAdapterPosition());
             });
         }
     }

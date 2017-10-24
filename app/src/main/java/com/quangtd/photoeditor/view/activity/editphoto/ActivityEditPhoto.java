@@ -25,6 +25,7 @@ import com.quangtd.photoeditor.view.component.CustomFeatureBar;
 import com.quangtd.photoeditor.view.component.CustomFilterBar;
 import com.quangtd.photoeditor.view.component.CustomToolBar;
 import com.quangtd.photoeditor.view.iface.IViewEditPhoto;
+import com.quangtd.photoeditor.view.iface.listener.AbstractSeekBarChangeListener;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -41,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
-public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawSticker.OnChangeItemStickerListener, SeekBar.OnSeekBarChangeListener, IViewEditPhoto, CustomFilterBar.OnClickFilterListener {
+public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomFilterBar.OnClickFilterListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
     @ViewById(R.id.bottomTools) CustomToolBar mCustomToolBar;
     @ViewById(R.id.imgPreview) ImageView mCustomPreview;
@@ -63,11 +64,19 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         Glide.with(this).load(mImagePath).into(mCustomPreview);
         Glide.with(this).load(mImagePath).fitCenter().into(mImgOriginFilter);
         mBitmap = BitmapFactory.decodeFile(mImagePath);
+        addListeners();
+    }
+
+    private void addListeners() {
         mCustomFeatureBar.setOnClickFeatureListener(this);
         mCustomFilterBar.setOnClickFilterListener(this);
         mCustomToolBar.setOnClickToolListener(this);
         mCustomDrawSticker.setOnChangeItemStickerListener(this);
-        mSeekBar.setOnSeekBarChangeListener(this);
+        mSeekBar.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                ActivityEditPhoto.this.onSeekBarProgressChanged(progress, fromUser);
+            }
+        });
     }
 
     @Click(R.id.imgPreview)
@@ -120,6 +129,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 break;
             case FILTER:
                 showBar(mCustomFilterBar);
+                mImgBack.setVisibility(View.INVISIBLE);
+                mImgSave.setVisibility(View.INVISIBLE);
                 break;
             default:
                 showBar(mCustomFeatureBar);
@@ -186,7 +197,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     }
 
-    @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    public void onSeekBarProgressChanged(int progress, boolean fromUser) {
         if (fromUser) {
             Decor decor = mCustomDrawSticker.getFocusDecor();
             if (decor == null) return;
@@ -195,16 +206,21 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
-    @Override public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override public void clickFilterItem(int position) {
+    @Override public void onClickFilterItem(int position) {
         getPresenter(this).downloadFilter(position + 1);
+    }
+
+    @Override public void onClickFilterClose() {
+        onClickClearFilter();
+        showBar(mCustomFeatureBar);
+        mImgSave.setVisibility(View.VISIBLE);
+        mImgBack.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void onClickFilterOk() {
+        showBar(mCustomFeatureBar);
+        mImgSave.setVisibility(View.VISIBLE);
+        mImgBack.setVisibility(View.VISIBLE);
     }
 
     @Override public void downloadFilterSuccess(String path) {
