@@ -30,7 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-public class CustomDrawView extends View {
+public class CustomDrawSticker extends View {
 
     public interface OnChangeItemStickerListener {
         void changeSticker(int oldP, int newP);
@@ -85,15 +85,15 @@ public class CustomDrawView extends View {
         }
     }
 
-    public CustomDrawView(Context context) {
+    public CustomDrawSticker(Context context) {
         this(context, null);
     }
 
-    public CustomDrawView(Context context, @Nullable AttributeSet attrs) {
+    public CustomDrawSticker(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomDrawView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CustomDrawSticker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mTouchType = TYPE_NONE;
         if (mDecors == null) {

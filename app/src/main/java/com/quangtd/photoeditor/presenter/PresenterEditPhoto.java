@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import com.quangtd.photoeditor.model.data.Decor;
+import com.quangtd.photoeditor.model.net.DataCallBack;
+import com.quangtd.photoeditor.model.repository.ListFilterRepository;
 import com.quangtd.photoeditor.utils.EditPhotoUtils;
 import com.quangtd.photoeditor.view.iface.IViewEditPhoto;
 
@@ -14,8 +16,25 @@ import java.util.List;
  */
 
 public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> {
-    @Override public void onInit() {
+    private ListFilterRepository mListFilterRepository;
 
+    @Override public void onInit() {
+        mListFilterRepository = ListFilterRepository.getInstance(getContext());
+    }
+
+    public void downloadFilter(int filterNumber) {
+        getIFace().showLoading();
+        mListFilterRepository.downloadFilter(filterNumber, new DataCallBack<String>() {
+            @Override public void onSuccess(String result) {
+                getIFace().downloadFilterSuccess(result);
+                getIFace().hideLoading();
+            }
+
+            @Override public void onError(String message) {
+                getIFace().downloadFilterFailure(message);
+                getIFace().hideLoading();
+            }
+        });
     }
 
     public void save() {

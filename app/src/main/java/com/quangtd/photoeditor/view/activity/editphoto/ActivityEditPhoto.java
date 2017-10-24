@@ -19,7 +19,8 @@ import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
-import com.quangtd.photoeditor.view.component.CustomDrawView;
+import com.quangtd.photoeditor.view.component.CustomDrawFilter;
+import com.quangtd.photoeditor.view.component.CustomDrawSticker;
 import com.quangtd.photoeditor.view.component.CustomFeatureBar;
 import com.quangtd.photoeditor.view.component.CustomFilterBar;
 import com.quangtd.photoeditor.view.component.CustomToolBar;
@@ -40,15 +41,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
-public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawView.OnChangeItemStickerListener, SeekBar.OnSeekBarChangeListener, IViewEditPhoto {
+public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawSticker.OnChangeItemStickerListener, SeekBar.OnSeekBarChangeListener, IViewEditPhoto, CustomFilterBar.OnClickFilterListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
     @ViewById(R.id.bottomTools) CustomToolBar mCustomToolBar;
-    @ViewById(R.id.preview) ImageView mCustomPreview;
+    @ViewById(R.id.imgPreview) ImageView mCustomPreview;
     @ViewById(R.id.imgBack) CircleImageView mImgBack;
     @ViewById(R.id.imgSave) CircleImageView mImgSave;
     @ViewById(R.id.bottomFilters) CustomFilterBar mCustomFilterBar;
     @ViewById(R.id.containerBottom) FrameLayout mFlContainer;
-    @ViewById(R.id.customDraw) CustomDrawView mCustomDraw;
+    @ViewById(R.id.drawSticker) CustomDrawSticker mCustomDrawSticker;
+    @ViewById(R.id.drawFilter) CustomDrawFilter mCustomDrawFilter;
+    @ViewById(R.id.imgOriginFilter) ImageView mImgOriginFilter;
     @ViewById(R.id.sb) SeekBar mSeekBar;
     @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
     Bitmap mBitmap;
@@ -58,14 +61,16 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @Override protected void init() {
         super.init();
         Glide.with(this).load(mImagePath).into(mCustomPreview);
+        Glide.with(this).load(mImagePath).fitCenter().into(mImgOriginFilter);
         mBitmap = BitmapFactory.decodeFile(mImagePath);
         mCustomFeatureBar.setOnClickFeatureListener(this);
+        mCustomFilterBar.setOnClickFilterListener(this);
         mCustomToolBar.setOnClickToolListener(this);
-        mCustomDraw.setOnChangeItemStickerListener(this);
+        mCustomDrawSticker.setOnChangeItemStickerListener(this);
         mSeekBar.setOnSeekBarChangeListener(this);
     }
 
-    @Click(R.id.preview)
+    @Click(R.id.imgPreview)
     void onClickPreview() {
         if (mToolsVisible) {
             showBar(mCustomFeatureBar);
@@ -92,6 +97,11 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @Click(R.id.imgSave)
     void onClickSave() {
         getPresenter(this).save();
+    }
+
+    @Click(R.id.imgOriginFilter)
+    void onClickClearFilter() {
+        mCustomDrawFilter.clearFilter();
     }
 
     private void showBar(View view) {
@@ -136,8 +146,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         Bitmap mBitmap = BitmapFactory.decodeFile(path, options);
         mSeekBar.setVisibility(View.VISIBLE);
         showProgressDialog();
-        mCustomDraw.post(() -> {
-            mCustomDraw.addDecoItem(mBitmap, 1);
+        mCustomDrawSticker.post(() -> {
+            mCustomDrawSticker.addDecoItem(mBitmap, 1);
             dismissProgressDialog();
         });
     }
@@ -155,7 +165,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     }
 
     @Override public List<Decor> getListDecor() {
-        return mCustomDraw.getDecors();
+        return mCustomDrawSticker.getDecors();
     }
 
     @Override public Bitmap getPhoto() {
@@ -171,17 +181,17 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             mSeekBar.setVisibility(View.GONE);
         } else {
             mSeekBar.setVisibility(View.VISIBLE);
-            mSeekBar.setProgress(mCustomDraw.getDecors().get(newP).getAlpha());
+            mSeekBar.setProgress(mCustomDrawSticker.getDecors().get(newP).getAlpha());
         }
 
     }
 
     @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            Decor decor = mCustomDraw.getFocusDecor();
+            Decor decor = mCustomDrawSticker.getFocusDecor();
             if (decor == null) return;
             decor.setAlpha(progress);
-            mCustomDraw.invalidate();
+            mCustomDrawSticker.invalidate();
         }
     }
 
@@ -191,6 +201,18 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @Override public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    @Override public void clickFilterItem(int position) {
+        getPresenter(this).downloadFilter(position + 1);
+    }
+
+    @Override public void downloadFilterSuccess(String path) {
+        mCustomDrawFilter.setResource(path);
+    }
+
+    @Override public void downloadFilterFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -23,8 +23,8 @@ public class CustomFilterBar extends RelativeLayout {
     RecyclerView mRvFilters;
     private CustomFilterAdapter mAdapter;
 
-    interface OnClickFilterListener {
-        void clickItem(int id);
+    public interface OnClickFilterListener {
+        void clickFilterItem(int position);
     }
 
     public CustomFilterBar(Context context) {
@@ -49,7 +49,7 @@ public class CustomFilterBar extends RelativeLayout {
         mRvFilters.setAdapter(mAdapter);
     }
 
-    public void setOnClickToolListener(CustomFilterBar.OnClickFilterListener listener) {
+    public void setOnClickFilterListener(CustomFilterBar.OnClickFilterListener listener) {
         if (listener != null) mAdapter.setListener(listener);
     }
 

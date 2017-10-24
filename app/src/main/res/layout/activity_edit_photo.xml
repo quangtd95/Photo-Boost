@@ -42,21 +42,31 @@
         android:layout_above="@id/containerBottom">
 
         <ImageView
-            android:id="@+id/preview"
+            android:id="@+id/imgPreview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:scaleType="fitCenter"
             android:src="@drawable/temp"/>
 
-        <com.quangtd.photoeditor.view.component.CustomDrawView
-            android:id="@+id/customDraw"
+        <com.quangtd.photoeditor.view.component.CustomDrawFilter
+            android:id="@+id/drawFilter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignBottom="@id/preview"
-            android:layout_alignEnd="@id/preview"
-            android:layout_alignStart="@id/preview"
-            android:layout_alignTop="@id/preview"
+            android:layout_alignBottom="@id/imgPreview"
+            android:layout_alignEnd="@id/imgPreview"
+            android:layout_alignStart="@id/imgPreview"
+            android:layout_alignTop="@id/imgPreview"
+            android:layout_centerInParent="true"/>
+
+        <com.quangtd.photoeditor.view.component.CustomDrawSticker
+            android:id="@+id/drawSticker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/imgPreview"
+            android:layout_alignEnd="@id/imgPreview"
+            android:layout_alignStart="@id/imgPreview"
+            android:layout_alignTop="@id/imgPreview"
             android:layout_centerInParent="true"/>
 
         <SeekBar
@@ -65,8 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-            android:progress="255"
             android:max="255"
+            android:progress="255"
             android:visibility="gone"/>
     </RelativeLayout>
 

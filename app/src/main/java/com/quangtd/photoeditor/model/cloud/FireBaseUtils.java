@@ -22,7 +22,6 @@ public class FireBaseUtils {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private final FirebaseStorage fireBaseStorage;
     private final StorageReference storageReference;
 
     public synchronized static FireBaseUtils getInstance() {
@@ -30,15 +29,15 @@ public class FireBaseUtils {
         return instance;
     }
 
-    public FireBaseUtils() {
-        fireBaseStorage = FirebaseStorage.getInstance();
-        storageReference = fireBaseStorage.getReference().child(ServerConst.APP_NAME);
+    private FireBaseUtils() {
+        FirebaseStorage fireBaseStorage = FirebaseStorage.getInstance();
+        storageReference = fireBaseStorage.getReference().child(GlobalDefine.APP_NAME);
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void signIn(Activity activity) {
+    private void signIn(Activity activity) {
         LogUtils.e(TAG, "signing...");
-        mAuth.signInWithEmailAndPassword(ServerConst.USER_NAME, ServerConst.PASSWORD).addOnCompleteListener(activity, task -> {
+        mAuth.signInWithEmailAndPassword(GlobalDefine.FIREBASE_USER_NAME, GlobalDefine.FIREBASE_PASSWORD).addOnCompleteListener(activity, task -> {
             if (task.isSuccessful()) {
                 LogUtils.e(TAG, "signInWithEmail:success");
                 mUser = mAuth.getCurrentUser();
@@ -91,5 +90,21 @@ public class FireBaseUtils {
         storageReference.getFile(stickerLocalFile)
                 .addOnSuccessListener(taskSnapshot -> callBack.onSuccess(localPath))
                 .addOnFailureListener(e -> callBack.onError(e.toString()));
+    }
+
+    public void downloadFilter(StorageReference storageReference, DataCallBack<String> callBack) {
+        File filterDir = new File(GlobalDefine.FILTER_FOLDER_LOCAL);
+        if (!filterDir.exists()) {
+            filterDir.mkdirs();
+        }
+        String localPath = GlobalDefine.FILTER_FOLDER_LOCAL + storageReference.getName();
+        File filterLocalFile = new File(localPath);
+        if (filterLocalFile.exists()) {
+            callBack.onSuccess(localPath);
+            return;
+        }
+        storageReference.getFile(filterLocalFile)
+                .addOnSuccessListener(taskSnapshot -> callBack.onSuccess(localPath))
+                .addOnFailureListener(e -> callBack.onError(e.getMessage()));
     }
 }

@@ -15,5 +15,9 @@ public interface IViewEditPhoto extends IViewBase {
 
     Bitmap getPhoto();
 
+    void downloadFilterSuccess(String path);
+
+    void downloadFilterFailure(String message);
+
     void showOutput(String output);
 }
