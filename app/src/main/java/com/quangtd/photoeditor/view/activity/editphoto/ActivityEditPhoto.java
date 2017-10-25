@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
+import com.quangtd.photoeditor.model.data.Filter;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
@@ -186,8 +187,13 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         return mBitmap;
     }
 
+    @Override public Filter getFilter() {
+        return mCustomDrawFilter.getFilter();
+    }
+
     @Override public void showOutput(String output) {
-        Toast.makeText(this, output, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override public void changeSticker(int oldP, int newP) {

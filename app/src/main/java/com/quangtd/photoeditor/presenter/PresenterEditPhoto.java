@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import com.quangtd.photoeditor.model.data.Decor;
+import com.quangtd.photoeditor.model.data.Filter;
 import com.quangtd.photoeditor.model.net.DataCallBack;
 import com.quangtd.photoeditor.model.repository.ListFilterRepository;
 import com.quangtd.photoeditor.utils.EditPhotoUtils;
@@ -39,16 +40,19 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> {
 
     public void save() {
         Bitmap bitmap = getIFace().getPhoto();
+        Filter filter = getIFace().getFilter();
         List<Decor> decors = getIFace().getListDecor();
-        new EditPhotoAsync(bitmap, decors).execute();
+        new EditPhotoAsync(bitmap, filter, decors).execute();
     }
 
     private class EditPhotoAsync extends AsyncTask<Void, Void, String> {
-        private Bitmap bitmap;
+        private Bitmap mBitmap;
+        private Filter mFilter;
         private List<Decor> decors;
 
-        EditPhotoAsync(Bitmap bitmap, List<Decor> decors) {
-            this.bitmap = bitmap;
+        EditPhotoAsync(Bitmap bitmap, Filter filter, List<Decor> decors) {
+            this.mBitmap = bitmap;
+            this.mFilter = filter;
             this.decors = decors;
         }
 
@@ -58,14 +62,13 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> {
         }
 
         @Override protected String doInBackground(Void... params) {
-            return EditPhotoUtils.editAndSaveImage(bitmap, decors);
+            return EditPhotoUtils.editAndSaveImage(mBitmap, mFilter, decors);
         }
 
         @Override protected void onPostExecute(String s) {
             super.onPostExecute(s);
             getIFace().hideLoading();
             getIFace().showOutput(s);
-
         }
     }
 }

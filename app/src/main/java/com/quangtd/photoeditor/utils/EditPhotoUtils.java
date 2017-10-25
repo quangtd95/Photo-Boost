@@ -1,13 +1,17 @@
 package com.quangtd.photoeditor.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.MediaScannerConnection;
 import android.os.Environment;
+import android.util.Log;
 
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
+import com.quangtd.photoeditor.model.data.Filter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,14 +31,22 @@ public class EditPhotoUtils {
     public static int WIDTH_PREVIEW;
     public static int HEIGHT_PREVIEW;
 
-    public static String editAndSaveImage(Bitmap bitmap, List<Decor> decors) {
-        Bitmap edited = editImage(bitmap, decors);
+    public static String editAndSaveImage(Bitmap bitmap, Filter filter, List<Decor> decors) {
+        Bitmap edited = editImage(bitmap, filter, decors);
         return saveImage(edited);
     }
 
-    private static Bitmap editImage(Bitmap bitmap, List<Decor> decors) {
+    private static Bitmap editImage(Bitmap bitmap, Filter filter, List<Decor> decors) {
         Bitmap mutableBitmap = convertToMutable(bitmap);
         Canvas canvas = new Canvas(mutableBitmap);
+        Bitmap bmFilter = filter.getBitmap();
+        //draw filter
+        if (bmFilter != null) {
+            Paint paintFilter = new Paint(Paint.FILTER_BITMAP_FLAG);
+            paintFilter.setAlpha(filter.getAlpha());
+            canvas.drawBitmap(bmFilter, (bitmap.getWidth() - bmFilter.getWidth()) / 2, (bitmap.getHeight() - bmFilter.getHeight()) / 2, paintFilter);
+        }
+        //draw sticker
         for (int i = 0; i < decors.size(); i++) {
             Decor decor = decors.get(i);
             Matrix matrix = decor.getMatrix(bitmap.getWidth() * 1.0f / WIDTH_PREVIEW, bitmap.getHeight() * 1.0f / HEIGHT_PREVIEW);
@@ -102,5 +114,15 @@ public class EditPhotoUtils {
         }
 
         return imgIn;
+    }
+
+    public static void reloadMedia(Context context) {
+        MediaScannerConnection.scanFile(context,
+                new String[]{Environment.getExternalStorageDirectory().toString()},
+                null,
+                (path, uri) -> {
+                    Log.i("ExternalStorage", "Scanned " + path + ":");
+                    Log.i("ExternalStorage", "-> uri=" + uri);
+                });
     }
 }
