@@ -46,12 +46,12 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> {
     }
 
     private class EditPhotoAsync extends AsyncTask<Void, Void, String> {
-        private Bitmap mBitmap;
+        private Bitmap mInput;
         private Effect mEffect;
         private List<Decor> decors;
 
         EditPhotoAsync(Bitmap bitmap, Effect effect, List<Decor> decors) {
-            this.mBitmap = bitmap;
+            this.mInput = bitmap;
             this.mEffect = effect;
             this.decors = decors;
         }
@@ -62,7 +62,7 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> {
         }
 
         @Override protected String doInBackground(Void... params) {
-            return EditPhotoUtils.editAndSaveImage(mBitmap, mEffect, decors);
+            return EditPhotoUtils.editAndSaveImage(mInput, mEffect, decors);
         }
 
         @Override protected void onPostExecute(String s) {

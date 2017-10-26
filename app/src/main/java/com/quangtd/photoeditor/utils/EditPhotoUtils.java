@@ -42,9 +42,10 @@ public class EditPhotoUtils {
         Bitmap bmEffect = effect.getBitmap();
         //draw effect
         if (bmEffect != null) {
+            Bitmap bmEffectScaled = Bitmap.createScaledBitmap(bmEffect, mutableBitmap.getWidth(), mutableBitmap.getHeight(), true);
             Paint paintEffect = new Paint(Paint.FILTER_BITMAP_FLAG);
             paintEffect.setAlpha(effect.getAlpha());
-            canvas.drawBitmap(bmEffect, (bitmap.getWidth() - bmEffect.getWidth()) / 2, (bitmap.getHeight() - bmEffect.getHeight()) / 2, paintEffect);
+            canvas.drawBitmap(bmEffectScaled, (bitmap.getWidth() - bmEffectScaled.getWidth()) / 2, (bitmap.getHeight() - bmEffectScaled.getHeight()) / 2, paintEffect);
         }
         //draw sticker
         for (int i = 0; i < decors.size(); i++) {
