@@ -1,6 +1,6 @@
 # Photo-Editor
 
-download here: https://github.com/quangtd95/Photo-Editor/blob/master/demo_apk/photo_editor_v1.0.26102017.apk
+download here: https://github.com/quangtd95/Photo-Editor/raw/master/demo_apk/photo_editor_v1.0.26102017.apk
 
 screenshots:
 ![](https://github.com/quangtd95/Photo-Editor/blob/master/screenshots/intro3.png)
