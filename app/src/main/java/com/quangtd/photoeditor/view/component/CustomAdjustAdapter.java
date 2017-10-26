@@ -17,15 +17,15 @@ import lombok.experimental.Accessors;
  * QuangTD on 10/15/2017.
  */
 
-class CustomToolAdapter extends RecyclerView.Adapter<CustomToolAdapter.ToolHolder> {
+class CustomAdjustAdapter extends RecyclerView.Adapter<CustomAdjustAdapter.ToolHolder> {
     private final Context mContext;
     private String[] mTools;
     private int[] mIdIcons;
     @Accessors(prefix = "m")
     @Setter
-    private CustomToolBar.OnClickToolListener mListener;
+    private CustomAdjustBar.OnClickAdjustListener mListener;
 
-    CustomToolAdapter(Context context, String[] features, int[] ids) {
+    CustomAdjustAdapter(Context context, String[] features, int[] ids) {
         this.mContext = context;
         this.mTools = features;
         this.mIdIcons = ids;
@@ -36,7 +36,7 @@ class CustomToolAdapter extends RecyclerView.Adapter<CustomToolAdapter.ToolHolde
     }
 
     @Override public void onBindViewHolder(ToolHolder holder, int position) {
-        holder.bindData(CustomToolBar.TYPE.values()[position], mTools[position], mIdIcons[position]);
+        holder.bindData(CustomAdjustBar.TYPE.values()[position], mTools[position], mIdIcons[position]);
     }
 
     @Override public int getItemCount() {
@@ -46,7 +46,7 @@ class CustomToolAdapter extends RecyclerView.Adapter<CustomToolAdapter.ToolHolde
     class ToolHolder extends RecyclerView.ViewHolder {
         ImageView mImgIcon;
         TextView mTvTitle;
-        CustomToolBar.TYPE mType;
+        CustomAdjustBar.TYPE mType;
 
         ToolHolder(View itemView) {
             super(itemView);
@@ -54,13 +54,13 @@ class CustomToolAdapter extends RecyclerView.Adapter<CustomToolAdapter.ToolHolde
             mTvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
         }
 
-        void bindData(CustomToolBar.TYPE type, String title, int id) {
+        void bindData(CustomAdjustBar.TYPE type, String title, int id) {
             this.mType = type;
             mImgIcon.setImageDrawable(mContext.getResources().getDrawable(id));
             mTvTitle.setText(title);
             mImgIcon.setOnClickListener(v -> {
                 if (mListener != null) {
-                    mListener.clickItem(mType);
+                    mListener.clickItemAdjust(mType);
                 }
             });
         }

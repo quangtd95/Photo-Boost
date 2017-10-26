@@ -18,59 +18,59 @@ import org.androidannotations.annotations.ViewById;
  */
 
 
-@EViewGroup(R.layout.custom_filter_bar)
-public class CustomFilterBar extends RelativeLayout {
-    @ViewById(R.id.rvFilters) RecyclerView mRvFilters;
-    private CustomFilterAdapter mAdapter;
+@EViewGroup(R.layout.custom_effect_bar)
+public class CustomEffectBar extends RelativeLayout {
+    @ViewById(R.id.rvEffects) RecyclerView mRvEffects;
+    private CustomEffectAdapter mAdapter;
 
-    public interface OnClickFilterListener {
-        void onClickFilterItem(int position);
+    public interface OnClickEffectListener {
+        void onClickItemEffect(int position);
 
-        void onClickFilterClose();
+        void onClickEffectClose();
 
-        void onClickFilterOk();
+        void onClickEffectOk();
 
     }
 
-    public CustomFilterBar(Context context) {
+    public CustomEffectBar(Context context) {
         super(context);
     }
 
-    public CustomFilterBar(Context context, AttributeSet attrs) {
+    public CustomEffectBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    private OnClickFilterListener mListener;
+    private OnClickEffectListener mListener;
 
     @AfterViews
     public void init() {
-        String[] nameFilters = new String[37];
-        int[] filterIds = new int[37];
-        for (int i = 1; i <= nameFilters.length; i++) {
+        String[] nameEffects = new String[37];
+        int[] effectIds = new int[37];
+        for (int i = 1; i <= nameEffects.length; i++) {
             int drawableResourceId = this.getResources().getIdentifier("filter" + i, "drawable", this.getContext().getPackageName());
-            filterIds[i - 1] = drawableResourceId;
+            effectIds[i - 1] = drawableResourceId;
         }
 
-        mAdapter = new CustomFilterAdapter(this.getContext(), filterIds);
-        mRvFilters.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        mRvFilters.setAdapter(mAdapter);
+        mAdapter = new CustomEffectAdapter(this.getContext(), effectIds);
+        mRvEffects.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRvEffects.setAdapter(mAdapter);
     }
 
     @Click(R.id.imgClose)
     public void onClickClose() {
         if (mListener != null) {
-            mListener.onClickFilterClose();
+            mListener.onClickEffectClose();
         }
     }
 
     @Click(R.id.imgOk)
     public void onClickOk() {
         if (mListener != null) {
-            mListener.onClickFilterOk();
+            mListener.onClickEffectOk();
         }
     }
 
-    public void setOnClickFilterListener(CustomFilterBar.OnClickFilterListener listener) {
+    public void setOnClickEffectListener(OnClickEffectListener listener) {
         mListener = listener;
         if (listener != null) mAdapter.setListener(listener);
     }

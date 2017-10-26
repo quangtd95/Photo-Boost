@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.cloud.FireBaseUtils;
-import com.quangtd.photoeditor.model.local.RealmUtils;
 import com.quangtd.photoeditor.model.data.CategorySticker;
+import com.quangtd.photoeditor.model.local.RealmUtils;
 import com.quangtd.photoeditor.presenter.PresenterCategorySticker;
 import com.quangtd.photoeditor.utils.LogUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
@@ -55,7 +55,9 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         getPresenter(this).getListCategory();
         //load cache
         mCategoryStickers.addAll(RealmUtils.getInstance().getList(CategorySticker.class));
-        updateUiActivity(0);
+        if (mCategoryStickers.size() != 0) {
+            updateUiActivity(0);
+        }
         mCategoryAdapter.notifyDataSetChanged();
 
         mVpListStickerAdapter = new ViewPagerListStickerAdapter(getSupportFragmentManager(), mCategoryStickers);
@@ -102,7 +104,9 @@ public class StickerActivity extends ActivityBase<PresenterCategorySticker> impl
         mCategoryStickers.clear();
         mCategoryStickers.addAll(categoryStickers);
         RealmUtils.getInstance().saveListData(mCategoryStickers);
-        updateUiActivity(0);
+        if (mCategoryStickers.size() != 0) {
+            updateUiActivity(0);
+        }
         mCategoryAdapter.notifyDataSetChanged();
         mVpListStickerAdapter.notifyDataSetChanged();
     }

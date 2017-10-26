@@ -3,12 +3,12 @@ package com.quangtd.photoeditor.view.iface;
 import android.graphics.Bitmap;
 
 import com.quangtd.photoeditor.model.data.Decor;
-import com.quangtd.photoeditor.model.data.Filter;
+import com.quangtd.photoeditor.model.data.Effect;
 
 import java.util.List;
 
 /**
- * Created by QuangTD on 10/19/2017.
+ * QuangTD on 10/19/2017.
  */
 
 public interface IViewEditPhoto extends IViewBase {
@@ -16,11 +16,11 @@ public interface IViewEditPhoto extends IViewBase {
 
     Bitmap getPhoto();
 
-    Filter getFilter();
+    Effect getEffect();
 
-    void downloadFilterSuccess(String path);
+    void downloadEffectSuccess(String path);
 
-    void downloadFilterFailure(String message);
+    void downloadEffectFailure(String message);
 
     void showOutput(String output);
 }

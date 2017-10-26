@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
-import com.quangtd.photoeditor.model.data.Filter;
+import com.quangtd.photoeditor.model.data.Effect;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,20 +31,20 @@ public class EditPhotoUtils {
     public static int WIDTH_PREVIEW;
     public static int HEIGHT_PREVIEW;
 
-    public static String editAndSaveImage(Bitmap bitmap, Filter filter, List<Decor> decors) {
-        Bitmap edited = editImage(bitmap, filter, decors);
+    public static String editAndSaveImage(Bitmap bitmap, Effect effect, List<Decor> decors) {
+        Bitmap edited = editImage(bitmap, effect, decors);
         return saveImage(edited);
     }
 
-    private static Bitmap editImage(Bitmap bitmap, Filter filter, List<Decor> decors) {
+    private static Bitmap editImage(Bitmap bitmap, Effect effect, List<Decor> decors) {
         Bitmap mutableBitmap = convertToMutable(bitmap);
         Canvas canvas = new Canvas(mutableBitmap);
-        Bitmap bmFilter = filter.getBitmap();
-        //draw filter
-        if (bmFilter != null) {
-            Paint paintFilter = new Paint(Paint.FILTER_BITMAP_FLAG);
-            paintFilter.setAlpha(filter.getAlpha());
-            canvas.drawBitmap(bmFilter, (bitmap.getWidth() - bmFilter.getWidth()) / 2, (bitmap.getHeight() - bmFilter.getHeight()) / 2, paintFilter);
+        Bitmap bmEffect = effect.getBitmap();
+        //draw effect
+        if (bmEffect != null) {
+            Paint paintEffect = new Paint(Paint.FILTER_BITMAP_FLAG);
+            paintEffect.setAlpha(effect.getAlpha());
+            canvas.drawBitmap(bmEffect, (bitmap.getWidth() - bmEffect.getWidth()) / 2, (bitmap.getHeight() - bmEffect.getHeight()) / 2, paintEffect);
         }
         //draw sticker
         for (int i = 0; i < decors.size(); i++) {

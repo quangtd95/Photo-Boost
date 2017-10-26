@@ -92,18 +92,18 @@ public class FireBaseUtils {
                 .addOnFailureListener(e -> callBack.onError(e.toString()));
     }
 
-    public void downloadFilter(StorageReference storageReference, DataCallBack<String> callBack) {
-        File filterDir = new File(GlobalDefine.FILTER_FOLDER_LOCAL);
-        if (!filterDir.exists()) {
-            filterDir.mkdirs();
+    public void downloadEffect(StorageReference storageReference, DataCallBack<String> callBack) {
+        File effectDir = new File(GlobalDefine.EFFECT_FOLDER_LOCAL);
+        if (!effectDir.exists()) {
+            effectDir.mkdirs();
         }
-        String localPath = GlobalDefine.FILTER_FOLDER_LOCAL + storageReference.getName();
-        File filterLocalFile = new File(localPath);
-        if (filterLocalFile.exists()) {
+        String localPath = GlobalDefine.EFFECT_FOLDER_LOCAL + storageReference.getName();
+        File effectLocalFile = new File(localPath);
+        if (effectLocalFile.exists()) {
             callBack.onSuccess(localPath);
             return;
         }
-        storageReference.getFile(filterLocalFile)
+        storageReference.getFile(effectLocalFile)
                 .addOnSuccessListener(taskSnapshot -> callBack.onSuccess(localPath))
                 .addOnFailureListener(e -> callBack.onError(e.getMessage()));
     }

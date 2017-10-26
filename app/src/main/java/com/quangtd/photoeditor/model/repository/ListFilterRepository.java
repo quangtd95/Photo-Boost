@@ -34,11 +34,11 @@ public class ListFilterRepository {
      * @param filerIndex start from 1
      * @param callBack
      */
-    public void downloadFilter(int filerIndex, DataCallBack<String> callBack) {
+    public void downloadEffect(int filerIndex, DataCallBack<String> callBack) {
         @SuppressLint("DefaultLocale")
-        String filterName = String.format(GlobalDefine.FILTER_FILE_FORMAT, filerIndex);
-        StorageReference storageReference = FireBaseUtils.getInstance().getStorageReference(GlobalDefine.FILTER_FOLDER + File.separator + filterName);
-        FireBaseUtils.getInstance().downloadFilter(storageReference, callBack);
+        String filterName = String.format(GlobalDefine.EFFECT_FILE_FORMAT, filerIndex);
+        StorageReference storageReference = FireBaseUtils.getInstance().getStorageReference(GlobalDefine.EFFECT_FOLDER + File.separator + filterName);
+        FireBaseUtils.getInstance().downloadEffect(storageReference, callBack);
     }
 
 }

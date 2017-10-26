@@ -29,7 +29,7 @@ public class CustomFeatureBar extends RelativeLayout {
     }
 
     public enum TYPE {
-        STICKER, EFFECT, FILTER, BLUR, TEXT, CROP, SHARE
+        STICKER, ADJUST, EFFECT, FILTER, BLUR, TEXT, CROP, SHARE
     }
 
     public CustomFeatureBar(Context context) {
@@ -43,7 +43,7 @@ public class CustomFeatureBar extends RelativeLayout {
     @AfterViews
     public void init() {
         mFeatures = getContext().getResources().getStringArray(R.array.list_features);
-        mIcons = new int[]{R.drawable.ic_sticker, R.drawable.ic_effect, R.drawable.ic_filter, R.drawable.ic_blur, R.drawable.ic_text, R.drawable.ic_crop, R.drawable.ic_share};
+        mIcons = new int[]{R.drawable.ic_sticker, R.drawable.ic_adjust, R.drawable.ic_effect, R.drawable.ic_filter, R.drawable.ic_blur, R.drawable.ic_text, R.drawable.ic_crop, R.drawable.ic_share};
         mAdapter = new CustomFeatureAdapter(this.getContext(), mFeatures, mIcons);
         mRvFeatures.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRvFeatures.setAdapter(mAdapter);

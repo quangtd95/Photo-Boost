@@ -9,11 +9,11 @@ import lombok.Data;
  */
 
 @Data
-public class Filter {
+public class Effect {
     private Bitmap bitmap;
     private int alpha;
 
-    public Filter(Bitmap bitmap, int alpha) {
+    public Effect(Bitmap bitmap, int alpha) {
         this.bitmap = bitmap;
         this.alpha = alpha;
     }

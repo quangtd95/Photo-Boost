@@ -17,15 +17,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
-import com.quangtd.photoeditor.model.data.Filter;
+import com.quangtd.photoeditor.model.data.Effect;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
-import com.quangtd.photoeditor.view.component.CustomDrawFilter;
+import com.quangtd.photoeditor.view.component.CustomAdjustBar;
+import com.quangtd.photoeditor.view.component.CustomDrawEffect;
 import com.quangtd.photoeditor.view.component.CustomDrawSticker;
+import com.quangtd.photoeditor.view.component.CustomEffectBar;
 import com.quangtd.photoeditor.view.component.CustomFeatureBar;
-import com.quangtd.photoeditor.view.component.CustomFilterBar;
-import com.quangtd.photoeditor.view.component.CustomToolBar;
 import com.quangtd.photoeditor.view.iface.IViewEditPhoto;
 import com.quangtd.photoeditor.view.iface.listener.AbstractSeekBarChangeListener;
 
@@ -44,17 +44,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
-public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomToolBar.OnClickToolListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomFilterBar.OnClickFilterListener {
+public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomAdjustBar.OnClickAdjustListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomEffectBar.OnClickEffectListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
-    @ViewById(R.id.bottomTools) CustomToolBar mCustomToolBar;
+    @ViewById(R.id.bottomTools) CustomAdjustBar mCustomAdjustBar;
     @ViewById(R.id.imgPreview) ImageView mCustomPreview;
     @ViewById(R.id.imgBack) CircleImageView mImgBack;
     @ViewById(R.id.imgSave) CircleImageView mImgSave;
-    @ViewById(R.id.bottomFilters) CustomFilterBar mCustomFilterBar;
+    @ViewById(R.id.bottomEffects) CustomEffectBar mCustomEffectBar;
     @ViewById(R.id.containerBottom) FrameLayout mFlContainer;
     @ViewById(R.id.drawSticker) CustomDrawSticker mCustomDrawSticker;
-    @ViewById(R.id.drawFilter) CustomDrawFilter mCustomDrawFilter;
-    @ViewById(R.id.imgOriginFilter) ImageView mImgOriginFilter;
+    @ViewById(R.id.drawEffect) CustomDrawEffect mCustomDrawEffect;
+    @ViewById(R.id.imgOriginEffect) ImageView mImgOriginFilter;
     @ViewById(R.id.sb) SeekBar mSeekBar;
     @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
     Bitmap mBitmap;
@@ -73,8 +73,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     private void addListeners() {
         mCustomFeatureBar.setOnClickFeatureListener(this);
-        mCustomFilterBar.setOnClickFilterListener(this);
-        mCustomToolBar.setOnClickToolListener(this);
+        mCustomEffectBar.setOnClickEffectListener(this);
+        mCustomAdjustBar.setOnClickToolListener(this);
         mCustomDrawSticker.setOnChangeItemStickerListener(this);
         mSeekBar.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -88,7 +88,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         if (mToolsVisible) {
             showBar(mCustomFeatureBar);
         } else {
-            showBar(mCustomToolBar);
+            showBar(mCustomAdjustBar);
         }
         mToolsVisible = !mToolsVisible;
     }
@@ -112,9 +112,9 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         getPresenter(this).save();
     }
 
-    @Click(R.id.imgOriginFilter)
-    void onClickClearFilter() {
-        mCustomDrawFilter.clearFilter();
+    @Click(R.id.imgOriginEffect)
+    void onClickClearEffect() {
+        mCustomDrawEffect.clearEffect();
     }
 
     private void showBar(View view) {
@@ -123,6 +123,13 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             nextChild.setVisibility(View.INVISIBLE);
         }
         view.setVisibility(View.VISIBLE);
+        if (view == mCustomFeatureBar) {
+            mImgBack.setVisibility(View.VISIBLE);
+            mImgSave.setVisibility(View.VISIBLE);
+        } else {
+            mImgBack.setVisibility(View.INVISIBLE);
+            mImgSave.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override public void clickItem(CustomFeatureBar.TYPE type) {
@@ -131,18 +138,27 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             case STICKER:
                 StickerActivity_.intent(this).startForResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER);
                 break;
-            case FILTER:
-                showBar(mCustomFilterBar);
-                mImgBack.setVisibility(View.INVISIBLE);
-                mImgSave.setVisibility(View.INVISIBLE);
+            case ADJUST:
+                showBar(mCustomAdjustBar);
+                break;
+            case EFFECT:
+                showBar(mCustomEffectBar);
                 break;
             default:
                 showBar(mCustomFeatureBar);
         }
     }
 
-    @Override public void clickItem(CustomToolBar.TYPE type) {
+    @Override public void clickItemAdjust(CustomAdjustBar.TYPE type) {
         Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void clickCloseAdjust() {
+        showBar(mCustomFeatureBar);
+    }
+
+    @Override public void clickOkAdjust() {
+
     }
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER)
@@ -187,8 +203,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         return mBitmap;
     }
 
-    @Override public Filter getFilter() {
-        return mCustomDrawFilter.getFilter();
+    @Override public Effect getEffect() {
+        return mCustomDrawEffect.getEffect();
     }
 
     @Override public void showOutput(String output) {
@@ -215,28 +231,28 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
-    @Override public void onClickFilterItem(int position) {
-        getPresenter(this).downloadFilter(position + 1);
+    @Override public void onClickItemEffect(int position) {
+        getPresenter(this).downloadEffect(position + 1);
     }
 
-    @Override public void onClickFilterClose() {
-        onClickClearFilter();
+    @Override public void onClickEffectClose() {
+        onClickClearEffect();
         showBar(mCustomFeatureBar);
         mImgSave.setVisibility(View.VISIBLE);
         mImgBack.setVisibility(View.VISIBLE);
     }
 
-    @Override public void onClickFilterOk() {
+    @Override public void onClickEffectOk() {
         showBar(mCustomFeatureBar);
         mImgSave.setVisibility(View.VISIBLE);
         mImgBack.setVisibility(View.VISIBLE);
     }
 
-    @Override public void downloadFilterSuccess(String path) {
-        mCustomDrawFilter.setResource(path);
+    @Override public void downloadEffectSuccess(String path) {
+        mCustomDrawEffect.setResource(path);
     }
 
-    @Override public void downloadFilterFailure(String message) {
+    @Override public void downloadEffectFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

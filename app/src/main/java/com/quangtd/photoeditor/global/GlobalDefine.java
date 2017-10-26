@@ -10,8 +10,8 @@ public class GlobalDefine {
     public static final String APP_NAME = "photo_editor";
     public static final String STICKER_FOLDER = "stickers";
     public static final String STICKER_FILE_FORMAT = ".image_%d.png";
-    public static final String FILTER_FOLDER = "filters";
-    public static final String FILTER_FILE_FORMAT = ".filter%d.png";
+    public static final String EFFECT_FOLDER = "effects";
+    public static final String EFFECT_FILE_FORMAT = ".effect%d.png";
     public static final String FIREBASE_USER_NAME = "pfiev13.photoeditor@gmail.com";
     public static final String FIREBASE_PASSWORD = "quang123";
 
@@ -26,8 +26,8 @@ public class GlobalDefine {
 
     public static final String STICKER_FOLDER_LOCAL = Environment.getExternalStorageDirectory()
             + "/." + APP_NAME + "/." + STICKER_FOLDER + "/";
-    public static final String FILTER_FOLDER_LOCAL = Environment.getExternalStorageDirectory()
-            + "/." + APP_NAME + "/." + FILTER_FOLDER + "/";
+    public static final String EFFECT_FOLDER_LOCAL = Environment.getExternalStorageDirectory()
+            + "/." + APP_NAME + "/." + EFFECT_FOLDER + "/";
     public static final String OUTPUT_FOLDER = Environment.getExternalStorageDirectory() + "/" + APP_NAME + "/";
 
 }

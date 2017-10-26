@@ -18,7 +18,7 @@
             android:layout_alignParentBottom="true"
             android:background="@android:color/black"/>
 
-        <com.quangtd.photoeditor.view.component.CustomToolBar_
+        <com.quangtd.photoeditor.view.component.CustomAdjustBar_
             android:id="@+id/bottomTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,8 +26,8 @@
             android:background="@android:color/black"
             android:visibility="invisible"/>
 
-        <com.quangtd.photoeditor.view.component.CustomFilterBar_
-            android:id="@+id/bottomFilters"
+        <com.quangtd.photoeditor.view.component.CustomEffectBar_
+            android:id="@+id/bottomEffects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -46,13 +46,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:scaleType="fitCenter"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
             android:src="@drawable/temp"/>
 
-        <com.quangtd.photoeditor.view.component.CustomDrawFilter
-            android:id="@+id/drawFilter"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.quangtd.photoeditor.view.component.CustomDrawEffect
+            android:id="@+id/drawEffect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imgPreview"
             android:layout_alignEnd="@id/imgPreview"
             android:layout_alignStart="@id/imgPreview"
@@ -61,24 +62,25 @@
 
         <com.quangtd.photoeditor.view.component.CustomDrawSticker
             android:id="@+id/drawSticker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imgPreview"
             android:layout_alignEnd="@id/imgPreview"
             android:layout_alignStart="@id/imgPreview"
             android:layout_alignTop="@id/imgPreview"
             android:layout_centerInParent="true"/>
 
-        <SeekBar
-            android:id="@+id/sb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:max="255"
-            android:progress="255"
-            android:visibility="gone"/>
     </RelativeLayout>
+
+    <SeekBar
+        android:id="@+id/sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/containerBottom"
+        android:max="255"
+        android:padding="10dp"
+        android:progress="255"
+        android:visibility="visible"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBack"
