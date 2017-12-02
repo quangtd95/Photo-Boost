@@ -63,6 +63,7 @@
     <string name="confirm_back">This photo is not saved, you want to save it before closing?</string>
     <string name="discard">DISCARD</string>
     <string name="save">SAVE</string>
+    <string name="filter">Filter</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>adjust</item>

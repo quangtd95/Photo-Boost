@@ -19,7 +19,7 @@ public class GlobalDefine {
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 101;
     public static final int MY_REQUEST_CODE_GET_STICKER = 102;
     public static final int MY_RESULT_CODE_GET_STICKER = 103;
-
+    public static final int MY_REQUEST_CODE_FILTER = 104;
     public static final String KEY_IMAGE = "image";
     public static final String KEY_STICKER = "sticker";
     public static final String KEY_CATEGORY = "category";

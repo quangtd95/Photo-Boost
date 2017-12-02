@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".global.PhotoEditorApplication"
         android:allowBackup="true"
@@ -33,6 +34,9 @@
         </activity>
         <activity
             android:name=".view.activity.choosephoto.ActivityListPhoto_"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.editphoto.ActivityFilterPhoto_"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.editphoto.ActivityEditPhoto_"

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/dip05"
+              android:layout_marginStart="@dimen/dip05"
+              android:orientation="vertical"
+              android:weightSum="5">
+
+    <ImageView
+        android:id="@+id/imgFilter"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/color_white"/>
+</LinearLayout>

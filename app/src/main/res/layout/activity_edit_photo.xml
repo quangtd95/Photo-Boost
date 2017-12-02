@@ -33,7 +33,6 @@
             android:layout_alignParentBottom="true"
             android:background="@android:color/black"
             android:visibility="invisible"/>
-
     </FrameLayout>
 
     <RelativeLayout

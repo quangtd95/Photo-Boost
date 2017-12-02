@@ -65,7 +65,6 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         int widthFrame = ScreenUtils.getWidthScreen(this);
         int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
         getPresenter(this).prepareImage(mImagePath, widthFrame, heightFrame);
-
     }
 
     @Override
@@ -151,6 +150,9 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             case EFFECT:
                 showBar(mCustomEffectBar);
                 break;
+            case FILTER:
+                ActivityFilterPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_FILTER);
+                break;
             default:
                 showBar(mCustomFeatureBar);
         }
@@ -175,6 +177,15 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 String pathSticker = data.getStringExtra(GlobalDefine.KEY_STICKER);
                 addSticker(pathSticker);
             }
+        }
+    }
+
+    @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_FILTER)
+    public void onResultFilter(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            int widthFrame = ScreenUtils.getWidthScreen(this);
+            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
         }
     }
 
@@ -262,5 +273,6 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @Override public void downloadEffectFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }
 
