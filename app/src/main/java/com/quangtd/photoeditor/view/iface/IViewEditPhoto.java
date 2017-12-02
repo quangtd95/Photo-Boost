@@ -12,6 +12,8 @@ import java.util.List;
  */
 
 public interface IViewEditPhoto extends IViewBase {
+    void onPrepared(String path);
+
     List<Decor> getListDecor();
 
     Bitmap getPhoto();

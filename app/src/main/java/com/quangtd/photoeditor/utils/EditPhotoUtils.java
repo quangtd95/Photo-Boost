@@ -2,6 +2,7 @@ package com.quangtd.photoeditor.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -31,16 +32,20 @@ public class EditPhotoUtils {
     public static int WIDTH_PREVIEW;
     public static int HEIGHT_PREVIEW;
 
-    public static String scaleBitmapFitScreen(Bitmap bitmap, int width, int height) {
-        float aX = 1, aY = 1;
-        if (bitmap.getWidth() < width) {
-            aX = width * 1.0f / bitmap.getWidth();
-        }
-        if (bitmap.getHeight() < height) {
-            aY = height * 1.0f / bitmap.getHeight();
-        }
+    public static String scaleBitmapFitScreen(String path, int width, int height) {
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bitmapOptions);
+        int imageWidth = bitmapOptions.outWidth;
+        int imageHeight = bitmapOptions.outHeight;
+        float aX, aY;
+        aX = width * 1.0f / imageWidth;
+        aY = height * 1.0f / imageHeight;
         aX = (aX < aY) ? aX : aY;
-        Bitmap scaled = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * aX), (int) (bitmap.getHeight() * aX), true);
+        bitmapOptions.inJustDecodeBounds = false;
+        bitmapOptions.inSampleSize = Math.round(aX);
+        Bitmap tmp = BitmapFactory.decodeFile(path, bitmapOptions);
+        Bitmap scaled = Bitmap.createScaledBitmap(tmp, (int) (imageWidth * aX), (int) (imageHeight * aX), true);
         return saveImage(scaled);
     }
 

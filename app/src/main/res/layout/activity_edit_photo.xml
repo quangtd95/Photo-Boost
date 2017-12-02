@@ -47,8 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:src="@drawable/temp"/>
+            android:scaleType="centerInside"/>
 
         <com.quangtd.photoeditor.view.component.CustomDrawEffect
             android:id="@+id/drawEffect"
@@ -80,7 +79,7 @@
         android:max="255"
         android:padding="10dp"
         android:progress="255"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBack"

@@ -18,7 +18,6 @@ import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.Effect;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
-import com.quangtd.photoeditor.utils.EditPhotoUtils;
 import com.quangtd.photoeditor.utils.ScreenUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
@@ -63,18 +62,18 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @Override protected void init() {
         super.init();
-        mBitmap = BitmapFactory.decodeFile(mImagePath);
         int widthFrame = ScreenUtils.getWidthScreen(this);
         int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
-        if (mBitmap.getWidth() < widthFrame && mBitmap.getHeight() < heightFrame) {
-            mImagePath = EditPhotoUtils.scaleBitmapFitScreen(mBitmap, widthFrame, heightFrame);
-            mBitmap.recycle();
-            mBitmap = null;
-            mBitmap = BitmapFactory.decodeFile(mImagePath);
-        }
+        getPresenter(this).prepareImage(mImagePath, widthFrame, heightFrame);
+
+    }
+
+    @Override
+    public void onPrepared(String path) {
+        this.mImagePath = path;
+        mBitmap = BitmapFactory.decodeFile(mImagePath);
         Glide.with(this).load(mImagePath).into(mCustomPreview);
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.fitCenter();
+        RequestOptions requestOptions = new RequestOptions().fitCenter();
         Glide.with(this).setDefaultRequestOptions(requestOptions).load(mImagePath).into(mImgOriginFilter);
         addListeners();
     }
