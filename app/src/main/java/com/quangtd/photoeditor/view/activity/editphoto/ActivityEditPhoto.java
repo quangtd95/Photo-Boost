@@ -136,6 +136,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             mImgBack.setVisibility(View.INVISIBLE);
             mImgSave.setVisibility(View.INVISIBLE);
         }
+        mSeekBar.setVisibility(View.INVISIBLE);
     }
 
     @Override public void clickItem(CustomFeatureBar.TYPE type) {
@@ -149,12 +150,14 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 break;
             case EFFECT:
                 showBar(mCustomEffectBar);
+                mSeekBar.setVisibility(View.VISIBLE);
+                mSeekBar.setProgress(100);
                 break;
             case FILTER:
                 ActivityFilterPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_FILTER);
                 break;
             case BLUR:
-                ActivityBlurPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE,mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_BLUR);
+                ActivityBlurPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_BLUR);
             default:
                 showBar(mCustomFeatureBar);
         }
@@ -192,13 +195,14 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     }
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_BLUR)
-    public void onResultBlur(int resultCode,Intent data){
-        if (resultCode == RESULT_OK){
+    public void onResultBlur(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
             int widthFrame = ScreenUtils.getWidthScreen(this);
             int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
             getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
         }
     }
+
     private void addSticker(String path) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -252,10 +256,14 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     public void onSeekBarProgressChanged(int progress, boolean fromUser) {
         if (fromUser) {
-            Decor decor = mCustomDrawSticker.getFocusDecor();
-            if (decor == null) return;
-            decor.setAlpha(progress);
-            mCustomDrawSticker.invalidate();
+            if (mCustomEffectBar.getVisibility() == View.VISIBLE) {
+                mCustomDrawEffect.setAlpha(progress);
+            } else {
+                Decor decor = mCustomDrawSticker.getFocusDecor();
+                if (decor == null) return;
+                decor.setAlpha(progress);
+                mCustomDrawSticker.invalidate();
+            }
         }
     }
 
@@ -266,14 +274,10 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @Override public void onClickEffectClose() {
         onClickClearEffect();
         showBar(mCustomFeatureBar);
-        mImgSave.setVisibility(View.VISIBLE);
-        mImgBack.setVisibility(View.VISIBLE);
     }
 
     @Override public void onClickEffectOk() {
         showBar(mCustomFeatureBar);
-        mImgSave.setVisibility(View.VISIBLE);
-        mImgBack.setVisibility(View.VISIBLE);
     }
 
     @Override public void downloadEffectSuccess(String path) {
