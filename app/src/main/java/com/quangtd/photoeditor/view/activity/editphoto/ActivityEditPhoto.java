@@ -1,6 +1,5 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +18,8 @@ import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.Effect;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
+import com.quangtd.photoeditor.utils.EditPhotoUtils;
+import com.quangtd.photoeditor.utils.ScreenUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
 import com.quangtd.photoeditor.view.component.CustomAdjustBar;
@@ -42,7 +43,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * QuangTD on 10/15/2017.
  */
-@SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
 public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomAdjustBar.OnClickAdjustListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomEffectBar.OnClickEffectListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
@@ -63,11 +63,19 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @Override protected void init() {
         super.init();
+        mBitmap = BitmapFactory.decodeFile(mImagePath);
+        int widthFrame = ScreenUtils.getWidthScreen(this);
+        int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+        if (mBitmap.getWidth() < widthFrame && mBitmap.getHeight() < heightFrame) {
+            mImagePath = EditPhotoUtils.scaleBitmapFitScreen(mBitmap, widthFrame, heightFrame);
+            mBitmap.recycle();
+            mBitmap = null;
+            mBitmap = BitmapFactory.decodeFile(mImagePath);
+        }
         Glide.with(this).load(mImagePath).into(mCustomPreview);
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.fitCenter();
         Glide.with(this).setDefaultRequestOptions(requestOptions).load(mImagePath).into(mImgOriginFilter);
-        mBitmap = BitmapFactory.decodeFile(mImagePath);
         addListeners();
     }
 

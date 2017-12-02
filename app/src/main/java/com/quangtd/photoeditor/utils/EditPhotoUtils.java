@@ -31,6 +31,19 @@ public class EditPhotoUtils {
     public static int WIDTH_PREVIEW;
     public static int HEIGHT_PREVIEW;
 
+    public static String scaleBitmapFitScreen(Bitmap bitmap, int width, int height) {
+        float aX = 1, aY = 1;
+        if (bitmap.getWidth() < width) {
+            aX = width * 1.0f / bitmap.getWidth();
+        }
+        if (bitmap.getHeight() < height) {
+            aY = height * 1.0f / bitmap.getHeight();
+        }
+        aX = (aX < aY) ? aX : aY;
+        Bitmap scaled = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * aX), (int) (bitmap.getHeight() * aX), true);
+        return saveImage(scaled);
+    }
+
     public static String editAndSaveImage(Bitmap bitmap, Effect effect, List<Decor> decors) {
         Bitmap edited = editImage(bitmap, effect, decors);
         return saveImage(edited);
