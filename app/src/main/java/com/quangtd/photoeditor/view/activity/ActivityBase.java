@@ -139,12 +139,9 @@ public abstract class ActivityBase<P extends PresenterBase> extends AppCompatAct
 
     public void uiChangeListener() {
         final View decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                    hideStatusAndNavigationBar();
-                }
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                hideStatusAndNavigationBar();
             }
         });
     }

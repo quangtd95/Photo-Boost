@@ -20,6 +20,8 @@ public class GlobalDefine {
     public static final int MY_REQUEST_CODE_GET_STICKER = 102;
     public static final int MY_RESULT_CODE_GET_STICKER = 103;
     public static final int MY_REQUEST_CODE_FILTER = 104;
+    public static final int MY_REQUEST_CODE_BLUR = 105;
+
     public static final String KEY_IMAGE = "image";
     public static final String KEY_STICKER = "sticker";
     public static final String KEY_CATEGORY = "category";
@@ -29,5 +31,6 @@ public class GlobalDefine {
     public static final String EFFECT_FOLDER_LOCAL = Environment.getExternalStorageDirectory()
             + "/." + APP_NAME + "/." + EFFECT_FOLDER + "/";
     public static final String OUTPUT_FOLDER = Environment.getExternalStorageDirectory() + "/" + APP_NAME + "/";
+
 
 }

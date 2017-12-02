@@ -10,12 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <com.quangtd.photoeditor.view.component.CustomFilterBar_
-            android:id="@+id/bottomFilters"
+        <com.quangtd.photoeditor.view.component.CustomBlurBar_
+            android:id="@+id/bottomBlur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dip05"
-            android:layout_alignParentBottom="true"
             android:background="@android:color/black"
             android:visibility="visible"/>
     </FrameLayout>
@@ -25,25 +23,22 @@
         android:layout_height="match_parent"
         android:layout_above="@id/containerBottom">
 
-        <jp.co.cyberagent.android.gpuimage.GPUImageView
-            android:id="@+id/imgPreview"
+        <ImageView
+            android:id="@+id/imgBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_margin="@dimen/dip10"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"/>
+
+        <com.quangtd.photoeditor.view.component.CustomDrawSticker
+            android:id="@+id/drawOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgPreview"
+            android:layout_alignEnd="@id/imgPreview"
+            android:layout_alignStart="@id/imgPreview"
+            android:layout_alignTop="@id/imgPreview"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
-
-    <SeekBar
-        android:id="@+id/sb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/containerBottom"
-        android:max="255"
-        android:padding="10dp"
-        android:progress="255"
-        android:visibility="invisible"/>
-
-
 </RelativeLayout>

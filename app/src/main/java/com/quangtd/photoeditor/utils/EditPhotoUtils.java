@@ -144,4 +144,8 @@ public class EditPhotoUtils {
                     Log.i("ExternalStorage", "-> uri=" + uri);
                 });
     }
+
+   /* public static Bitmap blur(Context context, Bitmap image, int radius) {
+
+    }*/
 }

@@ -2,6 +2,8 @@ package com.quangtd.photoeditor.view.activity.editphoto;
 
 import android.content.Intent;
 import android.os.Environment;
+import android.view.View;
+import android.widget.SeekBar;
 
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
@@ -9,6 +11,7 @@ import com.quangtd.photoeditor.model.response.Filter;
 import com.quangtd.photoeditor.utils.TimeUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.component.CustomFilterBar;
+import com.quangtd.photoeditor.view.iface.listener.AbstractSeekBarChangeListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -29,6 +32,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 public class ActivityFilterPhoto extends ActivityBase implements CustomFilterBar.OnClickFilterListener {
     @ViewById(R.id.bottomFilters) CustomFilterBar mCustomFilterBar;
     @ViewById(R.id.imgPreview) GPUImageView mGpuImageView;
+    @ViewById(R.id.sb) SeekBar mSb;
     @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
     private List<Filter> mFilters;
 
@@ -42,9 +46,20 @@ public class ActivityFilterPhoto extends ActivityBase implements CustomFilterBar
 
     private void addListeners() {
         mCustomFilterBar.setOnClickFilterListener(this);
+        mSb.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                super.onProgressChanged(seekBar, progress, fromUser);
+
+            }
+        });
     }
 
     @Override public void onClickItemFilter(int position) {
+        if (position != 0) {
+            mSb.setVisibility(View.VISIBLE);
+        } else {
+            mSb.setVisibility(View.INVISIBLE);
+        }
         mGpuImageView.setFilter(new GPUImageFilter());
         mGpuImageView.setFilter(Filter.getGpuFilter(this, mFilters.get(position)));
     }

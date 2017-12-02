@@ -64,6 +64,9 @@
     <string name="discard">DISCARD</string>
     <string name="save">SAVE</string>
     <string name="filter">Filter</string>
+    <string name="blur">Blur</string>
+    <string name="sample">Sample</string>
+    <string name="radius">Radius</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>adjust</item>

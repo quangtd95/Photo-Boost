@@ -39,6 +39,9 @@
             android:name=".view.activity.editphoto.ActivityFilterPhoto_"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".view.activity.editphoto.ActivityBlurPhoto_"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".view.activity.editphoto.ActivityEditPhoto_"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.choosesticker.StickerActivity_">

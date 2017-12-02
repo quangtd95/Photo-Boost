@@ -153,6 +153,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             case FILTER:
                 ActivityFilterPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_FILTER);
                 break;
+            case BLUR:
+                ActivityBlurPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE,mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_BLUR);
             default:
                 showBar(mCustomFeatureBar);
         }
@@ -189,6 +191,14 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
+    @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_BLUR)
+    public void onResultBlur(int resultCode,Intent data){
+        if (resultCode == RESULT_OK){
+            int widthFrame = ScreenUtils.getWidthScreen(this);
+            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
+        }
+    }
     private void addSticker(String path) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;

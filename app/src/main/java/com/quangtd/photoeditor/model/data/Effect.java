@@ -17,4 +17,7 @@ public class Effect {
         this.bitmap = bitmap;
         this.alpha = alpha;
     }
+    public Effect(){
+        //no-op
+    }
 }
