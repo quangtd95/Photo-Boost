@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dip10"
+        android:text="@string/text_music_video_maker"
+        android:textColor="@color/text_color_folder"
+        android:textSize="@dimen/dip16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dip0_5"
+        android:layout_marginLeft="@dimen/dip10"
+        android:layout_marginRight="@dimen/dip10"
+        android:background="@color/color_dark_gray" />
+</LinearLayout>

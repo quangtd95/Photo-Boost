@@ -44,6 +44,9 @@
         <activity
             android:name=".view.activity.editphoto.ActivityEditPhoto_"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.edittext.ActivityEditText_"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.choosesticker.StickerActivity_">
         </activity>
     </application>

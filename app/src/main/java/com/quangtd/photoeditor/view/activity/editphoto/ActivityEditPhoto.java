@@ -21,6 +21,7 @@ import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.utils.ScreenUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
+import com.quangtd.photoeditor.view.activity.edittext.ActivityEditText_;
 import com.quangtd.photoeditor.view.component.CustomAdjustBar;
 import com.quangtd.photoeditor.view.component.CustomDrawEffect;
 import com.quangtd.photoeditor.view.component.CustomDrawSticker;
@@ -158,6 +159,9 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 break;
             case BLUR:
                 ActivityBlurPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_BLUR);
+                break;
+            case TEXT:
+                ActivityEditText_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_TEXT);
             default:
                 showBar(mCustomFeatureBar);
         }
@@ -196,6 +200,16 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_BLUR)
     public void onResultBlur(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            int widthFrame = ScreenUtils.getWidthScreen(this);
+            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
+        }
+    }
+
+
+    @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_TEXT)
+    public void onResultText(int resultCode,Intent data){
         if (resultCode == RESULT_OK) {
             int widthFrame = ScreenUtils.getWidthScreen(this);
             int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);

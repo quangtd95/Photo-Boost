@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:animateLayoutChanges="true"
+                android:background="#000"
+                android:orientation="vertical"
+                tools:context=".view.activity.edittext.ActivityEditText">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"/>
+
+        <com.quangtd.photoeditor.view.component.CustomDrawSticker
+            android:id="@+id/drawSticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgPreview"
+            android:layout_alignEnd="@id/imgPreview"
+            android:layout_alignStart="@id/imgPreview"
+            android:layout_alignTop="@id/imgPreview"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/btnPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_toStartOf="@id/viewTemp"
+        android:background="@color/color_white"
+        android:drawableStart="@drawable/ic_control"
+        android:gravity="center_vertical|start"
+        android:onClick="showEditPanel"
+        android:padding="@dimen/dip10"
+        android:text="@string/open_panel"
+        />
+
+    <View
+        android:id="@+id/viewTemp"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/btnChangeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@id/viewTemp"
+        android:background="@color/color_white"
+        android:drawableEnd="@drawable/ic_control"
+        android:gravity="center_vertical|end"
+        android:onClick="changeText"
+        android:padding="@dimen/dip10"
+        android:text="@string/change_text"
+        />
+
+    <com.quangtd.photoeditor.view.component.CustomTextView
+        android:id="@+id/customTextView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_back"
+        app:civ_circle_background_color="@android:color/white"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_save"
+        app:civ_circle_background_color="@android:color/white"/>
+</RelativeLayout>
+

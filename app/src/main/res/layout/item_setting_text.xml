@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light_gray"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="@dimen/dip10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_alignment"
+                android:textColor="@color/text_color_folder"/>
+
+            <ImageView
+                android:id="@+id/imgLeftAlign"
+                style="@style/ImageViewInTextLayout"
+                android:layout_toStartOf="@+id/imgCenterAlign"
+                android:src="@drawable/ic_left_alignment"/>
+
+            <ImageView
+                android:id="@+id/imgCenterAlign"
+                style="@style/ImageViewInTextLayout"
+                android:layout_toStartOf="@+id/imgRightAlign"
+                android:src="@drawable/ic_center_alignment_select"/>
+
+            <ImageView
+                android:id="@+id/imgRightAlign"
+                style="@style/ImageViewInTextLayout"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_right_alignment"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dip0_5"
+            android:background="@color/color_line_gray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="@dimen/dip10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_size"
+                android:textColor="@color/text_color_folder"/>
+
+            <ImageView
+                android:id="@+id/imgDes"
+                style="@style/ImageViewInTextLayout"
+                android:layout_toStartOf="@+id/imgAsc"
+                android:src="@drawable/ic_des"/>
+
+            <ImageView
+                android:id="@+id/imgAsc"
+                style="@style/ImageViewInTextLayout"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_asc"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dip0_5"
+            android:background="@color/color_line_gray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="@dimen/dip10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_style"
+                android:textColor="@color/text_color_folder"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/imgNormalText"
+                    style="@style/ImageViewInTextLayout"
+                    android:src="@drawable/ic_normal_text"/>
+
+                <ImageView
+                    android:id="@+id/imgBoldText"
+                    style="@style/ImageViewInTextLayout"
+                    android:src="@drawable/ic_bold_text"/>
+
+                <ImageView
+                    android:id="@+id/imgItalyText"
+                    style="@style/ImageViewInTextLayout"
+                    android:src="@drawable/ic_italy_text"/>
+
+                <ImageView
+                    android:id="@+id/imgUnderLineText"
+                    style="@style/ImageViewInTextLayout"
+                    android:src="@drawable/ic_under_line_text"/>
+
+                <ImageView
+                    android:id="@+id/imgCenterLineText"
+                    style="@style/ImageViewInTextLayout"
+                    android:src="@drawable/ic_center_line_text"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dip0_5"
+            android:background="@color/color_line_gray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="@dimen/dip10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_shadow"
+                android:textColor="@color/text_color_folder"/>
+
+            <ImageView
+                android:id="@+id/imgDesShadow"
+                style="@style/ImageViewInTextLayout"
+                android:layout_toStartOf="@+id/imgAscShadow"
+                android:src="@drawable/ic_des_none"/>
+
+            <ImageView
+                android:id="@+id/imgAscShadow"
+                style="@style/ImageViewInTextLayout"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_asc"/>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

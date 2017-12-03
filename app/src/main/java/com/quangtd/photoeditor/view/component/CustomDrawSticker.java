@@ -22,6 +22,7 @@ import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.DecorText;
 import com.quangtd.photoeditor.utils.EditPhotoUtils;
+import com.quangtd.photoeditor.view.activity.edittext.OnHandlerItemListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 public class CustomDrawSticker extends View {
+
+    @Accessors(prefix = "m")
+    @Setter
+    private OnHandlerItemListener mOnHandlerItemListener;
 
     public interface OnChangeItemStickerListener {
         void changeSticker(int oldP, int newP);
@@ -158,12 +163,20 @@ public class CustomDrawSticker extends View {
     public boolean onTouchEvent(MotionEvent event) {
         Point touchPoint = new Point((int) event.getX(), (int) event.getY());
         judgeTouchPoint(touchPoint);
+        if (mOnHandlerItemListener != null) {
+            mOnHandlerItemListener.touchItem();
+        }
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 long mTime = System.currentTimeMillis();
                 Log.d("ttt", "ACTION_DOWN: " + mTime);
                 if (this.mTouchType == TYPE_DELETE) {
                     if (mDecors.get(this.mFocusObjectIndex).getTouchType(touchPoint) == TYPE_DELETE) {
+                        if (mFocusObjectIndex != -1 && mDecors.get(mFocusObjectIndex).getType() == 0) {
+                            if (mOnHandlerItemListener != null) {
+                                mOnHandlerItemListener.onDeleteItem();
+                            }
+                        }
                         mDecors.remove(this.mFocusObjectIndex);
                         mFocusObjectIndex--;
                     }
@@ -195,6 +208,17 @@ public class CustomDrawSticker extends View {
                 mTimeCurrent = System.currentTimeMillis();
 
                 if (!mDecors.isEmpty()) {
+                    if (mTouchType == TYPE_NONE || mTouchType == TYPE_TAP) {
+                        if (mFocusObjectIndex != -1 && mDecors.get(mFocusObjectIndex).getType() == 0) {
+                            if (System.currentTimeMillis() - mTimeCurrent < 300) {
+                                if (mOnHandlerItemListener != null && !mIsMove) {
+                                    mOnHandlerItemListener.clickItem();
+                                }
+                            }
+                        }
+                    } else if (mFocusObjectIndex >= 0 && mFocusObjectIndex < mDecors.size() && mDecors.get(mFocusObjectIndex).getType() == 2) {
+                        Decor decor = mDecors.get(mFocusObjectIndex);
+                    }
                     mIsMove = true;
                     this.mTouchType = TYPE_NONE;
                     break;
@@ -215,11 +239,17 @@ public class CustomDrawSticker extends View {
                             Decor focusDecor = mDecors.get(this.mFocusObjectIndex);
                             focusDecor.setZoom(mLengthOld, mLengthNew);
                             mLengthOld = mLengthNew;
+                            if (mOnHandlerItemListener != null) {
+                                mOnHandlerItemListener.onZoomItem();
+                            }
                         }
                         break;
                     } else if (this.mTouchType == TYPE_CHANGE) {
                         if (mFocusObjectIndex != -1) {
                             mDecors.get(this.mFocusObjectIndex).setChange(touchPoint);
+                            if (mOnHandlerItemListener != null) {
+                                mOnHandlerItemListener.onZoomItem();
+                            }
                             break;
                         }
                     } else if (mIsMove && mFocusObjectIndex != -1 && mFocusObjectIndex < mDecors.size()) {
@@ -269,6 +299,7 @@ public class CustomDrawSticker extends View {
             }
         }
     }
+
 
     private void drawFrame(Canvas canvas, Decor decor) {
         Point[] points = decor.getRectPoints();
@@ -320,7 +351,7 @@ public class CustomDrawSticker extends View {
 
     public void addDecoItemText(Bitmap bitmap, int type, String text) {
         float scale = 1.0f;
-        mDecorText = new DecorText(bitmap, getWidth() / 2, getHeight() / 2, bitmap.getWidth() * scale, bitmap.getHeight() * scale, null, TYPE_NONE, type, scale);
+        mDecorText = new DecorText(bitmap, getWidth() / 2, getHeight() / 2, bitmap.getWidth() * scale, bitmap.getHeight() * scale, new Paint(), TYPE_NONE, type, scale);
         mDecorText.setText(text);
         addDecoItem(mDecorText);
     }

@@ -67,6 +67,9 @@
     <string name="blur">Blur</string>
     <string name="sample">Sample</string>
     <string name="radius">Radius</string>
+    <string name="default_text">Your text here</string>
+    <string name="open_panel">Open Panel</string>
+    <string name="change_text">Change Text</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>adjust</item>
@@ -84,5 +87,54 @@
         <item>Zoom In</item>
         <item>Zoom Out</item>
         <item>Rotate</item>
+    </string-array>
+    <array name="array_text_category">
+        <item>Font</item>
+        <item>Color</item>
+        <item>Setting</item>
+    </array>
+    <array name="array_font">
+        <item>default</item>
+        <item>icielpanton-light</item>
+        <item>Chunkfive</item>
+        <item>GreatVibes-Regular</item>
+        <item>Quicksand-Bold</item>
+        <item>Quicksand-BoldItalic</item>
+        <item>Quicksand-Italic</item>
+        <item>Quicksand-Light</item>
+        <item>Quicksand-LightItalic</item>
+        <item>Quicksand-Regular</item>
+        <item>Quicksand_Dash</item>
+    </array>
+    <string-array name="array_color">
+        <item>#000000</item>
+        <item>#FFC0CB</item>
+        <item>#FF0000</item>
+        <item>#008080</item>
+        <item>#0000FF</item>
+        <item>#EEEEEE</item>
+        <item>#FF7373</item>
+        <item>#40E0D0</item>
+        <item>#00FFFF</item>
+        <item>#FFD700</item>
+        <item>#CCCCCC</item>
+        <item>#C0C0C0</item>
+        <item>#333333</item>
+        <item>#B0E0E6</item>
+        <item>#468499</item>
+        <item>#D3FFCE</item>
+        <item>#666666</item>
+        <item>#FFA500</item>
+        <item>#00FF00</item>
+        <item>#660066</item>
+        <item>#003366</item>
+        <item>#800080</item>
+        <item>#F6546A</item>
+        <item>#FFFF00</item>
+        <item>#088DA5</item>
+        <item>#20B2AA</item>
+        <item>#F0F8FF</item>
+        <item>#7FFFD4</item>
+        <item>#FFE4E1</item>
     </string-array>
 </resources>

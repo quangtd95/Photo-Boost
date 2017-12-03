@@ -69,6 +69,7 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
 
         @Override protected String doInBackground(Void... voids) {
             return EditPhotoUtils.scaleBitmapFitScreen(mPath, mWidthFrame, mHeightFrame);
+//            return EditPhotoUtils.getSquareImage(mPath, mWidthFrame, mHeightFrame);
         }
 
         @Override protected void onPostExecute(String s) {

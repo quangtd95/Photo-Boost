@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:background="@drawable/layout_corner_white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edtText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dip30"
+        android:layout_marginRight="@dimen/dip30"
+        android:layout_marginTop="@dimen/dip20"
+        android:layout_weight="1"
+        android:background="@color/color_white"
+        android:gravity="left"
+        android:inputType="text"
+        android:padding="@dimen/dip10"
+        android:textSize="@dimen/text_big_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dip10"
+        android:layout_marginLeft="@dimen/dip20"
+        android:layout_marginRight="@dimen/dip20"
+        android:layout_marginTop="@dimen/dip10"
+        android:gravity="right|bottom">
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dip40"
+            android:background="@drawable/button_close_selector_dialog"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dip20"
+            android:paddingRight="@dimen/dip20"
+            android:text="@string/btn_cancel"
+            android:textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dip40"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_close_selector_dialog"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dip20"
+            android:paddingRight="@dimen/dip20"
+            android:text="@string/btn_ok"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+</LinearLayout>

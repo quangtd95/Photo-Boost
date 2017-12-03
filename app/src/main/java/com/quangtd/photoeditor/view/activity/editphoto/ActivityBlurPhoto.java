@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import com.muddzdev.viewshotlibrary.Viewshot;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Effect;
@@ -17,6 +18,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.File;
 
 import jp.wasabeef.blurry.Blurry;
 
@@ -81,11 +84,21 @@ public class ActivityBlurPhoto extends ActivityBase implements CustomBlurBar.OnB
 
     @Override public void onClickBlurOk() {
         showProgressDialog();
-        mImgBackground.setDrawingCacheEnabled(true);
-        Bitmap bitmap = mImgBackground.getDrawingCache();
-        String path = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors());
-        dismissProgressDialog();
-        setResult(RESULT_OK, new Intent().putExtra(GlobalDefine.KEY_IMAGE, path));
-        finish();
+        Viewshot.of(mImgBackground)
+                .setFilename(System.currentTimeMillis() + "")
+                .setDirectoryPath("Photo_Editor/.temp")
+                .toPNG()
+                .setOnSaveResultListener((isSaved, path) -> {
+                    if (isSaved) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(path);
+                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors());
+                        dismissProgressDialog();
+                        setResult(RESULT_OK, new Intent().putExtra(GlobalDefine.KEY_IMAGE, pathFinal));
+                        new File(path).delete();
+                        finish();
+                    }
+                })
+                .save();
+
     }
 }
