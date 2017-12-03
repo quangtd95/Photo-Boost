@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quangtd.photoeditor.R;
@@ -30,6 +31,7 @@ public class CustomFilterAdapter extends RecyclerView.Adapter<CustomFilterAdapte
     private CustomFilterBar.OnClickFilterListener mListener;
     private String mPath;
     private Bitmap mBitmapOrigin;
+    private int mCurrent = 0;
 
     public CustomFilterAdapter(Context context, List<Filter> filters, String path) {
         this.mContext = context;
@@ -51,6 +53,7 @@ public class CustomFilterAdapter extends RecyclerView.Adapter<CustomFilterAdapte
     }
 
     class FilterHolder extends RecyclerView.ViewHolder {
+        LinearLayout mBackground;
         TextView mTvFilter;
         ImageView mImgFilter;
 
@@ -58,15 +61,24 @@ public class CustomFilterAdapter extends RecyclerView.Adapter<CustomFilterAdapte
             super(itemView);
             mImgFilter = itemView.findViewById(R.id.imgFilter);
             mTvFilter = itemView.findViewById(R.id.tvFilter);
+            mBackground = itemView.findViewById(R.id.background);
         }
 
         void bindData(Filter filter) {
             mImgFilter.setImageBitmap(mBitmapOrigin);
             mImgFilter.setOnClickListener(v -> {
                 if (mListener != null) {
+                    notifyItemChanged(mCurrent);
+                    mCurrent = getAdapterPosition();
                     mListener.onClickItemFilter(getAdapterPosition());
+                    notifyItemChanged(mCurrent);
                 }
             });
+            if (getAdapterPosition() == mCurrent) {
+                mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            } else {
+                mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorBlack));
+            }
             mTvFilter.setText(filter.name());
         }
     }

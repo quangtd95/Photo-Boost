@@ -40,8 +40,7 @@ public class ColorAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int color = Color.parseColor(mColors[position]); //The color u want
-//        ((ColorViewHolder) holder).mImgColor.setColorFilter(color);
+        int color = Color.parseColor(mColors[position]);
         ((ColorViewHolder) holder).mImgColor.setBackgroundColor(color);
     }
 
@@ -56,7 +55,7 @@ public class ColorAdapter extends RecyclerView.Adapter {
 
         ColorViewHolder(View itemView) {
             super(itemView);
-            mImgColor = (ImageView) itemView.findViewById(R.id.imgColor);
+            mImgColor = itemView.findViewById(R.id.imgColor);
             mImgColor.getLayoutParams().width = mSize;
             mImgColor.getLayoutParams().height = mSize * 2 / 3;
             mImgColor.setOnClickListener(this);

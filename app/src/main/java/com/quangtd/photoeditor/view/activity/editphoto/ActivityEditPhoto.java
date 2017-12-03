@@ -1,5 +1,6 @@
 package com.quangtd.photoeditor.view.activity.editphoto;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -43,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * QuangTD on 10/15/2017.
  */
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
 public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomAdjustBar.OnClickAdjustListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomEffectBar.OnClickEffectListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;

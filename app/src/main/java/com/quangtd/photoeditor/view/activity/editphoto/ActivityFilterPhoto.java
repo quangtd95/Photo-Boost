@@ -25,8 +25,23 @@ import java.io.File;
 import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.GPUImageBrightnessFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageBulgeDistortionFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageHalftoneFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageHazeFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageKuwaharaFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageLaplacianFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageLookupFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageMonochromeFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageNonMaximumSuppressionFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageSharpenFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageSmoothToonFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageSwirlFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageToonFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
+import jp.co.cyberagent.android.gpuimage.GPUImageVignetteFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageWhiteBalanceFilter;
 
 /**
  * QuangTD on 12/2/2017.
@@ -55,22 +70,109 @@ public class ActivityFilterPhoto extends ActivityBase implements CustomFilterBar
         mSb.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 super.onProgressChanged(seekBar, progress, fromUser);
-
+                handleChangeProgressBar(progress);
             }
         });
     }
 
+    private void handleChangeProgressBar(int progress) {
+        if (mGpuImageFilter == null) return;
+        Filter filter = Filter.values()[mCurrentFilter];
+        switch (filter) {
+            case AMATORKA:
+                GPUImageLookupFilter mGpuImageFilter2 = (GPUImageLookupFilter) mGpuImageFilter;
+                mGpuImageFilter2.setIntensity(progress * 1.0f / 255);
+                break;
+            case BEAUTY:
+                GPUImageSharpenFilter imageSharpenFilter = (GPUImageSharpenFilter) mGpuImageFilter;
+                imageSharpenFilter.setSharpness(progress * 1.0f / 255 * 8 - 4);
+                break;
+            case BMW:
+                break;
+            case SWIRL:
+                GPUImageSwirlFilter gpuImageSwirlFilter = (GPUImageSwirlFilter) mGpuImageFilter;
+                gpuImageSwirlFilter.setRadius(progress * 1.0f / 255);
+                break;
+            case BRIGHTNESS:
+                GPUImageBrightnessFilter gpuImageBrightnessFilter = (GPUImageBrightnessFilter) mGpuImageFilter;
+                gpuImageBrightnessFilter.setBrightness(progress * 1.0f / 255 * 2 - 1);
+                break;
+            case LAPLACIAN:
+                GPUImageLaplacianFilter gpuImageLaplacianFilter = (GPUImageLaplacianFilter) mGpuImageFilter;
+                gpuImageLaplacianFilter.setLineSize(progress * 1.0f / 255 * 3);
+                break;
+            case MONOCHROME:
+                GPUImageMonochromeFilter gpuImageMonochromeFilter = (GPUImageMonochromeFilter) mGpuImageFilter;
+                gpuImageMonochromeFilter.setIntensity(progress * 1.0f / 255);
+                break;
+            case CGA_COLORSPACE:
+                break;
+            case VIGNETTE:
+                GPUImageVignetteFilter gpuImageVignetteFilter = (GPUImageVignetteFilter) mGpuImageFilter;
+                gpuImageVignetteFilter.setVignetteStart(progress * 1.0f / 255);
+                break;
+            case WHITE_BALANCE:
+                GPUImageWhiteBalanceFilter gpuImageWhiteBalanceFilter = (GPUImageWhiteBalanceFilter) mGpuImageFilter;
+                gpuImageWhiteBalanceFilter.setTint(progress * 1.0f / 255 * 100);
+                break;
+            case DILATION:
+                break;
+            case KUWAHARA:
+                GPUImageKuwaharaFilter gpuImageKuwaharaFilter = (GPUImageKuwaharaFilter) mGpuImageFilter;
+                gpuImageKuwaharaFilter.setRadius((int) (progress * 1.0f / 255 * 10));
+                break;
+            case RGB_DILATION:
+                break;
+            case SKETCH:
+                break;
+            case TOON:
+                GPUImageToonFilter gpuImageToonFilter = (GPUImageToonFilter) mGpuImageFilter;
+                gpuImageToonFilter.setQuantizationLevels(progress * 1.0f / 255 * 30);
+                break;
+            case SMOOTH_TOON:
+                GPUImageSmoothToonFilter gpuImageSmoothToonFilter = (GPUImageSmoothToonFilter) mGpuImageFilter;
+                gpuImageSmoothToonFilter.setBlurSize(progress * 1.0f / 255);
+                break;
+
+            case BULGE_DISTORTION:
+                GPUImageBulgeDistortionFilter gpuImageBulgeDistortionFilter = (GPUImageBulgeDistortionFilter) mGpuImageFilter;
+                gpuImageBulgeDistortionFilter.setRadius(progress * 1.0f / 255);
+                break;
+            case HAZE:
+                GPUImageHazeFilter gpuImageHazeFilter = (GPUImageHazeFilter) mGpuImageFilter;
+                gpuImageHazeFilter.setSlope(progress * 1.0f / 255 * 0.6f - 0.3f);
+                break;
+            case NON_MAXIMUM_SUPPRESSION:
+                GPUImageNonMaximumSuppressionFilter gpuImageNonMaximumSuppressionFilter = (GPUImageNonMaximumSuppressionFilter) mGpuImageFilter;
+                gpuImageNonMaximumSuppressionFilter.setLineSize(progress * 1.0f / 255 * 10);
+                break;
+            case FALSE_COLOR:
+                break;
+            case COLOR_BALANCE:
+                break;
+            case LEVELS_FILTER_MIN:
+                break;
+            case HALFTONE:
+                GPUImageHalftoneFilter gpuImageHalftoneFilter = (GPUImageHalftoneFilter) mGpuImageFilter;
+                gpuImageHalftoneFilter.setFractionalWidthOfAPixel(progress * 1.0f / 255 * 0.1f);
+                break;
+        }
+        mGpuImageView.requestRender();
+    }
+
     private int mCurrentFilter;
+    private GPUImageFilter mGpuImageFilter;
 
     @Override public void onClickItemFilter(int position) {
         if (mCurrentFilter == position) return;
         if (position == 0) {
-            mSb.setVisibility(View.VISIBLE);
-            mGpuImageView.setFilter(new GPUImageFilter());
-        } else {
             mSb.setVisibility(View.INVISIBLE);
-            mGpuImageView.setFilter(Filter.getGpuFilter(this, mFilters.get(position)));
+            mGpuImageFilter = new GPUImageFilter();
+        } else {
+            mSb.setVisibility(View.VISIBLE);
+            mGpuImageFilter = Filter.getGpuFilter(this, mFilters.get(position));
         }
+        mGpuImageView.setFilter(mGpuImageFilter);
         mCurrentFilter = position;
 
 
@@ -81,13 +183,7 @@ public class ActivityFilterPhoto extends ActivityBase implements CustomFilterBar
     }
 
     @Override public void onClickFilterOk() {
-        GPUImageFilter gpuImageFilter;
-        if (mCurrentFilter == 0) {
-            gpuImageFilter = new GPUImageFilter();
-        } else {
-            gpuImageFilter = Filter.getGpuFilter(this, mFilters.get(mCurrentFilter));
-        }
-        new FilterImageAsync(gpuImageFilter).execute();
+        new FilterImageAsync(mGpuImageFilter).execute();
     }
 
     private class FilterImageAsync extends AsyncTask<Void, Void, String> {

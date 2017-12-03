@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.quangtd.photoeditor.R;
@@ -20,6 +21,7 @@ import lombok.experimental.Accessors;
 public class CustomEffectAdapter extends RecyclerView.Adapter<CustomEffectAdapter.EffectHolder> {
     private final Context mContext;
     private int[] mResIds;
+    private int mCurrent = -1;
     @Accessors(prefix = "m")
     @Setter
     private CustomEffectBar.OnClickEffectListener mListener;
@@ -44,16 +46,26 @@ public class CustomEffectAdapter extends RecyclerView.Adapter<CustomEffectAdapte
     class EffectHolder extends RecyclerView.ViewHolder {
 
         ImageView mImgEffect;
+        LinearLayout mBackground;
 
         EffectHolder(View itemView) {
             super(itemView);
-            mImgEffect = (ImageView) itemView.findViewById(R.id.imgEffect);
+            mImgEffect = itemView.findViewById(R.id.imgEffect);
+            mBackground = itemView.findViewById(R.id.background);
         }
 
         void bindData(int resId) {
             Glide.with(mContext).load(resId).into(mImgEffect);
+            if (getAdapterPosition() == mCurrent) {
+                mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            } else {
+                mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorBlack));
+            }
             mImgEffect.setOnClickListener(v -> {
                 if (mListener != null) mListener.onClickItemEffect(getAdapterPosition());
+                notifyItemChanged(mCurrent);
+                mCurrent = getAdapterPosition();
+                notifyItemChanged(mCurrent);
             });
         }
     }
