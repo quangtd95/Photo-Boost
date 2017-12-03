@@ -189,31 +189,31 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
+    private void changeImage(String path) {
+        int widthFrame = ScreenUtils.getWidthScreen(this);
+        int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+        getPresenter(this).prepareImage(path, widthFrame, heightFrame);
+    }
+
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_FILTER)
     public void onResultFilter(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            int widthFrame = ScreenUtils.getWidthScreen(this);
-            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
-            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
+            changeImage(data.getStringExtra(GlobalDefine.KEY_IMAGE));
         }
     }
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_BLUR)
     public void onResultBlur(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            int widthFrame = ScreenUtils.getWidthScreen(this);
-            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
-            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
+            changeImage(data.getStringExtra(GlobalDefine.KEY_IMAGE));
         }
     }
 
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_TEXT)
-    public void onResultText(int resultCode,Intent data){
+    public void onResultText(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            int widthFrame = ScreenUtils.getWidthScreen(this);
-            int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
-            getPresenter(this).prepareImage(data.getStringExtra(GlobalDefine.KEY_IMAGE), widthFrame, heightFrame);
+            changeImage(data.getStringExtra(GlobalDefine.KEY_IMAGE));
         }
     }
 

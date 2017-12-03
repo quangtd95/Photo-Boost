@@ -123,7 +123,11 @@ public class ActivityEditText extends ActivityBase implements View.OnClickListen
         dlNotify.show();
     }
 
+    private boolean mIsPrepared;
+
     private void addText() {
+        if (mIsPrepared) return;
+        mIsPrepared = true;
         stringToBitMap(mText);
         mCustomDrawSticker.setVisibility(View.VISIBLE);
         mCustomDrawSticker.post(() -> mCustomDrawSticker.addDecoItemText(mBitmap, 0, mText));
