@@ -202,7 +202,7 @@ public class ActivityFilterPhoto extends ActivityBase implements CustomFilterBar
 
         @Override protected String doInBackground(Void... voids) {
             Bitmap filter = mGpuImage.getBitmapWithFilterApplied();
-            return EditPhotoUtils.editAndSaveImage(filter, new Effect(), null);
+            return EditPhotoUtils.editAndSaveImage(filter, new Effect(), null,true);
         }
 
         @Override protected void onPostExecute(String s) {

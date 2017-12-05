@@ -31,7 +31,7 @@ public class FireBaseUtils {
 
     private FireBaseUtils() {
         FirebaseStorage fireBaseStorage = FirebaseStorage.getInstance();
-        storageReference = fireBaseStorage.getReference().child(GlobalDefine.APP_NAME);
+        storageReference = fireBaseStorage.getReference().child("photo_editor");
         mAuth = FirebaseAuth.getInstance();
     }
 

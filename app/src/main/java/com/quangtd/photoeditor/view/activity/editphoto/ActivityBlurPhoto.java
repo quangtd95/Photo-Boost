@@ -86,12 +86,12 @@ public class ActivityBlurPhoto extends ActivityBase implements CustomBlurBar.OnB
         showProgressDialog();
         Viewshot.of(mImgBackground)
                 .setFilename(System.currentTimeMillis() + "")
-                .setDirectoryPath("Photo_Editor/.temp")
+                .setDirectoryPath("." + GlobalDefine.APP_NAME)
                 .toPNG()
                 .setOnSaveResultListener((isSaved, path) -> {
                     if (isSaved) {
                         Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors());
+                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors(), true);
                         dismissProgressDialog();
                         setResult(RESULT_OK, new Intent().putExtra(GlobalDefine.KEY_IMAGE, pathFinal));
                         new File(path).delete();

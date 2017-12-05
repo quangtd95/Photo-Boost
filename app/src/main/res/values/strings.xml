@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Photo Editor</string>
+    <string name="app_name">Photo Boost</string>
     <string name="key_save_first_open_app"><![CDATA[key_save_first_open_app\">key_save_first_open_app]]></string>
     <string name="text_theme">Theme</string>
     <string name="text_save">Save</string>
@@ -81,7 +81,6 @@
         <item>share</item>
     </string-array>
     <string-array name="list_tools">
-        <item>Change</item>
         <item>Flip H</item>
         <item>Flip V</item>
         <item>Zoom In</item>

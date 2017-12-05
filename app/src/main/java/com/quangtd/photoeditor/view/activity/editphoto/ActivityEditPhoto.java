@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.chrisbanes.photoview.PhotoView;
+import com.muddzdev.viewshotlibrary.Viewshot;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.Effect;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
+import com.quangtd.photoeditor.utils.EditPhotoUtils;
+import com.quangtd.photoeditor.utils.FileUtils;
 import com.quangtd.photoeditor.utils.ScreenUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
@@ -37,6 +42,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomAdjustBar.OnClickAdjustListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomEffectBar.OnClickEffectListener {
     @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
     @ViewById(R.id.bottomTools) CustomAdjustBar mCustomAdjustBar;
-    @ViewById(R.id.imgPreview) ImageView mCustomPreview;
+    @ViewById(R.id.imgPreview) PhotoView mCustomPreview;
     @ViewById(R.id.imgBack) CircleImageView mImgBack;
     @ViewById(R.id.imgSave) CircleImageView mImgSave;
     @ViewById(R.id.bottomEffects) CustomEffectBar mCustomEffectBar;
@@ -60,8 +66,11 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     @ViewById(R.id.sb) SeekBar mSeekBar;
     @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
     Bitmap mBitmap;
+    private static float DEFAULT_MAX_SCALE = 3.0f;
+    private static float DEFAULT_MIN_SCALE = 1.0f;
 
     private boolean mToolsVisible;
+    private Matrix mMatrix;
 
     @Override protected void init() {
         super.init();
@@ -136,8 +145,15 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
             mImgBack.setVisibility(View.VISIBLE);
             mImgSave.setVisibility(View.VISIBLE);
         } else {
-            mImgBack.setVisibility(View.INVISIBLE);
-            mImgSave.setVisibility(View.INVISIBLE);
+            mImgBack.setVisibility(View.GONE);
+            mImgSave.setVisibility(View.GONE);
+        }
+        if (view == mCustomAdjustBar) {
+            mCustomDrawSticker.setVisibility(View.GONE);
+            mCustomDrawEffect.setVisibility(View.GONE);
+        } else {
+            mCustomDrawSticker.setVisibility(View.VISIBLE);
+            mCustomDrawEffect.setVisibility(View.VISIBLE);
         }
         mSeekBar.setVisibility(View.INVISIBLE);
     }
@@ -149,6 +165,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 StickerActivity_.intent(this).startForResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER);
                 break;
             case ADJUST:
+                if (mMatrix == null) mMatrix = new Matrix();
                 showBar(mCustomAdjustBar);
                 break;
             case EFFECT:
@@ -169,18 +186,6 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
-    @Override public void clickItemAdjust(CustomAdjustBar.TYPE type) {
-        Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override public void clickCloseAdjust() {
-        showBar(mCustomFeatureBar);
-    }
-
-    @Override public void clickOkAdjust() {
-
-    }
-
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER)
     public void onResultGetSticker(int resultCode, Intent data) {
         if (resultCode == GlobalDefine.MY_RESULT_CODE_GET_STICKER) {
@@ -192,9 +197,20 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     }
 
     private void changeImage(String path) {
+        mCustomPreview.setRotation(0);
+        mCustomPreview.setScale(1);
+        mCustomPreview.setScaleX(1);
+        mCustomPreview.setScaleY(1);
+        mMatrix = null;
         int widthFrame = ScreenUtils.getWidthScreen(this);
         int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
         getPresenter(this).prepareImage(path, widthFrame, heightFrame);
+    }
+
+    private void changeImage(Matrix matrix) {
+        int widthFrame = ScreenUtils.getWidthScreen(this);
+        int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
+        getPresenter(this).prepareImage(mImagePath, matrix, widthFrame, heightFrame);
     }
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_FILTER)
@@ -296,6 +312,66 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         showBar(mCustomFeatureBar);
     }
 
+    @Override public void clickItemAdjust(CustomAdjustBar.TYPE type) {
+        switch (type) {
+            case ZOOM_IN:
+                float scale = mCustomPreview.getScale() + 0.5f;
+                mCustomPreview.setScale((scale < DEFAULT_MAX_SCALE) ? scale : DEFAULT_MAX_SCALE, true);
+                break;
+            case ZOOM_OUT:
+                scale = mCustomPreview.getScale() - 0.5f;
+                mCustomPreview.setScale((scale < DEFAULT_MIN_SCALE) ? DEFAULT_MIN_SCALE : scale, true);
+                break;
+            case ROTATE:
+                float mRotation = mCustomPreview.getRotation() + 90;
+                if (mRotation >= 360) mRotation = 0;
+                if (mRotation < 0) mRotation = 0;
+                mCustomPreview.setRotation(mRotation);
+                mMatrix.setRotate(mRotation);
+                break;
+            case FLIP_H:
+                float scaleX = mCustomPreview.getScaleX();
+                mCustomPreview.setScaleX(-1 * scaleX);
+//                mMatrix.setScale(scaleX, mCustomPreview.getScaleY());
+                mMatrix.postScale(-1,1,mCustomPreview.getWidth() / 2,mCustomPreview.getHeight() / 2);
+
+                break;
+            case FLIP_V:
+                float scaleY = mCustomPreview.getScaleY();
+                mCustomPreview.setScaleY(-1 * scaleY);
+//                mMatrix.setScale(mCustomPreview.getScaleX(), scaleY);
+                mMatrix.postScale(1,-1,mCustomPreview.getWidth() / 2,mCustomPreview.getHeight() / 2);
+                break;
+        }
+    }
+
+    @Override public void clickCloseAdjust() {
+        mCustomPreview.setRotation(0);
+        mCustomPreview.setScale(1);
+        mCustomPreview.setScaleX(1);
+        mCustomPreview.setScaleY(1);
+        mMatrix = null;
+        showBar(mCustomFeatureBar);
+    }
+
+    @Override public void clickOkAdjust() {
+        showLoading();
+        Viewshot.of(mCustomPreview)
+                .setFilename(System.currentTimeMillis() + "")
+                .setDirectoryPath("." + GlobalDefine.APP_NAME)
+                .toPNG()
+                .setOnSaveResultListener((isSaved, path) -> {
+                    if (isSaved) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(path);
+                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors(), mMatrix, true);
+                        changeImage(pathFinal);
+                        showBar(mCustomFeatureBar);
+                    }
+                })
+                .save();
+
+    }
+
     @Override public void downloadEffectSuccess(String path) {
         mCustomDrawEffect.setResource(path);
     }
@@ -304,5 +380,9 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        FileUtils.deleteFolder(new File(GlobalDefine.OUTPUT_TEMP));
+    }
 }
 

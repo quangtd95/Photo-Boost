@@ -39,7 +39,7 @@ public class EditPhotoUtils {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         Bitmap result = (w <= h) ? Bitmap.createBitmap(bitmap, 0, (h - w) / 2, w, w) : Bitmap.createBitmap(bitmap, (w - h) / 2, 0, h, h);
-        return saveImage(Bitmap.createScaledBitmap(result, widthScreen, widthScreen, true));
+        return saveImage(Bitmap.createScaledBitmap(result, widthScreen, widthScreen, true), true);
     }
 
     private static Bitmap decodeScaledBitmapFromSdCard(String filePath, int reqWidth, int reqHeight) {
@@ -88,7 +88,7 @@ public class EditPhotoUtils {
         return inSampleSize;
     }
 
-    public static String scaleBitmapFitScreen(String path, int width, int height) {
+    public static String scaleBitmapFitScreen(String path, Matrix matrix, int width, int height) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, bitmapOptions);
@@ -101,13 +101,22 @@ public class EditPhotoUtils {
         bitmapOptions.inJustDecodeBounds = false;
         bitmapOptions.inSampleSize = Math.round(aX);
         Bitmap tmp = BitmapFactory.decodeFile(path, bitmapOptions);
-        Bitmap scaled = Bitmap.createScaledBitmap(tmp, (int) (imageWidth * aX), (int) (imageHeight * aX), true);
-        return saveImage(scaled);
+        Bitmap scaled;
+        if (matrix == null) {
+            scaled = Bitmap.createScaledBitmap(tmp, (int) (imageWidth * aX), (int) (imageHeight * aX), true);
+        } else {
+            scaled = Bitmap.createBitmap(tmp, 0, 0, (int) (imageWidth * aX), (int) (imageHeight * aX), matrix, true);
+        }
+        return saveImage(scaled, true);
     }
 
-    public static String editAndSaveImage(Bitmap bitmap, Effect effect, List<Decor> decors) {
+    public static String editAndSaveImage(Bitmap bitmap, Effect effect, List<Decor> decors, Matrix matrix, boolean isTemp) {
         Bitmap edited = editImage(bitmap, effect, decors);
-        return saveImage(edited);
+        return saveImage(edited, matrix, isTemp);
+    }
+
+    public static String editAndSaveImage(Bitmap bitmap, Effect effect, List<Decor> decors, boolean isTemp) {
+        return editAndSaveImage(bitmap, effect, decors, null, isTemp);
     }
 
     private static Bitmap editImage(Bitmap bitmap, Effect effect, List<Decor> decors) {
@@ -127,26 +136,42 @@ public class EditPhotoUtils {
             //draw sticker
             for (int i = 0; i < decors.size(); i++) {
                 Decor decor = decors.get(i);
-                Matrix matrix = decor.getMatrix(bitmap.getWidth() * 1.0f / WIDTH_PREVIEW, bitmap.getHeight() * 1.0f / HEIGHT_PREVIEW);
-                canvas.drawBitmap(decor.getBitmap(), matrix, decor.getPaint());
+                Matrix matrixDecor = decor.getMatrix(bitmap.getWidth() * 1.0f / WIDTH_PREVIEW, bitmap.getHeight() * 1.0f / HEIGHT_PREVIEW);
+                canvas.drawBitmap(decor.getBitmap(), matrixDecor, decor.getPaint());
             }
         }
         return mutableBitmap;
     }
 
-    private static String saveImage(Bitmap bitmap) {
-        String fileName = GlobalDefine.OUTPUT_FOLDER + "Image_" + TimeUtils.parseTimeStampToString(System.currentTimeMillis()) + ".png";
-        File dir = new File(GlobalDefine.OUTPUT_FOLDER);
+    private static String saveImage(Bitmap bitmap, Matrix matrix, boolean isTemp) {
+        String fileName;
+        if (isTemp) {
+            fileName = GlobalDefine.OUTPUT_TEMP + "Temp_" + TimeUtils.parseTimeStampToString(System.currentTimeMillis()) + ".png";
+        } else {
+            fileName = GlobalDefine.OUTPUT_FOLDER + "Image_" + TimeUtils.parseTimeStampToString(System.currentTimeMillis()) + ".png";
+        }
+        File dir = new File((isTemp) ? GlobalDefine.OUTPUT_TEMP : GlobalDefine.OUTPUT_FOLDER);
         if (!dir.exists()) dir.mkdirs();
         try {
             OutputStream stream = new FileOutputStream(fileName);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            ((matrix == null) ?
+                    bitmap :
+                    Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true)
+            ).compress(Bitmap.CompressFormat.PNG, 100, stream);
+
             stream.close();
         } catch (IOException ex) {
             LogUtils.e(EditPhotoUtils.class.getSimpleName(), ex.toString());
             return null;
         }
+        if (!isTemp) {
+            FileUtils.deleteFolder(new File(GlobalDefine.OUTPUT_TEMP));
+        }
         return fileName;
+    }
+
+    private static String saveImage(Bitmap bitmap, boolean isTemp) {
+        return saveImage(bitmap,null,isTemp);
     }
 
     public static Bitmap convertToMutable(Bitmap imgIn) {

@@ -50,8 +50,8 @@ class CustomAdjustAdapter extends RecyclerView.Adapter<CustomAdjustAdapter.ToolH
 
         ToolHolder(View itemView) {
             super(itemView);
-            mImgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
-            mTvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            mImgIcon = itemView.findViewById(R.id.imgIcon);
+            mTvTitle = itemView.findViewById(R.id.tvTitle);
         }
 
         void bindData(CustomAdjustBar.TYPE type, String title, int id) {

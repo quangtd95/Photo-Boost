@@ -1,6 +1,7 @@
 package com.quangtd.photoeditor.presenter;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 
 import com.quangtd.photoeditor.model.data.Decor;
@@ -47,28 +48,34 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
         Bitmap bitmap = getIFace().getPhoto();
         Effect effect = getIFace().getEffect();
         List<Decor> decors = getIFace().getListDecor();
-        new EditPhotoAsync(bitmap, effect, decors).execute();
+        new EditPhotoAsync(bitmap, effect, decors, false).execute();
     }
 
     public void prepareImage(String mImagePath, int widthFrame, int heightFrame) {
+        prepareImage(mImagePath, null, widthFrame, heightFrame);
+    }
+
+    public void prepareImage(String mImagePath, Matrix matrix, int widthFrame, int heightFrame) {
         getIFace().showLoading();
-        new LoadLargeImageAsyncTask(this, mImagePath, widthFrame, heightFrame).execute();
+        new LoadLargeImageAsyncTask(this, mImagePath, matrix, widthFrame, heightFrame).execute();
     }
 
     private static class LoadLargeImageAsyncTask extends AsyncTask<Void, Void, String> {
         private int mWidthFrame, mHeightFrame;
         private String mPath;
+        private Matrix mMatrix;
         private OnLoadImageFinishListener mListener;
 
-        LoadLargeImageAsyncTask(OnLoadImageFinishListener listener, String path, int widthFrame, int heightFrame) {
+        LoadLargeImageAsyncTask(OnLoadImageFinishListener listener, String path, Matrix mMatrix, int widthFrame, int heightFrame) {
             this.mPath = path;
             this.mWidthFrame = widthFrame;
             this.mHeightFrame = heightFrame;
             this.mListener = listener;
+            this.mMatrix = mMatrix;
         }
 
         @Override protected String doInBackground(Void... voids) {
-            return EditPhotoUtils.scaleBitmapFitScreen(mPath, mWidthFrame, mHeightFrame);
+            return EditPhotoUtils.scaleBitmapFitScreen(mPath, mMatrix, mWidthFrame, mHeightFrame);
 //            return EditPhotoUtils.getSquareImage(mPath, mWidthFrame, mHeightFrame);
         }
 
@@ -78,14 +85,16 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
     }
 
     private class EditPhotoAsync extends AsyncTask<Void, Void, String> {
+        private final boolean mIsTemp;
         private Bitmap mInput;
         private Effect mEffect;
         private List<Decor> decors;
 
-        EditPhotoAsync(Bitmap bitmap, Effect effect, List<Decor> decors) {
+        EditPhotoAsync(Bitmap bitmap, Effect effect, List<Decor> decors, boolean isTemp) {
             this.mInput = bitmap;
             this.mEffect = effect;
             this.decors = decors;
+            this.mIsTemp = isTemp;
         }
 
         @Override protected void onPreExecute() {
@@ -94,10 +103,11 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
         }
 
         @Override protected String doInBackground(Void... params) {
-            return EditPhotoUtils.editAndSaveImage(mInput, mEffect, decors);
+            return EditPhotoUtils.editAndSaveImage(mInput, mEffect, decors, mIsTemp);
         }
 
         @Override protected void onPostExecute(String s) {
+
             super.onPostExecute(s);
             getIFace().hideLoading();
             getIFace().showOutput(s);

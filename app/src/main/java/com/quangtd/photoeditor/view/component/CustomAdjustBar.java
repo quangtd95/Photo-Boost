@@ -32,11 +32,10 @@ public class CustomAdjustBar extends LinearLayout {
         void clickCloseAdjust();
 
         void clickOkAdjust();
-
     }
 
     public enum TYPE {
-        CHANGE_PHOTO, FLIP_H, FLIP_V, ZOOM_IN, ZOOM_OUT, ROTATE
+        FLIP_H, FLIP_V, ZOOM_IN, ZOOM_OUT, ROTATE
     }
 
     public CustomAdjustBar(Context context, @Nullable AttributeSet attrs) {
@@ -46,7 +45,7 @@ public class CustomAdjustBar extends LinearLayout {
     @AfterViews
     public void init() {
         mTools = getContext().getResources().getStringArray(R.array.list_tools);
-        mIcons = new int[]{R.drawable.ic_change_photo, R.drawable.ic_flip_h, R.drawable.ic_flip_v, R.drawable.ic_zoom_in, R.drawable.ic_zoom_out, R.drawable.ic_rotate};
+        mIcons = new int[]{R.drawable.ic_flip_h, R.drawable.ic_flip_v, R.drawable.ic_zoom_in, R.drawable.ic_zoom_out, R.drawable.ic_rotate};
         mAdapter = new CustomAdjustAdapter(this.getContext(), mTools, mIcons);
         mRvTools.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRvTools.setAdapter(mAdapter);

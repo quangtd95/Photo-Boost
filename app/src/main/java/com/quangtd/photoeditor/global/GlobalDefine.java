@@ -7,7 +7,7 @@ import android.os.Environment;
  */
 
 public class GlobalDefine {
-    public static final String APP_NAME = "photo_editor";
+    public static final String APP_NAME = "Photo_boost";
     public static final String STICKER_FOLDER = "stickers";
     public static final String STICKER_FILE_FORMAT = ".image_%d.png";
     public static final String EFFECT_FOLDER = "effects";
@@ -32,5 +32,6 @@ public class GlobalDefine {
     public static final String EFFECT_FOLDER_LOCAL = Environment.getExternalStorageDirectory()
             + "/." + APP_NAME + "/." + EFFECT_FOLDER + "/";
     public static final String OUTPUT_FOLDER = Environment.getExternalStorageDirectory() + "/" + APP_NAME + "/";
+    public static final String OUTPUT_TEMP = Environment.getExternalStorageDirectory() + "/." + APP_NAME + "/";
 
 }

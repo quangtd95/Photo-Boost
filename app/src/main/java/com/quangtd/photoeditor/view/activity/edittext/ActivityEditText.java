@@ -329,7 +329,7 @@ public class ActivityEditText extends ActivityBase implements View.OnClickListen
         }
 
         @Override protected String doInBackground(Void... voids) {
-            return EditPhotoUtils.editAndSaveImage(mBitmapOrigin, null, mCustomDrawSticker.getDecors());
+            return EditPhotoUtils.editAndSaveImage(mBitmapOrigin, null, mCustomDrawSticker.getDecors(),true);
         }
 
         @Override protected void onPostExecute(String path) {

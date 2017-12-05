@@ -29,7 +29,7 @@ public class ActivityIntro extends MaterialIntroActivity {
                 .backgroundColor(R.color.second_slide_background)
                 .buttonsColor(R.color.second_slide_buttons)
                 .image(R.mipmap.img_equipment)
-                .title("Photo Editor")
+                .title(getResources().getString(R.string.app_name))
                 .description("Easy & Quick")
                 .build());
 
@@ -47,7 +47,7 @@ public class ActivityIntro extends MaterialIntroActivity {
                         .title("13PFIEV3")
                         .description("Quang - Sang - Nhan")
                         .build(),
-                new MessageButtonBehaviour(v -> showMessage("Try its!"), "Photo Editor"));
+                new MessageButtonBehaviour(v -> showMessage("Try its!"), getResources().getString(R.string.app_name)));
 
     }
 
