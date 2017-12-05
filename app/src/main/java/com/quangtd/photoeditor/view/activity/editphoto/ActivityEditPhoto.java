@@ -363,7 +363,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 .setOnSaveResultListener((isSaved, path) -> {
                     if (isSaved) {
                         Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), mCustomDrawSticker.getDecors(), mMatrix, true);
+                        String pathFinal = EditPhotoUtils.editAndSaveImage(bitmap, new Effect(), null, mMatrix, true);
                         changeImage(pathFinal);
                         showBar(mCustomFeatureBar);
                     }
