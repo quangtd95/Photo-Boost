@@ -1,4 +1,4 @@
-# Photo-Editor
+# Photo-Boost
 
 download here: https://github.com/quangtd95/Photo-Editor/raw/master/demo_apk/photo_editor_v1.0.26102017.apk
 
