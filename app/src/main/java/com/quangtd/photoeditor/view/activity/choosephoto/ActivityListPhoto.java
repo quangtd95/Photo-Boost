@@ -5,8 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -32,6 +34,7 @@ import com.quangtd.photoeditor.view.iface.IViewListPhoto;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
@@ -53,9 +56,12 @@ import static com.quangtd.photoeditor.global.GlobalDefine.MY_PERMISSIONS_REQUEST
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_list_photo)
 public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implements FolderPhotoAdapter.OnClickItemFolderListener, PhotoAdapter.OnClickItemPhotoListener, IViewListPhoto {
-    @ViewById(R.id.tvNameFolder) TextView mTvNameFolder;
-    @ViewById(R.id.recyclerFolder) RecyclerView mRecyclerFolder;
-    @ViewById(R.id.recyclerPhoto) RecyclerView mRecyclerPhoto;
+    @ViewById(R.id.tvNameFolder)
+    TextView mTvNameFolder;
+    @ViewById(R.id.recyclerFolder)
+    RecyclerView mRecyclerFolder;
+    @ViewById(R.id.recyclerPhoto)
+    RecyclerView mRecyclerPhoto;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private FolderPhotoAdapter mAdapterFolder;
@@ -138,7 +144,8 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
         //Toast.makeText(this, "comming soon!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         onClickBack();
     }
 
@@ -158,27 +165,32 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
         ActivityEditPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mLocalImages.get(position).getPath()).start();
     }
 
-    @Override public void getListPhotoSuccess(List<AlbumImage> albumImageList) {
+    @Override
+    public void getListPhotoSuccess(List<AlbumImage> albumImageList) {
         if (albumImageList != null) {
             mAlbumImages.addAll(albumImageList);
             mAdapterFolder.notifyDataSetChanged();
         }
     }
 
-    @Override public void getListPhotoFail(String message) {
+    @Override
+    public void getListPhotoFail(String message) {
         Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
     }
 
 
-    @Override public Context getContext() {
+    @Override
+    public Context getContext() {
         return this;
     }
 
-    @Override public void showLoading() {
+    @Override
+    public void showLoading() {
 
     }
 
-    @Override public void hideLoading() {
+    @Override
+    public void hideLoading() {
 
     }
 
@@ -201,6 +213,13 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
+        }
+    }
+
+    @OnActivityResult(REQUEST_IMAGE_CAPTURE)
+    protected void onActivityResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            ActivityEditPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, myCurrentPhotoPath).start();
         }
     }
 
