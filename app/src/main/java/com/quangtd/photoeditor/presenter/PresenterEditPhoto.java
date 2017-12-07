@@ -20,26 +20,30 @@ import java.util.List;
 public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements OnLoadImageFinishListener {
     private ListFilterRepository mListEffectRepository;
 
-    @Override public void onInit() {
+    @Override
+    public void onInit() {
         mListEffectRepository = ListFilterRepository.getInstance(getContext());
     }
 
     public void downloadEffect(int effectNumber) {
         getIFace().showLoading();
         mListEffectRepository.downloadEffect(effectNumber, new DataCallBack<String>() {
-            @Override public void onSuccess(String result) {
+            @Override
+            public void onSuccess(String result) {
                 getIFace().downloadEffectSuccess(result);
                 getIFace().hideLoading();
             }
 
-            @Override public void onError(String message) {
+            @Override
+            public void onError(String message) {
                 getIFace().downloadEffectFailure(message);
                 getIFace().hideLoading();
             }
         });
     }
 
-    @Override public void onLoadFinish(String path) {
+    @Override
+    public void onLoadFinish(String path) {
         getIFace().onPrepared(path);
         getIFace().hideLoading();
     }
@@ -74,12 +78,14 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
             this.mMatrix = mMatrix;
         }
 
-        @Override protected String doInBackground(Void... voids) {
+        @Override
+        protected String doInBackground(Void... voids) {
             return EditPhotoUtils.scaleBitmapFitScreen(mPath, mMatrix, mWidthFrame, mHeightFrame);
 //            return EditPhotoUtils.getSquareImage(mPath, mWidthFrame, mHeightFrame);
         }
 
-        @Override protected void onPostExecute(String s) {
+        @Override
+        protected void onPostExecute(String s) {
             mListener.onLoadFinish(s);
         }
     }
@@ -97,16 +103,19 @@ public class PresenterEditPhoto extends PresenterBase<IViewEditPhoto> implements
             this.mIsTemp = isTemp;
         }
 
-        @Override protected void onPreExecute() {
+        @Override
+        protected void onPreExecute() {
             super.onPreExecute();
             getIFace().showLoading();
         }
 
-        @Override protected String doInBackground(Void... params) {
+        @Override
+        protected String doInBackground(Void... params) {
             return EditPhotoUtils.editAndSaveImage(mInput, mEffect, decors, mIsTemp);
         }
 
-        @Override protected void onPostExecute(String s) {
+        @Override
+        protected void onPostExecute(String s) {
 
             super.onPostExecute(s);
             getIFace().hideLoading();

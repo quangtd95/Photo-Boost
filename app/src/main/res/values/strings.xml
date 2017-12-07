@@ -78,6 +78,7 @@
     <string name="default_text">Your text here</string>
     <string name="open_panel">Open Panel</string>
     <string name="change_text">Change Text</string>
+    <string name="result">Photo saved in: %s</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>adjust</item>

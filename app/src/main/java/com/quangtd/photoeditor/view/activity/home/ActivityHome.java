@@ -21,11 +21,16 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_home)
 public class ActivityHome extends ActivityBase {
 
-    @ViewById(R.id.btn_linearPhotoEditor) LinearLayout btn_linearPhotoEditor;
-    @ViewById(R.id.btn_linearCollage) LinearLayout btn_linearCollage;
-    @ViewById(R.id.btn_linearGallery) LinearLayout btn_linearGallery;
-    @ViewById(R.id.btn_linearPhotoFrames) LinearLayout btn_linearPhotoFrames;
-    @ViewById(R.id.btn_linearTattoo) LinearLayout btn_linearTattoo;
+    @ViewById(R.id.btn_linearPhotoEditor)
+    LinearLayout btn_linearPhotoEditor;
+    @ViewById(R.id.btn_linearCollage)
+    LinearLayout btn_linearCollage;
+    @ViewById(R.id.btn_linearGallery)
+    LinearLayout btn_linearGallery;
+    @ViewById(R.id.btn_linearPhotoFrames)
+    LinearLayout btn_linearPhotoFrames;
+    @ViewById(R.id.btn_linearTattoo)
+    LinearLayout btn_linearTattoo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,33 +39,11 @@ public class ActivityHome extends ActivityBase {
         setContentView(R.layout.activity_home);
 
     }
+
     @Click(R.id.btn_linearPhotoEditor)
     void onClickPhotoEditor() {
         ActivityListPhoto_.intent(this).start();
     }
 
-    @Click(R.id.btn_linearCollage)
-    void onClickCollage() {
-        ActivityOutput_.intent(this).start();
-    }
 
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.btn_linearPhotoEditor:
-//                ActivityListPhoto_.intent(this).start();
-//                break;
-//            case R.id.btn_linearCollage:
-//                ActivityListPhoto_.intent(this).start();
-//                break;
-//            case R.id.btn_linearGallery:
-//                break;
-//            case R.id.btn_linearPhotoFrames:
-//                break;
-//            case R.id.btn_linearTattoo:
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 }

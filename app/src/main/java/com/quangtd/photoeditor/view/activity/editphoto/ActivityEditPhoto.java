@@ -21,6 +21,7 @@ import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.global.GlobalDefine;
 import com.quangtd.photoeditor.model.data.Decor;
 import com.quangtd.photoeditor.model.data.Effect;
+import com.quangtd.photoeditor.model.response.Filter;
 import com.quangtd.photoeditor.presenter.PresenterEditPhoto;
 import com.quangtd.photoeditor.utils.EditPhotoUtils;
 import com.quangtd.photoeditor.utils.FileUtils;
@@ -28,6 +29,7 @@ import com.quangtd.photoeditor.utils.ScreenUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosesticker.StickerActivity_;
 import com.quangtd.photoeditor.view.activity.edittext.ActivityEditText_;
+import com.quangtd.photoeditor.view.activity.output.ActivityOutput_;
 import com.quangtd.photoeditor.view.component.CustomAdjustBar;
 import com.quangtd.photoeditor.view.component.CustomDrawEffect;
 import com.quangtd.photoeditor.view.component.CustomDrawSticker;
@@ -53,18 +55,30 @@ import de.hdodenhof.circleimageview.CircleImageView;
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_edit_photo)
 public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implements CustomFeatureBar.OnClickFeatureListener, CustomAdjustBar.OnClickAdjustListener, CustomDrawSticker.OnChangeItemStickerListener, IViewEditPhoto, CustomEffectBar.OnClickEffectListener {
-    @ViewById(R.id.bottomFeatures) CustomFeatureBar mCustomFeatureBar;
-    @ViewById(R.id.bottomTools) CustomAdjustBar mCustomAdjustBar;
-    @ViewById(R.id.imgPreview) PhotoView mCustomPreview;
-    @ViewById(R.id.imgBack) CircleImageView mImgBack;
-    @ViewById(R.id.imgSave) CircleImageView mImgSave;
-    @ViewById(R.id.bottomEffects) CustomEffectBar mCustomEffectBar;
-    @ViewById(R.id.containerBottom) FrameLayout mFlContainer;
-    @ViewById(R.id.drawSticker) CustomDrawSticker mCustomDrawSticker;
-    @ViewById(R.id.drawEffect) CustomDrawEffect mCustomDrawEffect;
-    @ViewById(R.id.imgOriginEffect) ImageView mImgOriginFilter;
-    @ViewById(R.id.sb) SeekBar mSeekBar;
-    @Extra(GlobalDefine.KEY_IMAGE) String mImagePath;
+    @ViewById(R.id.bottomFeatures)
+    CustomFeatureBar mCustomFeatureBar;
+    @ViewById(R.id.bottomTools)
+    CustomAdjustBar mCustomAdjustBar;
+    @ViewById(R.id.imgPreview)
+    PhotoView mCustomPreview;
+    @ViewById(R.id.imgBack)
+    CircleImageView mImgBack;
+    @ViewById(R.id.imgSave)
+    CircleImageView mImgSave;
+    @ViewById(R.id.bottomEffects)
+    CustomEffectBar mCustomEffectBar;
+    @ViewById(R.id.containerBottom)
+    FrameLayout mFlContainer;
+    @ViewById(R.id.drawSticker)
+    CustomDrawSticker mCustomDrawSticker;
+    @ViewById(R.id.drawEffect)
+    CustomDrawEffect mCustomDrawEffect;
+    @ViewById(R.id.imgOriginEffect)
+    ImageView mImgOriginFilter;
+    @ViewById(R.id.sb)
+    SeekBar mSeekBar;
+    @Extra(GlobalDefine.KEY_IMAGE)
+    String mImagePath;
     Bitmap mBitmap;
     private static float DEFAULT_MAX_SCALE = 3.0f;
     private static float DEFAULT_MIN_SCALE = 1.0f;
@@ -72,7 +86,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     private boolean mToolsVisible;
     private Matrix mMatrix;
 
-    @Override protected void init() {
+    @Override
+    protected void init() {
         super.init();
         int widthFrame = ScreenUtils.getWidthScreen(this);
         int heightFrame = ScreenUtils.getHeightScreen(this) - ScreenUtils.convertDpToPixel(this, 100);
@@ -95,7 +110,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         mCustomAdjustBar.setOnClickToolListener(this);
         mCustomDrawSticker.setOnChangeItemStickerListener(this);
         mSeekBar.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 ActivityEditPhoto.this.onSeekBarProgressChanged(progress, fromUser);
             }
         });
@@ -158,7 +174,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         mSeekBar.setVisibility(View.INVISIBLE);
     }
 
-    @Override public void clickItem(CustomFeatureBar.TYPE type) {
+    @Override
+    public void clickItem(CustomFeatureBar.TYPE type) {
         Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
         switch (type) {
             case STICKER:
@@ -247,36 +264,44 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         });
     }
 
-    @Override public Context getContext() {
+    @Override
+    public Context getContext() {
         return null;
     }
 
-    @Override public void showLoading() {
+    @Override
+    public void showLoading() {
         showProgressDialog();
     }
 
-    @Override public void hideLoading() {
+    @Override
+    public void hideLoading() {
         dismissProgressDialog();
     }
 
-    @Override public List<Decor> getListDecor() {
+    @Override
+    public List<Decor> getListDecor() {
         return mCustomDrawSticker.getDecors();
     }
 
-    @Override public Bitmap getPhoto() {
+    @Override
+    public Bitmap getPhoto() {
         return mBitmap;
     }
 
-    @Override public Effect getEffect() {
+    @Override
+    public Effect getEffect() {
         return mCustomDrawEffect.getEffect();
     }
 
-    @Override public void showOutput(String output) {
-        Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+    @Override
+    public void showOutput(String output) {
+        ActivityOutput_.intent(this).extra(GlobalDefine.KEY_IMAGE, output).start();
         finish();
     }
 
-    @Override public void changeSticker(int oldP, int newP) {
+    @Override
+    public void changeSticker(int oldP, int newP) {
         if (newP == -1) {
             mSeekBar.setVisibility(View.GONE);
         } else {
@@ -299,20 +324,24 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         }
     }
 
-    @Override public void onClickItemEffect(int position) {
+    @Override
+    public void onClickItemEffect(int position) {
         getPresenter(this).downloadEffect(position + 1);
     }
 
-    @Override public void onClickEffectClose() {
+    @Override
+    public void onClickEffectClose() {
         onClickClearEffect();
         showBar(mCustomFeatureBar);
     }
 
-    @Override public void onClickEffectOk() {
+    @Override
+    public void onClickEffectOk() {
         showBar(mCustomFeatureBar);
     }
 
-    @Override public void clickItemAdjust(CustomAdjustBar.TYPE type) {
+    @Override
+    public void clickItemAdjust(CustomAdjustBar.TYPE type) {
         switch (type) {
             case ZOOM_IN:
                 float scale = mCustomPreview.getScale() + 0.5f;
@@ -333,19 +362,20 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 float scaleX = mCustomPreview.getScaleX();
                 mCustomPreview.setScaleX(-1 * scaleX);
 //                mMatrix.setScale(scaleX, mCustomPreview.getScaleY());
-                mMatrix.postScale(-1,1,mCustomPreview.getWidth() / 2,mCustomPreview.getHeight() / 2);
+                mMatrix.postScale(-1, 1, mCustomPreview.getWidth() / 2, mCustomPreview.getHeight() / 2);
 
                 break;
             case FLIP_V:
                 float scaleY = mCustomPreview.getScaleY();
                 mCustomPreview.setScaleY(-1 * scaleY);
 //                mMatrix.setScale(mCustomPreview.getScaleX(), scaleY);
-                mMatrix.postScale(1,-1,mCustomPreview.getWidth() / 2,mCustomPreview.getHeight() / 2);
+                mMatrix.postScale(1, -1, mCustomPreview.getWidth() / 2, mCustomPreview.getHeight() / 2);
                 break;
         }
     }
 
-    @Override public void clickCloseAdjust() {
+    @Override
+    public void clickCloseAdjust() {
         mCustomPreview.setRotation(0);
         mCustomPreview.setScale(1);
         mCustomPreview.setScaleX(1);
@@ -354,7 +384,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         showBar(mCustomFeatureBar);
     }
 
-    @Override public void clickOkAdjust() {
+    @Override
+    public void clickOkAdjust() {
         showLoading();
         Viewshot.of(mCustomPreview)
                 .setFilename(System.currentTimeMillis() + "")
@@ -372,15 +403,18 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     }
 
-    @Override public void downloadEffectSuccess(String path) {
+    @Override
+    public void downloadEffectSuccess(String path) {
         mCustomDrawEffect.setResource(path);
     }
 
-    @Override public void downloadEffectFailure(String message) {
+    @Override
+    public void downloadEffectFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         FileUtils.deleteFolder(new File(GlobalDefine.OUTPUT_TEMP));
     }

@@ -1,5 +1,9 @@
 package com.quangtd.photoeditor.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
 import java.io.File;
 
 /**
@@ -14,5 +18,13 @@ public class FileUtils {
                 new File(dir, children[i]).delete();
             }
         }
+    }
+
+    public static void reloadMedia(Context context, String url) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(url);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
     }
 }

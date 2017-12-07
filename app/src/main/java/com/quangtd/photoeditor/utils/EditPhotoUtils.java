@@ -171,7 +171,7 @@ public class EditPhotoUtils {
     }
 
     private static String saveImage(Bitmap bitmap, boolean isTemp) {
-        return saveImage(bitmap,null,isTemp);
+        return saveImage(bitmap, null, isTemp);
     }
 
     public static Bitmap convertToMutable(Bitmap imgIn) {

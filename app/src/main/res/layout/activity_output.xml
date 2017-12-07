@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
             android:layout_width="@dimen/height_header"
             android:layout_height="match_parent"
             android:padding="@dimen/dip12"
-            android:src="@drawable/ic_back"/>
+            android:src="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/tvNameFolder"
@@ -22,21 +23,22 @@
             android:gravity="start|center_vertical"
             android:text="@string/text_share"
             android:textColor="@color/color_dark_gray"
-            android:textSize="@dimen/dip18"/>
+            android:textSize="@dimen/dip18" />
 
         <ImageView
             android:id="@+id/img_ads"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:scaleType="fitEnd"
             android:layout_alignParentRight="true"
             android:padding="10dp"
-            android:src="@drawable/gift_ads"/>
+            android:scaleType="fitEnd"
+            android:src="@drawable/gift_ads" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_dark_gray"/>
+        android:background="@color/color_dark_gray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,103 +47,111 @@
         <ImageView
             android:id="@+id/img_outPut"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitStart"
+            android:layout_height="match_parent"
             android:layout_above="@+id/tv_pathSaved"
-            android:src="@drawable/test" />
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside" />
 
         <TextView
+            android:id="@+id/tv_pathSaved"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_pathSaved"
             android:layout_above="@+id/output_actions"
-            android:padding="@dimen/dip05"/>
+            android:padding="@dimen/dip05" />
 
         <LinearLayout
+            android:id="@+id/output_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/output_actions"
             android:layout_alignParentBottom="true"
+            android:background="@color/color_light_gray"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dip20"
-            android:paddingRight="@dimen/dip20"
             android:paddingBottom="@dimen/dip05"
-            android:background="@color/color_light_gray">
+            android:paddingLeft="@dimen/dip20"
+            android:paddingRight="@dimen/dip20">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:id="@+id/btn_linearShareNơw"
-                android:clickable="true">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:paddingTop="@dimen/dip10"
+                    android:clickable="false"
                     android:paddingBottom="@dimen/dip10"
-                    android:src="@drawable/ic_share_black_24dp"
-                    android:clickable="false"/>
+                    android:paddingTop="@dimen/dip10"
+                    android:src="@drawable/ic_share_black_24dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorBlack"
+                    android:clickable="false"
                     android:fontFamily="sans-serif"
                     android:text="@string/text_share_now"
-                    android:clickable="false"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:id="@+id/btn_linearSetWallpaper"
-                android:clickable="true">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:paddingTop="@dimen/dip10"
+                    android:clickable="false"
                     android:paddingBottom="@dimen/dip10"
-                    android:src="@drawable/ic_wallpaper_black_24dp"
-                    android:clickable="false"/>
+                    android:paddingTop="@dimen/dip10"
+                    android:src="@drawable/ic_wallpaper_black_24dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorBlack"
+                    android:clickable="false"
                     android:fontFamily="sans-serif"
                     android:text="@string/text_set_wallpaper"
-                    android:clickable="false"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:id="@+id/btn_linearVideoMaker"
-                android:clickable="true">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:paddingTop="@dimen/dip10"
+                    android:clickable="false"
                     android:paddingBottom="@dimen/dip10"
-                    android:src="@drawable/ic_slow_motion_video_black_24dp"
-                    android:clickable="false"/>
+                    android:paddingTop="@dimen/dip10"
+                    android:src="@drawable/ic_slow_motion_video_black_24dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorBlack"
+                    android:clickable="false"
                     android:fontFamily="sans-serif"
                     android:text="@string/text_video_maker"
-                    android:clickable="false"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
