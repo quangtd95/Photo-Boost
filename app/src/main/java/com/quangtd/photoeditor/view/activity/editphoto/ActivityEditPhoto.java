@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -322,7 +323,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     public void onSeekBarProgressChanged(int progress, boolean fromUser) {
         if (fromUser) {
             if (mCustomEffectBar.getVisibility() == View.VISIBLE) {
-                mCustomDrawEffect.setAlpha(progress * 1.0f / 255 * 100);
+                mCustomDrawEffect.setAlpha((int)(progress * 1.0f / 255 * 100));
             } else {
                 Decor decor = mCustomDrawSticker.getFocusDecor();
                 if (decor == null) return;
