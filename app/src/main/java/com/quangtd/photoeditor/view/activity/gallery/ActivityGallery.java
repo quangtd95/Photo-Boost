@@ -1,15 +1,14 @@
-package com.quangtd.photoeditor.view.activity.choosephoto;
+package com.quangtd.photoeditor.view.activity.gallery;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +28,7 @@ import com.quangtd.photoeditor.model.data.LocalImage;
 import com.quangtd.photoeditor.presenter.PresenterListPhoto;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.editphoto.ActivityEditPhoto_;
+import com.quangtd.photoeditor.view.activity.output.ActivityOutput_;
 import com.quangtd.photoeditor.view.component.GridSpacingItemDecoration;
 import com.quangtd.photoeditor.view.iface.IViewListPhoto;
 
@@ -39,8 +39,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,8 +52,8 @@ import static com.quangtd.photoeditor.global.GlobalDefine.MY_PERMISSIONS_REQUEST
  */
 
 @SuppressLint("Registered")
-@EActivity(R.layout.activity_list_photo)
-public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implements FolderPhotoAdapter.OnClickItemFolderListener, PhotoAdapter.OnClickItemPhotoListener, IViewListPhoto {
+@EActivity(R.layout.activity_gallery)
+public class ActivityGallery extends ActivityBase<PresenterListPhoto> implements FolderPhotoAdapter.OnClickItemFolderListener, PhotoAdapter.OnClickItemPhotoListener, IViewListPhoto {
     @ViewById(R.id.tvNameFolder)
     TextView mTvNameFolder;
     @ViewById(R.id.recyclerFolder)
@@ -121,13 +119,7 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     @Click(R.id.imgBack)
     void onClickBack() {
-        if (mRecyclerFolder.getVisibility() == View.VISIBLE) {
-            finish();
-        } else {
-            mRecyclerFolder.setVisibility(View.VISIBLE);
-            mRecyclerPhoto.setVisibility(View.GONE);
-            mTvNameFolder.setText(getString(R.string.choose_photo));
-        }
+        finish();
     }
 
     @Click(R.id.imgSort)
@@ -135,13 +127,6 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
         Collections.reverse(mLocalImages);
         mAdapterPhoto.notifyDataSetChanged();
         Toast.makeText(this, "Sort list photo", Toast.LENGTH_SHORT).show();
-    }
-
-    @Click(R.id.imgCamera)
-    void onClickCamera() {
-        capturePicture();
-        Log.d("URL path: ", myCurrentPhotoPath);
-        //Toast.makeText(this, "comming soon!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -162,16 +147,27 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     @Override
     public void onClickItemPhoto(int position) {
-        ActivityEditPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mLocalImages.get(position).getPath()).start();
+        ActivityOutput_.intent(this).extra(GlobalDefine.KEY_IMAGE, mLocalImages.get(position).getPath()).start();
         finish();
     }
 
     @Override
     public void getListPhotoSuccess(List<AlbumImage> albumImageList) {
         if (albumImageList != null) {
-            mAlbumImages.addAll(albumImageList);
+            for (AlbumImage albumImage : albumImageList) {
+                if (albumImage.getName().equals(GlobalDefine.APP_NAME)) {
+                    mAlbumImages.add(albumImage);
+                }
+            }
             mAdapterFolder.notifyDataSetChanged();
+            if (mAlbumImages.size() > 0) {
+                new Handler().postDelayed(() -> {
+                    onClickItem(0);
+                }, 500);
+
+            }
         }
+
     }
 
     @Override
@@ -195,48 +191,4 @@ public class ActivityListPhoto extends ActivityBase<PresenterListPhoto> implemen
 
     }
 
-    private void capturePicture() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.quangtd.photoeditor.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
-
-    @OnActivityResult(REQUEST_IMAGE_CAPTURE)
-    protected void onActivityResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            ActivityEditPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, myCurrentPhotoPath).start();
-        }
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        myCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 }

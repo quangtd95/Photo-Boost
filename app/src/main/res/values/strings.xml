@@ -80,6 +80,7 @@
     <string name="open_panel">Open Panel</string>
     <string name="change_text">Change Text</string>
     <string name="result">Photo saved in: %s</string>
+    <string name="my_gallery">Gallery</string>
     <string-array name="list_features">
         <item>sticker</item>
         <item>adjust</item>
@@ -88,7 +89,6 @@
         <item>blur</item>
         <item>text</item>
         <item>crop</item>
-        <item>share</item>
     </string-array>
     <string-array name="list_tools">
         <item>Flip H</item>

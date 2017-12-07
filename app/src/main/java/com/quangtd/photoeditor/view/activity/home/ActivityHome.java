@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
 import com.quangtd.photoeditor.view.activity.choosephoto.ActivityListPhoto_;
+import com.quangtd.photoeditor.view.activity.gallery.ActivityGallery;
+import com.quangtd.photoeditor.view.activity.gallery.ActivityGallery_;
 import com.quangtd.photoeditor.view.activity.output.ActivityOutput_;
 
 import org.androidannotations.annotations.Click;
@@ -45,5 +47,8 @@ public class ActivityHome extends ActivityBase {
         ActivityListPhoto_.intent(this).start();
     }
 
-
+    @Click(R.id.btn_linearGallery)
+    void onClickGallery(){
+        ActivityGallery_.intent(this).start();
+    }
 }
