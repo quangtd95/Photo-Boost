@@ -31,15 +31,18 @@ class CustomFeatureAdapter extends RecyclerView.Adapter<CustomFeatureAdapter.Fea
         this.mIdIcons = ids;
     }
 
-    @Override public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override
+    public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new FeatureHolder(LayoutInflater.from(mContext).inflate(R.layout.item_bottom, parent, false));
     }
 
-    @Override public void onBindViewHolder(FeatureHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(FeatureHolder holder, int position) {
         holder.bindData(CustomFeatureBar.TYPE.values()[position], mFeatures[position], mIdIcons[position]);
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return mFeatures.length;
     }
 
@@ -50,8 +53,8 @@ class CustomFeatureAdapter extends RecyclerView.Adapter<CustomFeatureAdapter.Fea
 
         FeatureHolder(View itemView) {
             super(itemView);
-            mImgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
-            mTvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            mImgIcon = itemView.findViewById(R.id.imgIcon);
+            mTvTitle = itemView.findViewById(R.id.tvTitle);
         }
 
         void bindData(CustomFeatureBar.TYPE type, String title, int id) {

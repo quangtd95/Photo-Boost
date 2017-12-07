@@ -51,7 +51,8 @@
         <activity
             android:name=".view.activity.edittext.ActivityEditText_"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.choosesticker.StickerActivity_">
+        <activity android:name=".view.activity.choosesticker.StickerActivity_"/>
+        <activity android:name=".view.activity.gallery.ActivityGallery_">
         </activity>
         <activity
             android:name=".view.activity.output.ActivityOutput_"

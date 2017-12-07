@@ -1,16 +1,16 @@
 package com.quangtd.photoeditor.presenter;
 
-import com.quangtd.photoeditor.model.repository.ListPhotoRepository;
 import com.quangtd.photoeditor.model.data.AlbumImage;
+import com.quangtd.photoeditor.model.repository.ListPhotoRepository;
 import com.quangtd.photoeditor.view.iface.IViewListPhoto;
 
 import java.util.List;
 
 /**
- * QuangTD on 10/10/2017.
+ * Created by djwag on 12/8/2017.
  */
 
-public class PresenterListPhoto extends PresenterBase<IViewListPhoto> {
+public class PresenterGallery extends PresenterBase<IViewListPhoto> {
 
     private ListPhotoRepository mListPhotoRepository;
 

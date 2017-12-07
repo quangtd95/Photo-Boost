@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:mContext="video.com.videomarker.ui.activity.ListPhotoActivity">
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_header">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/height_header"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dip12"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/tvNameFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/imgBack"
+                android:gravity="start|center_vertical"
+                android:text="@string/my_gallery"
+                android:textColor="@color/color_dark_gray"
+                android:textSize="@dimen/dip18" />
+
+            <ImageView
+                android:id="@+id/imgSort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_sort_descending" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_dark_gray" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_line_gray" />
+
+
+</LinearLayout>

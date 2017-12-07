@@ -1,7 +1,12 @@
 package com.quangtd.photoeditor.view.activity.output;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +26,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.OutputStream;
 
 /**
  * Created by HuynhSang on 12/7/2017.
@@ -52,7 +59,29 @@ public class ActivityOutput extends ActivityBase {
 
     @Click(R.id.btn_linearShareNơw)
     void onClickShareNow() {
-        Toast.makeText(this, "comming soon!", Toast.LENGTH_SHORT).show();
+        Bitmap mBitmap = BitmapFactory.decodeFile(mImagePath);
+        Bitmap icon = mBitmap;
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "title");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values);
+
+
+        OutputStream outstream;
+        try {
+            outstream = getContentResolver().openOutputStream(uri);
+            icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
+            outstream.close();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, "Share Image"));
     }
 
     @Click(R.id.btn_linearSetWallpaper)
