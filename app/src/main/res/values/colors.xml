@@ -27,4 +27,5 @@
     <color name="text_color_header">#30334e</color>
     <color name="text_color_folder">#4d4d4f</color>
     <color name="color_heavy_pink">#F00090</color>
+    <color name="color_orange">#f57606</color>
 </resources>
