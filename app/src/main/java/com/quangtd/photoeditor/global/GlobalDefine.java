@@ -22,6 +22,7 @@ public class GlobalDefine {
     public static final int MY_REQUEST_CODE_FILTER = 104;
     public static final int MY_REQUEST_CODE_BLUR = 105;
     public static final int MY_REQUEST_CODE_TEXT = 106;
+    public static final int MY_REQUEST_CODE_CROP = 107;
 
     public static final String KEY_IMAGE = "image";
     public static final String KEY_STICKER = "sticker";

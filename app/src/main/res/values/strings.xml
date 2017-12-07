@@ -73,6 +73,7 @@
     <string name="save">SAVE</string>
     <string name="filter">Filter</string>
     <string name="blur">Blur</string>
+    <string name="crop">crop</string>
     <string name="sample">Sample</string>
     <string name="radius">Radius</string>
     <string name="default_text">Your text here</string>

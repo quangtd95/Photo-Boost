@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <FrameLayout
+        android:id="@+id/containerBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.quangtd.photoeditor.view.component.CustomCropBar_
+            android:id="@+id/bottomCrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dip05"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"
+            android:visibility="visible"/>
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/containerBottom">
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dip10"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"/>
+
+        <com.quangtd.photoeditor.view.component.CustomCropView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cropView"
+            android:layout_alignBottom="@id/imgPreview"
+            android:layout_alignEnd="@id/imgPreview"
+            android:layout_alignStart="@id/imgPreview"
+            android:layout_alignTop="@id/imgPreview"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>
