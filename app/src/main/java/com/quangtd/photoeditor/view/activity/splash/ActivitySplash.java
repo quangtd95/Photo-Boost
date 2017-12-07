@@ -8,7 +8,7 @@ import android.util.Log;
 import com.quangtd.photoeditor.R;
 import com.quangtd.photoeditor.utils.SharedPreferencesUtils;
 import com.quangtd.photoeditor.view.activity.ActivityBase;
-import com.quangtd.photoeditor.view.activity.choosephoto.ActivityListPhoto_;
+import com.quangtd.photoeditor.view.activity.home.ActivityHome_;
 import com.quangtd.photoeditor.view.activity.intro.ActivityIntro;
 
 import org.androidannotations.annotations.EActivity;
@@ -35,7 +35,7 @@ public class ActivitySplash extends ActivityBase {
 
     private void gotoIntroOrMainActivity() {
         if (isFirstOpenApp) {
-            startActivity(ActivityListPhoto_.class);
+            startActivity(ActivityHome_.class);
         } else {
             startActivity(ActivityIntro.class);
         }
