@@ -66,15 +66,15 @@ Photo Boost has all the basic features of an ordinary photo editor application a
 
 |Feature|Assigned to|
 |-|-|
-|Sticker||
-|Adjust||
+|Sticker|Quang|
+|Adjust|Sang|
 |Effect|Nhân|
-|Filter||
+|Filter|Sang|
 |Blur|Nhân|
-|Text||
-|Crop||
-|Share||
-|Gallery||
+|Text|Quang|
+|Crop|Sang|
+|Share|Quang|
+|Gallery|Quang|
 
 
 ###Others
