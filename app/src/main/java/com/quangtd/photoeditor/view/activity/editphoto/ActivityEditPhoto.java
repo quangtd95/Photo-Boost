@@ -174,9 +174,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         mSeekBar.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void clickItem(CustomFeatureBar.TYPE type) {
-        Toast.makeText(this, "on click " + type, Toast.LENGTH_SHORT).show();
+    @Override public void clickItem(CustomFeatureBar.TYPE type) {
         switch (type) {
             case STICKER:
                 StickerActivity_.intent(this).startForResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER);
@@ -198,6 +196,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
                 break;
             case TEXT:
                 ActivityEditText_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_TEXT);
+            case CROP:
+                ActivityCropPhoto_.intent(this).extra(GlobalDefine.KEY_IMAGE, mImagePath).startForResult(GlobalDefine.MY_REQUEST_CODE_CROP);
             default:
                 showBar(mCustomFeatureBar);
         }
@@ -232,6 +232,13 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
 
     @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_FILTER)
     public void onResultFilter(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            changeImage(data.getStringExtra(GlobalDefine.KEY_IMAGE));
+        }
+    }
+
+    @OnActivityResult(GlobalDefine.MY_REQUEST_CODE_CROP)
+    public void onResultCrop(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             changeImage(data.getStringExtra(GlobalDefine.KEY_IMAGE));
         }
