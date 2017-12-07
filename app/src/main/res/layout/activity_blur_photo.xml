@@ -35,10 +35,10 @@
             android:id="@+id/drawOverlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/imgPreview"
-            android:layout_alignEnd="@id/imgPreview"
-            android:layout_alignStart="@id/imgPreview"
-            android:layout_alignTop="@id/imgPreview"
+            android:layout_alignBottom="@id/imgBackground"
+            android:layout_alignEnd="@id/imgBackground"
+            android:layout_alignStart="@id/imgBackground"
+            android:layout_alignTop="@id/imgBackground"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 </RelativeLayout>

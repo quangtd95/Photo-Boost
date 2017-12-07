@@ -174,7 +174,8 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
         mSeekBar.setVisibility(View.INVISIBLE);
     }
 
-    @Override public void clickItem(CustomFeatureBar.TYPE type) {
+    @Override
+    public void clickItem(CustomFeatureBar.TYPE type) {
         switch (type) {
             case STICKER:
                 StickerActivity_.intent(this).startForResult(GlobalDefine.MY_REQUEST_CODE_GET_STICKER);
@@ -321,7 +322,7 @@ public class ActivityEditPhoto extends ActivityBase<PresenterEditPhoto> implemen
     public void onSeekBarProgressChanged(int progress, boolean fromUser) {
         if (fromUser) {
             if (mCustomEffectBar.getVisibility() == View.VISIBLE) {
-                mCustomDrawEffect.setAlpha(progress);
+                mCustomDrawEffect.setAlpha(progress * 1.0f / 255 * 100);
             } else {
                 Decor decor = mCustomDrawSticker.getFocusDecor();
                 if (decor == null) return;

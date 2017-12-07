@@ -22,7 +22,8 @@ import lombok.experimental.Accessors;
 
 @EViewGroup(R.layout.custom_blur_bar)
 public class CustomBlurBar extends RelativeLayout {
-    @ViewById(R.id.sbRadius) SeekBar mSbRadius;
+    @ViewById(R.id.sbRadius)
+    SeekBar mSbRadius;
 
     public CustomBlurBar(Context context) {
         super(context);
@@ -52,11 +53,10 @@ public class CustomBlurBar extends RelativeLayout {
     @AfterViews
     public void init() {
         mSbRadius.setOnSeekBarChangeListener(new AbstractSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                super.onProgressChanged(seekBar, progress, fromUser);
-                if (fromUser) {
-                    mListener.onChangeRadiusBlur(progress);
-                }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                super.onStopTrackingTouch(seekBar);
+                mListener.onChangeRadiusBlur(seekBar.getProgress());
             }
         });
     }
