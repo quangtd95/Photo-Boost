@@ -1,5 +1,6 @@
 # Photo Boost
-##Foreword
+
+## Foreword
 
 This README file is about:
 
@@ -7,7 +8,7 @@ This README file is about:
 
 * Describing the job assignment tables.
 
-##Application Features
+## Application Features
 
 Photo Boost has all the basic features of an ordinary photo editor application and some of the advanced ones, including:
 
@@ -29,9 +30,10 @@ Photo Boost has all the basic features of an ordinary photo editor application a
 
 * Browsing edited images with Gallery.
 
-##Job Assignment
+## Job Assignment
 
-###Activity Layout
+### Activity Layout
+
 |Layout name|Assigned to|
 |-|-|
 |activity_blur_photo.xml|Sang|
@@ -62,7 +64,7 @@ Photo Boost has all the basic features of an ordinary photo editor application a
 |item_text_font.xml|Nhân|
 |v3_dialog_notify.xml|Quang|
 
-###Features
+### Features
 
 |Feature|Assigned to|
 |-|-|
@@ -77,7 +79,7 @@ Photo Boost has all the basic features of an ordinary photo editor application a
 |Gallery|Quang|
 
 
-###Others
+### Others
 
 |Name|Assigned to|
 |-|-|
